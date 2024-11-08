@@ -2,6 +2,9 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
+  "overrides": {
+    "vue": "latest"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -14,11 +17,14 @@
     "@nuxt/image": "^1.8.1",
     "@nuxt/ui": "^2.18.7",
     "@nuxtjs/color-mode": "^3.5.2",
+    "@pinia/nuxt": "^0.7.0",
     "clsx": "^2.1.1",
     "next-auth": "4.21.1",
     "nuxt": "^3.13.2",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-confetti": "^2.3.0",
+    "vue-router": "latest",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2",

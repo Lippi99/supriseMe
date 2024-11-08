@@ -1,5 +1,10 @@
 export default defineNuxtConfig({
-  modules: ["@sidebase/nuxt-auth", "@nuxt/ui", "@nuxt/image"],
+  plugins: [
+    {
+      src: "~/plugins/confetti.client",
+    },
+  ],
+  modules: ["@sidebase/nuxt-auth", "@nuxt/ui", "@nuxt/image", "@pinia/nuxt"],
   postcss: {
     plugins: {
       tailwindcss: {},
