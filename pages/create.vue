@@ -3,14 +3,15 @@
     <div class="py-[17px] px-14 lg:pr-0 lg:max-w-7xl m-auto">
       <h1 class="text-5xl font-bold">Create your page</h1>
       <span class="ml-1 mt-5 inline-block">Fill the fields in blank</span>
-      <div class="max-w-screen-xl w-full mt-10 flex items-center gap-32">
+      <div
+        class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row"
+      >
         <UForm
           :schema="schemas"
           :state="formState"
           class="flex-1"
           @submit="onSubmit"
         >
-          <button @click="theme.start" type="button">Click on me</button>
           <UFormGroup name="theme">
             <label class="mb-2 inline-block" for="theme"
               >Choose the theme</label
@@ -44,18 +45,39 @@
             />
           </UFormGroup>
 
-          <UFormGroup class="mt-8" name="message">
-            <label class="mb-2 inline-block" for="message"
-              >Write your message</label
+          <!-- Dynamic Message Fields -->
+          <div v-for="(field, index) in formState.messages" :key="index">
+            <UFormGroup class="mt-8" :name="'message-' + index">
+              <label class="mb-2 inline-block" :for="'message-' + index">
+                Write your message {{ index + 1 }}
+                <span>({{ formState.messages[index].message.length }})</span>
+              </label>
+              <UTextarea
+                @input="(event: Event) => limitTextAreaLength(event, index)"
+                v-model="field.message"
+                :rows="10"
+                class="border border-[#FF4E6D]"
+                variant="outline"
+                :placeholder="'Message ' + (index + 1)"
+              />
+            </UFormGroup>
+            <UButton
+              v-if="formState.messages.length > 1"
+              @click="removeMessage(index)"
+              class="py-4 px-8 mt-2 dark:bg-red-500 dark:hover:bg-red-500 dark:text-white"
+              type="button"
             >
-            <UTextarea
-              v-model="formState.message"
-              :rows="10"
-              class="border border-[#FF4E6D]"
-              variant="outline"
-              placeholder="I'd like to dedicate..."
-            />
-          </UFormGroup>
+              Remove
+            </UButton>
+          </div>
+
+          <UButton
+            @click="addMessage"
+            class="py-5 px-10 mt-32 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] dark:text-white"
+            type="button"
+          >
+            Add more messages (max 3)
+          </UButton>
 
           <UFormGroup class="mt-8" name="images">
             <label class="mb-2 inline-block" for="dropzone-file"
@@ -99,7 +121,7 @@
             </label>
           </UFormGroup>
 
-          <!-- Preview images -->
+          <!-- Image preview section -->
           <div class="mt-4">
             <h3 class="text-lg font-bold">Image Previews:</h3>
             <div class="w-full space-x-4 mt-2">
@@ -115,6 +137,7 @@
                     @click="openImageDialog(image)"
                   />
                   <UButton
+                    color="red"
                     @click="formState.images.splice(index, 1)"
                     class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
                     block
@@ -136,7 +159,7 @@
         </UForm>
 
         <div
-          class="flex-1 flex items-center justify-center flex-col mb-[321px]"
+          class="flex-1 flex items-center justify-center flex-col mb-0 lg:mb-[321px]"
         >
           <h2 class="text-center mb-5 text-2xl">Website's preview</h2>
           <Phone :form="formState" />
@@ -194,12 +217,18 @@ const schemas = z.object({
       invalid_type_error: "Must be a text",
     })
     .trim(),
-  message: z
-    .string({
-      required_error: "Message is required",
-      invalid_type_error: "Must be a text",
-    })
-    .trim(),
+  messages: z
+    .array(
+      z.object({
+        message: z
+          .string({
+            required_error: "Message is required",
+            invalid_type_error: "Must be a text",
+          })
+          .trim(),
+      })
+    )
+    .min(1),
   images: z.array(z.string()).max(3),
 });
 
@@ -207,10 +236,28 @@ export type Schema = z.output<typeof schemas>;
 
 const formState = reactive({
   theme: undefined,
-  message: undefined,
   name: undefined,
+  messages: [{ message: "" }] as Array<{ message: string }>,
   images: [] as string[],
 });
+
+// Functions to manage dynamic fields
+function addMessage() {
+  if (formState.messages.length > 2) {
+    alert("Maximum of 3 messages allowed.");
+    return;
+  }
+  selectedTheme(formState.theme || "");
+  formState.messages.push({ message: "" });
+}
+
+function removeMessage(index: number) {
+  if (formState.messages.length > 1) {
+    formState.messages.splice(index, 1);
+  } else {
+    alert("At least one message field is required.");
+  }
+}
 
 const showDialog = ref(false);
 const selectedImage = ref<string | null>(null);
@@ -232,6 +279,8 @@ const themes = [
 const selected = ref(themes[0]);
 
 function selectedTheme(value: string) {
+  if (value === "") return;
+
   if (value === "Christmas") {
     theme.snowTheme();
   } else if (value == "Wedding") {
@@ -252,6 +301,7 @@ async function uploadImage(event: Event) {
     for (const file of Array.from(input.files)) {
       const base64 = await getBase64(file);
       if (formState.images.length < 3) {
+        selectedTheme(formState.theme || "");
         formState.images.push(base64);
       } else {
         alert("Maximum of 3 images allowed.");
@@ -282,5 +332,13 @@ function openImageDialog(image: string) {
 function closeImageDialog() {
   selectedImage.value = null;
   showDialog.value = false;
+}
+
+function limitTextAreaLength(event: Event, index: number) {
+  const input = event.target as HTMLTextAreaElement;
+  if (input.value.length > 200) {
+    input.value = input.value.slice(0, 200);
+    formState.messages[index].message = input.value;
+  }
 }
 </script>

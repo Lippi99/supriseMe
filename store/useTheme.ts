@@ -14,10 +14,6 @@ export const useThemeStore = defineStore("theme", () => {
       particlesPerFrame: 0.5,
       windSpeedMax: 0,
     });
-
-    window.addEventListener("resize", () =>
-      adjustCanvasResolution(canvas as HTMLCanvasElement)
-    );
   }
 
   function stop() {

@@ -1,8 +1,24 @@
 <template>
-  <div class="relative w-full h-5/6 -z-10">
-    <canvas class="absolute left-0 top-0 w-full h-full" id="preview"></canvas>
+  <div
+    class='relative w-full -z-10 h-auto'
+  >
+    <canvas
+      class="absolute left-0 top-0 w-full h-[-webkit-fill-available !important]"
+      id="preview"
+    ></canvas>
     <slot />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  images: Array,
+});
+</script>
+
+
+<style>
+#preview {
+  height: -webkit-fill-available !important;
+}
+</style>
