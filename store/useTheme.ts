@@ -14,6 +14,10 @@ export const useThemeStore = defineStore("theme", () => {
       particlesPerFrame: 0.5,
       windSpeedMax: 0,
     });
+
+    setTimeout(() => {
+      stop();
+    }, 10000);
   }
 
   function stop() {

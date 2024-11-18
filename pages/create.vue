@@ -4,7 +4,7 @@
       <h1 class="text-5xl font-bold">Create your page</h1>
       <span class="ml-1 mt-5 inline-block">Fill the fields in blank</span>
       <div
-        class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row"
+        class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
       >
         <UForm
           :schema="schemas"
@@ -41,16 +41,20 @@
               v-model="formState.name"
               placeholder="Sarah, Peter, John..."
               class="border border-[#FF4E6D]"
-              id="name"
             />
           </UFormGroup>
 
-          <!-- Dynamic Message Fields -->
-          <div v-for="(field, index) in formState.messages" :key="index">
-            <UFormGroup class="mt-8" :name="'message-' + index">
-              <label class="mb-2 inline-block" :for="'message-' + index">
+          <div
+            v-for="(field, index) in formState.messages"
+            :key="index"
+            class="mt-4 flex flex-col-reverse"
+          >
+            <UFormGroup :name="'message-' + index">
+              <label class="mb-2 mt-5 inline-block" :for="'message-' + index">
                 Write your message {{ index + 1 }}
-                <span>({{ formState.messages[index].message.length }})</span>
+                <span class="ml-5"
+                  >{{ formState.messages[index].message.length }} /200
+                </span>
               </label>
               <UTextarea
                 @input="(event: Event) => limitTextAreaLength(event, index)"
@@ -61,96 +65,79 @@
                 :placeholder="'Message ' + (index + 1)"
               />
             </UFormGroup>
-            <UButton
-              v-if="formState.messages.length > 1"
-              @click="removeMessage(index)"
-              class="py-4 px-8 mt-2 dark:bg-red-500 dark:hover:bg-red-500 dark:text-white"
-              type="button"
-            >
-              Remove
-            </UButton>
-          </div>
 
-          <UButton
-            @click="addMessage"
-            class="py-5 px-10 mt-32 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] dark:text-white"
-            type="button"
-          >
-            Add more messages (max 3)
-          </UButton>
-
-          <UFormGroup class="mt-8" name="images">
-            <label class="mb-2 inline-block" for="dropzone-file"
-              >Pick some pictures (max 3)</label
-            >
-            <label
-              for="dropzone-file"
-              class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-900 dark:hover:bg-gray-800"
-            >
-              <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg
-                  class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
+            <!-- Image Upload Input for Each Message -->
+            <UFormGroup :name="'image-' + index" class="mt-4">
+              <label class="mb-2 inline-block" :for="'dropzone-file-' + index">
+                Pick or update a picture for Message {{ index + 1 }}
+              </label>
+              <label
+                v-if="!field.image"
+                :for="'dropzone-file-' + index"
+                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-900 dark:hover:bg-gray-800"
+              >
+                <div
+                  class="flex flex-col items-center justify-center pt-5 pb-6"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span class="font-semibold">Click to upload</span> or drag and
-                  drop
-                </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG, Webp
-                </p>
-              </div>
-              <input
-                @change="uploadImage($event)"
-                id="dropzone-file"
-                accept="image/*"
-                type="file"
-                class="hidden"
-              />
-            </label>
-          </UFormGroup>
-
-          <!-- Image preview section -->
-          <div class="mt-4">
-            <h3 class="text-lg font-bold">Image Previews:</h3>
-            <div class="w-full space-x-4 mt-2">
-              <div class="flex gap-10 h-28">
-                <div v-for="(image, index) in formState.images" :key="index">
-                  <NuxtPicture
-                    :src="image"
-                    class="w-full h-full object-cover cursor-pointer"
-                    :img-attrs="{
-                      alt: 'Image preview',
-                      style: 'width: 100%; height: 100%; object-fit: cover;',
-                    }"
-                    @click="openImageDialog(image)"
-                  />
-                  <UButton
-                    color="red"
-                    @click="formState.images.splice(index, 1)"
-                    class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
-                    block
+                  <svg
+                    class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 16"
                   >
-                    Remove
-                  </UButton>
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                    />
+                  </svg>
+                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="font-semibold">Click to upload</span> or drag
+                    and drop
+                  </p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">
+                    SVG, PNG, JPG, Webp
+                  </p>
                 </div>
-              </div>
+                <input
+                  @change="(event) => uploadImageForMessage(event, index)"
+                  :id="'dropzone-file-' + index"
+                  accept="image/*"
+                  type="file"
+                  class="hidden"
+                />
+              </label>
+            </UFormGroup>
+
+            <!-- Image Preview Section -->
+            <div v-if="field.image" class="mt-4">
+              <h3 class="text-lg font-bold">
+                Image Preview for Message {{ index + 1 }}:
+              </h3>
+              <NuxtPicture
+                :src="field.image"
+                class="w-full h-96 object-cover inline-block"
+                :img-attrs="{
+                  alt: 'Image preview',
+                  style: 'width: 100%; height: 100%; object-fit: cover;',
+                }"
+              />
+              <UButton
+                color="red"
+                @click="removeImage(index)"
+                class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
+                block
+              >
+                Remove Image
+              </UButton>
             </div>
           </div>
 
           <UButton
-            class="mt-28 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
+            class="mt-10 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
             block
             type="submit"
           >
@@ -158,40 +145,11 @@
           </UButton>
         </UForm>
 
-        <div
-          class="flex-1 flex items-center justify-center flex-col mb-0 lg:mb-[321px]"
-        >
-          <h2 class="text-center mb-5 text-2xl">Website's preview</h2>
-          <Phone :form="formState" />
-        </div>
-      </div>
-
-      <!-- Modal for image preview -->
-      <div
-        v-if="showDialog"
-        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-20"
-      >
-        <div
-          class="p-4 max-w-3xl w-full h-[512px] rounded-lg shadow-lg flex items-center flex-col justify-center"
-        >
-          <NuxtPicture
-            v-if="selectedImage"
-            :src="selectedImage"
-            :img-attrs="{
-              alt: 'Image preview',
-              style: 'width: 100%; height: 100%; object-fit: cover;',
-            }"
-            class="w-full h-full object-cover"
-          />
-          <button
-            @click="closeImageDialog"
-            class="mt-10 max-w-md w-full px-4 py-2 bg-red-500 text-white rounded"
-          >
-            Close
-          </button>
-        </div>
+        <Preview :form="formState" />
       </div>
     </div>
+    <button @click="isOpen = true" type="button">test</button>
+    <PaymentModal :isOpen="isOpen" @update:modelValue="closeModal" />
   </NuxtLayout>
 </template>
 
@@ -225,6 +183,8 @@ const schemas = z.object({
             required_error: "Message is required",
             invalid_type_error: "Must be a text",
           })
+          .min(1)
+          .max(200)
           .trim(),
       })
     )
@@ -237,30 +197,17 @@ export type Schema = z.output<typeof schemas>;
 const formState = reactive({
   theme: undefined,
   name: undefined,
-  messages: [{ message: "" }] as Array<{ message: string }>,
+  messages: [
+    { message: "", image: null },
+    { message: "", image: null },
+    { message: "", image: null },
+  ] as Array<{ message: string; image: string | null }>,
   images: [] as string[],
 });
 
-// Functions to manage dynamic fields
-function addMessage() {
-  if (formState.messages.length > 2) {
-    alert("Maximum of 3 messages allowed.");
-    return;
-  }
-  selectedTheme(formState.theme || "");
-  formState.messages.push({ message: "" });
+function closeModal(modal: boolean) {
+  isOpen.value = modal;
 }
-
-function removeMessage(index: number) {
-  if (formState.messages.length > 1) {
-    formState.messages.splice(index, 1);
-  } else {
-    alert("At least one message field is required.");
-  }
-}
-
-const showDialog = ref(false);
-const selectedImage = ref<string | null>(null);
 
 const themes = [
   {
@@ -277,6 +224,7 @@ const themes = [
   },
 ];
 const selected = ref(themes[0]);
+const isOpen = ref(false);
 
 function selectedTheme(value: string) {
   if (value === "") return;
@@ -295,23 +243,26 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   console.log(event.data);
 }
 
-async function uploadImage(event: Event) {
+async function uploadImageForMessage(event: Event, index: number) {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
-    for (const file of Array.from(input.files)) {
-      const base64 = await getBase64(file);
-      if (formState.images.length < 3) {
-        selectedTheme(formState.theme || "");
-        formState.images.push(base64);
-      } else {
-        alert("Maximum of 3 images allowed.");
-        break;
-      }
-    }
+    const base64 = await getBase64(input.files[0]);
+    formState.messages[index].image = base64;
+    console.log(formState);
   }
 }
 
-// Helper function to convert file to base64
+function removeImage(index: number) {
+  const imageToRemove = formState.messages[index].image;
+  if (imageToRemove) {
+    const imageIndex = formState.images.indexOf(imageToRemove);
+    if (imageIndex > -1) {
+      formState.images.splice(imageIndex, 1);
+    }
+    formState.messages[index].image = null;
+  }
+}
+
 function getBase64(file: File): Promise<string> {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -320,18 +271,6 @@ function getBase64(file: File): Promise<string> {
     };
     reader.readAsDataURL(file);
   });
-}
-
-// Open the image dialog
-function openImageDialog(image: string) {
-  selectedImage.value = image;
-  showDialog.value = true;
-}
-
-// Close the image dialog
-function closeImageDialog() {
-  selectedImage.value = null;
-  showDialog.value = false;
 }
 
 function limitTextAreaLength(event: Event, index: number) {
