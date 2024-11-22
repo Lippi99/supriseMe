@@ -1,0 +1,36 @@
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  active    Boolean   @default(false)
+  image     String?
+  Websites  Website[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Website {
+  id        Int       @id @default(autoincrement())
+  name      String
+  theme     String
+  messages  Message[]
+  userEmail String
+  user      User      @relation(fields: [userEmail], references: [email])
+}
+
+model Message {
+  id        Int     @id @default(autoincrement())
+  message   String  @db.VarChar(200)
+  image     String
+  websiteId Int
+  website   Website @relation(fields: [websiteId], references: [id])
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}

@@ -7,6 +7,7 @@
         class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
       >
         <UForm
+          ref="form"
           :schema="schemas"
           :state="formState"
           class="flex-1"
@@ -148,8 +149,8 @@
         <Preview :form="formState" />
       </div>
     </div>
-    <button @click="isOpen = true" type="button">test</button>
-    <PaymentModal :isOpen="isOpen" @update:modelValue="closeModal" />
+    <PaymentModal :isOpen="isOpen" @closeModal="closeModal" />
+    <UNotifications />
   </NuxtLayout>
 </template>
 
@@ -162,10 +163,13 @@ useSeoMeta({
 
 import { z } from "zod";
 import { useThemeStore } from "~/store/useTheme";
-import type { FormSubmitEvent } from "#ui/types";
-import { reactive, ref } from "vue";
+import type { Form, FormSubmitEvent } from "#ui/types";
+import { reactive, ref, type VNodeRef } from "vue";
 
 const theme = useThemeStore();
+const toast = useToast();
+
+const { status, data: googleUserData, signOut } = useAuth();
 
 const schemas = z.object({
   theme: z.any(),
@@ -205,7 +209,10 @@ const formState = reactive({
   images: [] as string[],
 });
 
+const form = ref<Form<Schema>>();
+
 function closeModal(modal: boolean) {
+  console.log(modal);
   isOpen.value = modal;
 }
 
@@ -226,6 +233,12 @@ const themes = [
 const selected = ref(themes[0]);
 const isOpen = ref(false);
 
+onMounted(() => {
+  if (status.value === "unauthenticated") {
+    isOpen.value = true;
+  }
+});
+
 function selectedTheme(value: string) {
   if (value === "") return;
 
@@ -239,8 +252,73 @@ function selectedTheme(value: string) {
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Do something with data
-  console.log(event.data);
+  if (status.value === "unauthenticated") {
+    isOpen.value = true;
+    return;
+  }
+  if (areFieldsEmpty()) {
+    toast.add({
+      title: "Fill all the fields",
+      color: "red",
+    });
+    return;
+  }
+
+  const { error: websiteError } = await useFetch("/api/website", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      userEmail: googleUserData.value?.user?.email,
+      name: event.data.name,
+      theme: event.data.theme,
+      messages: event.data.messages,
+      googleUserData: googleUserData.value?.user,
+    },
+  });
+
+  if (websiteError.value?.statusCode === 400) {
+    toast.add({
+      title: "Você precisa ter uma subscrição ativa para criar o site",
+      color: "red",
+    });
+    return;
+  }
+
+  if (websiteError.value?.statusCode === 500) {
+    toast.add({
+      title: "Houve um erro ao criar a página",
+      color: "red",
+    });
+    return;
+  }
+
+  form.value!.clear();
+  clearFields();
+  toast.add({
+    title: "Página criada com sucesso!",
+    color: "green",
+    timeout: 4000,
+  });
+}
+
+function clearFields() {
+  formState.theme = undefined;
+  formState.name = undefined;
+  formState.messages = [
+    { message: "", image: null },
+    { message: "", image: null },
+    { message: "", image: null },
+  ];
+}
+
+function areFieldsEmpty() {
+  return (
+    formState.theme === undefined ||
+    formState.name === undefined ||
+    formState.messages.some((message) => message.message === "")
+  );
 }
 
 async function uploadImageForMessage(event: Event, index: number) {

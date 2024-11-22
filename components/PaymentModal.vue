@@ -1,28 +1,40 @@
 <template>
-  <UModal
-    :modelValue="isOpen"
-    @update:modelValue="($event: boolean) => (open = $event)"
-    :transition="false"
-  >
+  <UModal :modelValue="isOpen" :transition="false">
     <div class="p-4">
-      <div @click="emit('isOpen')">Close</div>
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl">Sign in</h2>
+      </div>
+      <p class="mt-3 text-[#a3a3a3]">Sign in to your account to continue</p>
+
+      <div
+        @click="signInGoogle"
+        class="mt-8 flex items-center justify-center gap-5 cursor-pointer w-11/12 border border-gray-500 px-3 py-3 rounded-md"
+      >
+        <UIcon name="i-logos:google-icon" class="w-5 h-5 ml-3" />
+        <span>Continue with Google</span>
+      </div>
     </div>
   </UModal>
 </template>
 <script setup lang="ts">
-const emit = defineEmits();
+const { data: googleUserData } = useAuth();
+const { signIn } = useAuth();
 
-const props = defineProps({
+const emit = defineEmits(["closeModal"]);
+
+defineProps({
   isOpen: {
     type: Boolean,
     required: true,
   },
 });
 
-const open = ref<boolean>(props.isOpen);
+async function signInGoogle() {
+  await signIn("google");
+  closeModal();
+}
 
 const closeModal = () => {
-  open.value = false;
-  emit("update:isOpen", false); // Emit the updated value to parent
+  emit("closeModal", false);
 };
 </script>
