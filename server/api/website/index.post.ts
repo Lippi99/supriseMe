@@ -1,4 +1,4 @@
-import { createUser, getUser } from "~/server/services/user";
+import { getUser } from "~/server/services/user";
 import { createWebsite } from "~/server/services/website";
 
 export default defineEventHandler(async (event) => {
@@ -7,10 +7,6 @@ export default defineEventHandler(async (event) => {
 
     const user = await getUser(body.userEmail);
 
-    if (!user) {
-      await createUser(body.googleUserData);
-    }
-
     if (!user?.active) {
       return createError({
         statusCode: 400,
@@ -18,14 +14,23 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    await createWebsite(body);
+    const website = await createWebsite(body);
+    if (!website) {
+      return createError({
+        statusCode: 400,
+        statusMessage: "Website could not be created",
+      });
+    }
 
     return {
       statusCode: 201,
-      body: JSON.stringify({ message: "Website created" }),
+      body: JSON.stringify({
+        message: "Website created",
+        websiteId: website.id,
+      }),
     };
   } catch (e) {
-    throw createError({
+    return createError({
       statusCode: 500,
       statusMessage: "Internal Server Error" + e,
     });

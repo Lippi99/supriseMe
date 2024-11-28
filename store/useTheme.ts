@@ -2,52 +2,70 @@ export const useThemeStore = defineStore("theme", () => {
   const confetti = getCurrentInstance()?.appContext.config.globalProperties
     .$confetti as any;
 
-  function start() {
-    const canvas = document.getElementById("preview");
-    adjustCanvasResolution(canvas as HTMLCanvasElement);
+  function start(preview: boolean = false) {
+    if (preview) {
+      const canvas = document.getElementById("preview");
 
-    confetti.start({
-      defaultType: "circle",
-      canvasId: "preview",
-      defaultSize: 7,
-      defaultDropRate: 7,
-      particlesPerFrame: 0.5,
-      windSpeedMax: 0,
-    });
+      if (canvas instanceof HTMLCanvasElement) {
+        adjustCanvasResolution(canvas);
+        confetti.start({
+          canvasId: "preview", // Target the specific canvas
+          defaultType: "circle",
+          defaultSize: 7,
+          defaultDropRate: 7,
+          particlesPerFrame: 0.5,
+          windSpeedMax: 0,
+        });
+      } else {
+        console.error("Canvas with id 'preview' not found or invalid.");
+      }
+    } else {
+      // Use the global canvas for full-screen animation
+      confetti.start({
+        defaultType: "circle",
+        defaultSize: 7,
+        defaultDropRate: 7,
+        particlesPerFrame: 0.5,
+        windSpeedMax: 0,
+      });
+    }
 
     setTimeout(() => {
       stop();
     }, 10000);
   }
 
+  function startGlobal(theme: string) {
+    start(); // Start with global confetti
+
+    if (theme === "Christmas") {
+      snowTheme(false); // Pass `false` for global confetti
+    } else if (theme === "Wedding") {
+      loveTheme(false);
+    }
+  }
+
   function stop() {
     confetti.stop();
   }
 
-  function loveTheme() {
-    start();
+  function loveTheme(preview: boolean = false) {
+    start(preview);
     confetti.update({
-      canvasId: "preview",
+      ...(preview && { canvasId: "preview" }), // Apply only for preview
       defaultSize: 7,
       defaultDropRate: 7,
       particlesPerFrame: 0.5,
       windSpeedMax: 0,
-      particles: [
-        {
-          type: "heart",
-        },
-        {
-          type: "circle",
-        },
-      ],
+      particles: [{ type: "heart" }, { type: "circle" }],
       defaultColors: ["red", "pink", "#ba0000"],
     });
   }
 
-  function snowTheme() {
-    start();
+  function snowTheme(preview: boolean = false) {
+    start(preview);
     confetti.update({
-      canvasId: "preview",
+      ...(preview && { canvasId: "preview" }), // Apply only for preview
       defaultSize: 10,
       defaultDropRate: 7,
       particlesPerFrame: 0.5,
@@ -76,6 +94,7 @@ export const useThemeStore = defineStore("theme", () => {
 
   return {
     start,
+    startGlobal,
     stop,
     loveTheme,
     snowTheme,

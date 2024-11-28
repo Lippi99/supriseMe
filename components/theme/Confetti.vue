@@ -1,7 +1,5 @@
 <template>
-  <div
-    class='relative w-full -z-10 h-auto'
-  >
+  <div class="relative w-full -z-10 h-auto">
     <canvas
       class="absolute left-0 top-0 w-full h-[-webkit-fill-available !important]"
       id="preview"
@@ -15,7 +13,6 @@ defineProps({
   images: Array,
 });
 </script>
-
 
 <style>
 #preview {

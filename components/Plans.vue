@@ -28,6 +28,7 @@
     </ul>
 
     <UButton
+      @click="handleSetPlanUrl"
       class="py-5 dark:text-white font-bold text-2xl dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D]"
       block
       label="Buy plan"
@@ -36,8 +37,8 @@
 </template>
 
 <script setup lang="ts">
-import clsx from "clsx";
-defineProps({
+const emit = defineEmits(["set-plan-url"]);
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -55,4 +56,12 @@ defineProps({
     default: false,
   },
 });
+
+function handleSetPlanUrl() {
+  if (props.mostPicked) {
+    emit("set-plan-url", "/create?plan=Premium");
+  } else {
+    emit("set-plan-url", "/create?plan=Basic");
+  }
+}
 </script>

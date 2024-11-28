@@ -56,12 +56,14 @@
           title="Basic"
           :price="4"
           :benefits="['6 months access', '5 photos', 'No song']"
+          @set-plan-url="handleSetPlanUrl"
         />
         <Plans
           :most-picked="true"
           title="Premium"
           :price="10"
           :benefits="['Lifetime access', '5 photos', 'With song']"
+          @set-plan-url="handleSetPlanUrl"
         />
       </div>
     </section>
@@ -76,6 +78,8 @@
 </template>
 
 <script setup lang="ts">
+const route = useRouter();
+
 useSeoMeta({
   title: "SurpriseMe - Make a surprise for someone special",
   description:
@@ -84,16 +88,7 @@ useSeoMeta({
     "SurpriseMe is a platform destinated to create a surprise letter for someone special. You can choose a template, write a message and send it to the person you want to surprise.",
 });
 
-const { signIn, signOut, status } = useAuth();
-const headers = useRequestHeaders(["cookie"]) as HeadersInit;
-
-const { data } = await useFetch("/api/me", { headers });
-
-async function loginGoogle() {
-  await signIn("google");
-}
-
-async function logout() {
-  await signOut();
+function handleSetPlanUrl(url: string) {
+  route.push(url);
 }
 </script>

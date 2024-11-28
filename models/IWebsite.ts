@@ -10,3 +10,7 @@ export interface IWebsite {
   messages: IWebsiteMessages[];
   image: string;
 }
+
+export interface IWebsiteClient {
+  website: IWebsite;
+}

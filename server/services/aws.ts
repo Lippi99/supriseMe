@@ -24,7 +24,7 @@ export const uploadFile = async (file: string, key: string) => {
     };
 
     await client.send(new PutObjectCommand(params));
-    return `https://lettergiftbucket.s3.sa-east-1.amazonaws.com/${key}`;
+    return `https://lettergiftbucket.s3.sa-east-1.amazonaws.com/${key.trim()}`;
   } catch (error) {
     throw new Error("Failed to upload file to S3");
   }

@@ -13,6 +13,19 @@
           class="flex-1"
           @submit="onSubmit"
         >
+          <UFormGroup class="mb-8" name="plan">
+            <label class="mb-2 inline-block" for="plan">Choose the plan</label>
+            <USelectMenu
+              @change="handleSetPlanUrl"
+              class="border border-[#FF4E6D]"
+              v-model="formState.plan"
+              value-attribute="name"
+              :options="plans"
+              option-attribute="name"
+            >
+            </USelectMenu>
+          </UFormGroup>
+
           <UFormGroup name="theme">
             <label class="mb-2 inline-block" for="theme"
               >Choose the theme</label
@@ -75,7 +88,7 @@
               <label
                 v-if="!field.image"
                 :for="'dropzone-file-' + index"
-                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-900 dark:hover:bg-gray-800"
+                class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-[#FF4E6D] dark:hover:border-[#FF4E6D] dark:hover:bg-gray-800"
               >
                 <div
                   class="flex flex-col items-center justify-center pt-5 pb-6"
@@ -168,15 +181,17 @@ import { reactive, ref, type VNodeRef } from "vue";
 
 const theme = useThemeStore();
 const toast = useToast();
+const route = useRoute();
+const router = useRouter();
 
 const { status, data: googleUserData, signOut } = useAuth();
 
 const schemas = z.object({
-  theme: z.any(),
+  plan: z.enum(["Basic", "Premium"], { message: "Plan is empty or invalid" }),
+  theme: z.string({ required_error: "Theme is required" }).min(1),
   name: z
     .string({
       required_error: "Name is required",
-      invalid_type_error: "Must be a text",
     })
     .trim(),
   messages: z
@@ -197,8 +212,8 @@ const schemas = z.object({
 });
 
 export type Schema = z.output<typeof schemas>;
-
 const formState = reactive({
+  plan: route.query.plan as string | undefined,
   theme: undefined,
   name: undefined,
   messages: [
@@ -210,6 +225,11 @@ const formState = reactive({
 });
 
 const form = ref<Form<Schema>>();
+
+function handleSetPlanUrl(url: string) {
+  console.log(url);
+  router.push({ query: { plan: url } });
+}
 
 function closeModal(modal: boolean) {
   console.log(modal);
@@ -230,10 +250,20 @@ const themes = [
     icon: "i-fluent-emoji-high-contrast-wedding",
   },
 ];
+
+const plans = [
+  {
+    name: "Basic",
+  },
+  {
+    name: "Premium",
+  },
+];
+
 const selected = ref(themes[0]);
 const isOpen = ref(false);
 
-onMounted(() => {
+onMounted(async () => {
   if (status.value === "unauthenticated") {
     isOpen.value = true;
   }
@@ -243,12 +273,45 @@ function selectedTheme(value: string) {
   if (value === "") return;
 
   if (value === "Christmas") {
-    theme.snowTheme();
+    theme.snowTheme(true);
   } else if (value == "Wedding") {
-    theme.loveTheme();
+    theme.loveTheme(true);
   } else {
-    theme.start();
+    theme.start(true);
   }
+}
+
+const total = formState.plan === "Basic" ? 400 : 1000;
+const { stripe } = useClientStripe();
+
+async function subscribeStripe(websiteId: number) {
+  if (!websiteId) {
+    toast.add({
+      title: "Failed to create website",
+      color: "red",
+    });
+    return;
+  }
+
+  const { data } = await useFetch("/api/stripe/checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      amount: total,
+      websiteId,
+    }),
+  });
+
+  const sessionId = data.value?.sessionId;
+
+  if (!sessionId) {
+    throw new Error("Failed to create Checkout session");
+  }
+
+  // Redirect to Stripe Checkout
+  await stripe.value.redirectToCheckout({ sessionId });
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -263,44 +326,63 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     });
     return;
   }
+  try {
+    const { data, error: websiteError } = await useFetch<{
+      body: { websiteId: number };
+    }>("/api/website", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        userEmail: googleUserData.value?.user?.email,
+        name: event.data.name,
+        theme: event.data.theme,
+        messages: event.data.messages,
+        plan: event.data.plan,
+        googleUserData: googleUserData.value?.user,
+      },
+    });
 
-  const { error: websiteError } = await useFetch("/api/website", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: {
+    const parsedBody = JSON.parse(data.value?.body as any);
+    const websiteId = parsedBody.websiteId;
+
+    if (websiteError.value?.statusCode === 400) {
+      toast.add({
+        title: "Você precisa ter uma subscrição ativa para criar o site",
+        color: "red",
+      });
+      return;
+    }
+
+    if (websiteError.value?.statusCode === 500) {
+      toast.add({
+        title: "Houve um erro ao criar a página",
+        color: "red",
+      });
+      return;
+    }
+
+    await subscribeStripe(websiteId as number);
+
+    const body = {
       userEmail: googleUserData.value?.user?.email,
       name: event.data.name,
       theme: event.data.theme,
       messages: event.data.messages,
       googleUserData: googleUserData.value?.user,
-    },
-  });
+    };
 
-  if (websiteError.value?.statusCode === 400) {
+    localStorage.setItem("formState", JSON.stringify(body));
+
+    form.value!.clear();
+    clearFields();
     toast.add({
-      title: "Você precisa ter uma subscrição ativa para criar o site",
-      color: "red",
+      title: "Página criada com sucesso!",
+      color: "green",
+      timeout: 4000,
     });
-    return;
-  }
-
-  if (websiteError.value?.statusCode === 500) {
-    toast.add({
-      title: "Houve um erro ao criar a página",
-      color: "red",
-    });
-    return;
-  }
-
-  form.value!.clear();
-  clearFields();
-  toast.add({
-    title: "Página criada com sucesso!",
-    color: "green",
-    timeout: 4000,
-  });
+  } catch {}
 }
 
 function clearFields() {
