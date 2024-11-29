@@ -1,6 +1,5 @@
 import { useServerStripe } from "#stripe/server";
 import { readRawBody } from "h3";
-import prisma from "~/lib/prisma";
 import {
   deleteWebsiteFailure,
   updateWebsiteSuccess,
@@ -26,6 +25,14 @@ export default defineEventHandler(async (event) => {
         websiteId as string
       );
     } else if (stripeEvent.type === "checkout.session.async_payment_failed") {
+      const session = stripeEvent.data.object;
+      const websiteId = session.metadata?.websiteId;
+
+      await deleteWebsiteFailure(
+        session.customer_details?.email as string,
+        websiteId as string
+      );
+    } else if (stripeEvent.type === "checkout.session.expired") {
       const session = stripeEvent.data.object;
       const websiteId = session.metadata?.websiteId;
 

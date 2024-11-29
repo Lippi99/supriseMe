@@ -67,7 +67,7 @@
               <label class="mb-2 mt-5 inline-block" :for="'message-' + index">
                 Write your message {{ index + 1 }}
                 <span class="ml-5"
-                  >{{ formState.messages[index].message.length }} /200
+                  >{{ formState.messages[index].message.length }} /600
                 </span>
               </label>
               <UTextarea
@@ -151,11 +151,17 @@
           </div>
 
           <UButton
-            class="mt-10 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
+            color="red"
+            :loading="isSubmitting"
+            :class="
+              cn(
+                'mt-10 py-2 text-lg dark:bg-[#FF4E6D] dark:hover:bg-[#ff4e6eca] dark:text-white'
+              )
+            "
             block
             type="submit"
           >
-            Submit
+            {{ isSubmitting ? "Creating..." : "Create your website" }}
           </UButton>
         </UForm>
 
@@ -177,7 +183,7 @@ useSeoMeta({
 import { z } from "zod";
 import { useThemeStore } from "~/store/useTheme";
 import type { Form, FormSubmitEvent } from "#ui/types";
-import { reactive, ref, type VNodeRef } from "vue";
+import { reactive, ref } from "vue";
 
 const theme = useThemeStore();
 const toast = useToast();
@@ -203,7 +209,7 @@ const schemas = z.object({
             invalid_type_error: "Must be a text",
           })
           .min(1)
-          .max(200)
+          .max(600)
           .trim(),
       })
     )
@@ -262,6 +268,7 @@ const plans = [
 
 const selected = ref(themes[0]);
 const isOpen = ref(false);
+const isSubmitting = ref(false);
 
 onMounted(async () => {
   if (status.value === "unauthenticated") {
@@ -326,6 +333,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     });
     return;
   }
+  isSubmitting.value = true;
   try {
     const { data, error: websiteError } = await useFetch<{
       body: { websiteId: number };
@@ -382,7 +390,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       color: "green",
       timeout: 4000,
     });
-  } catch {}
+  } catch {
+    toast.add({
+      title: "Houve um erro ao criar a página",
+      color: "red",
+    });
+  } finally {
+    isSubmitting.value = false;
+  }
 }
 
 function clearFields() {
@@ -435,8 +450,8 @@ function getBase64(file: File): Promise<string> {
 
 function limitTextAreaLength(event: Event, index: number) {
   const input = event.target as HTMLTextAreaElement;
-  if (input.value.length > 200) {
-    input.value = input.value.slice(0, 200);
+  if (input.value.length > 600) {
+    input.value = input.value.slice(0, 600);
     formState.messages[index].message = input.value;
   }
 }

@@ -4,7 +4,7 @@
     <main
       class="absolute left-0 top-0 right-0 bottom-0 flex pt-32 items-center flex-col"
     >
-      <h1 class="text-6xl">{{ data?.website.name }}</h1>
+      <h1 class="text-6xl">{{ data?.website?.name }}</h1>
 
       <div class="max-w-md w-full mt-10 flex flex-col items-center">
         <div class="w-full flex flex-col items-center">
@@ -58,18 +58,28 @@ import type { IWebsiteClient } from "~/models/IWebsite";
 import { useThemeStore } from "~/store/useTheme";
 
 const route = useRoute();
+const router = useRouter();
 
 const id = computed(() => route.params.id);
-const { data } = await useFetch<IWebsiteClient>(`/api/website/${id.value}`, {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const { data, error } = await useFetch<IWebsiteClient>(
+  `/api/website/${id.value}`,
+  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);
+
+console.log(data.value);
 
 const { startGlobal } = useThemeStore();
 
 onMounted(() => {
+  if (error.value?.statusCode == 400) {
+    router.push("website/404");
+    return;
+  }
   startGlobal(data?.value?.website?.theme as string);
 });
 </script>

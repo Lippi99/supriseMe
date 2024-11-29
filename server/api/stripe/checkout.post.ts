@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const stripe = await useServerStripe(event);
   const body = await readBody(event);
   const orderAmount = body.amount || 0;
-  const websiteId = body.websiteId;
+  const websiteId = body.websiteId as number;
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         websiteId,
       },
       mode: "payment",
-      success_url: "http://localhost:3000/success",
+      success_url: `http://localhost:3000/success/${websiteId}`,
       cancel_url: "http://localhost:3000/",
     });
 

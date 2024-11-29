@@ -12,8 +12,6 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    console.log(website);
-
     return {
       statusCode: 200,
       website,

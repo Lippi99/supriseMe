@@ -9,10 +9,21 @@ export const getWebsite = async (websiteId: string) => {
       messages: true,
     },
     where: {
+      active: true,
       id: parseInt(websiteId),
     },
   });
+  console.log(website);
   return website;
+};
+
+export const getWebsites = async (customerEmail: string) => {
+  const websites = await prisma.website.findMany({
+    where: {
+      userEmail: customerEmail,
+    },
+  });
+  return websites;
 };
 
 export const createWebsite = async (website: IWebsite) => {
@@ -41,20 +52,23 @@ export const deleteWebsiteFailure = async (
   customerEmail: string,
   websiteId: string
 ) => {
-  await prisma.user.update({
-    include: {
-      Websites: true,
-    },
+  const user = await prisma.user.findUnique({
+    where: { email: customerEmail },
+    include: { Websites: true },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const website = user.Websites.find((site) => site.id === parseInt(websiteId));
+  if (!website) {
+    throw new Error("Website not found for the given user");
+  }
+
+  await prisma.website.delete({
     where: {
-      email: customerEmail,
-    },
-    data: {
-      active: true,
-      Websites: {
-        delete: {
-          id: parseInt(websiteId as string),
-        },
-      },
+      id: parseInt(websiteId),
     },
   });
 };

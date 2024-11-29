@@ -22,10 +22,10 @@ model Website {
 
 model Message {
   id        Int     @id @default(autoincrement())
-  message   String  @db.VarChar(200)
+  message   String  @db.VarChar(600)
   image     String
   websiteId Int
-  website   Website @relation(fields: [websiteId], references: [id])
+  website   Website @relation(fields: [websiteId], references: [id], onDelete: Cascade)
 }
 
 generator client {

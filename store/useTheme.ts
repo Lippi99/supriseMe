@@ -39,9 +39,11 @@ export const useThemeStore = defineStore("theme", () => {
     start(); // Start with global confetti
 
     if (theme === "Christmas") {
-      snowTheme(false); // Pass `false` for global confetti
+      snowTheme(false);
     } else if (theme === "Wedding") {
       loveTheme(false);
+    } else if (theme === "Confetti") {
+      confettiTheme(false);
     }
   }
 
@@ -76,6 +78,18 @@ export const useThemeStore = defineStore("theme", () => {
           url: new URL("../assets/snow.svg", import.meta.url).href,
         },
       ],
+    });
+  }
+
+  function confettiTheme(preview: boolean = false) {
+    start(preview);
+    confetti.update({
+      ...(preview && { canvasId: "preview" }), // Apply only for preview
+      defaultSize: 7,
+      defaultDropRate: 7,
+      particlesPerFrame: 0.5,
+      windSpeedMax: 0,
+      particles: [{ type: "circle" }],
     });
   }
 
