@@ -10,7 +10,7 @@
       <span
         class="bg-[#FF4E6D] rounded-full py-1 px-3 flex items-center font-bold"
         v-if="mostPicked"
-        >Most popular</span
+        >{{ $t("indexPage.sectionThree.premium.tag") }}</span
       >
     </div>
     <span class="text-5xl font-extrabold mb-10 inline-block"
@@ -31,7 +31,7 @@
       @click="handleSetPlanUrl"
       class="py-5 dark:text-white font-bold text-2xl dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D]"
       block
-      label="Buy plan"
+      :label="$t('indexPage.sectionThree.premium.button')"
     />
   </div>
 </template>

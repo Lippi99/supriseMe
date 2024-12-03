@@ -13,7 +13,6 @@ export const getWebsite = async (websiteId: string) => {
       id: parseInt(websiteId),
     },
   });
-  console.log(website);
   return website;
 };
 

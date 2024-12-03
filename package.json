@@ -10,7 +10,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prisma": "npx prisma"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.697.0",
@@ -19,6 +20,7 @@
     "@nuxt/scripts": "0.9.5",
     "@nuxt/ui": "^2.18.7",
     "@nuxtjs/color-mode": "^3.5.2",
+    "@nuxtjs/i18n": "^9.0.0-rc.2",
     "@pinia/nuxt": "^0.7.0",
     "@prisma/nuxt": "^0.0.35",
     "@unlok-co/nuxt-stripe": "^4.0.1",

@@ -1,23 +1,21 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const items = [
   {
-    label: "What is letter surpriseme?",
+    label: t("indexPage.sectionFour.title"),
     icon: "i-heroicons-information-circle",
     defaultOpen: false,
-    content:
-      "SurpriseMe is a platform destinated to create a surprise letter for someone special. You can choose a template, write a message and send it to the person you want to surprise.",
+    content: t("indexPage.sectionFour.questionOne.description"), // Adjusted for translation
   },
   {
-    label: "How do I receive my page after payment?",
+    label: t("indexPage.sectionFour.questionTwo.title"),
     icon: "i-heroicons-arrow-down-tray",
-    content:
-      "After payment, you will receive an email with a link to access your page. You can share this link with the person you want to surprise.",
+    content: t("indexPage.sectionFour.questionTwo.description"), // Adjusted for translation
   },
   {
-    label: "Can I edit after it's creation?",
+    label: t("indexPage.sectionFour.questionThree.title"),
     icon: "i-heroicons-eye-dropper",
-    content:
-      "Yes, you can edit your page after creation. You can change the message, the photos and the song if you got the premium plan.",
+    content: t("indexPage.sectionFour.questionThree.description"), // Adjusted for translation
   },
 ];
 </script>

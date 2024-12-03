@@ -1,12 +1,14 @@
 <template>
   <NuxtLayout name="custom">
     <div class="py-[17px] px-14 lg:pr-0 lg:max-w-7xl m-auto">
-      <h1 class="text-5xl font-bold">Create your page</h1>
-      <span class="ml-1 mt-5 inline-block">Fill the fields in blank</span>
+      <h1 class="text-5xl font-bold">{{ $t("createPage.title") }}</h1>
+      <span class="ml-1 mt-5 inline-block">{{
+        $t("createPage.instructions")
+      }}</span>
+      <YoutubeMusic :isDetail="false" :url="formState.songUrl" />
       <div
         class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
       >
-        <YoutubeMusic :isDetail="false" :url="formState.songUrl" />
         <UForm
           ref="form"
           :schema="schemas"
@@ -15,7 +17,9 @@
           @submit="onSubmit"
         >
           <UFormGroup class="mb-8" name="plan">
-            <label class="mb-2 inline-block" for="plan">Choose the plan</label>
+            <label class="mb-2 inline-block" for="plan">{{
+              $t("createPage.choosePlan")
+            }}</label>
             <USelectMenu
               @change="handleSetPlanUrl"
               class="border border-[#FF4E6D]"
@@ -32,9 +36,9 @@
             class="mb-8"
             name="songUrl"
           >
-            <label class="mb-2 inline-block" for="songUrl"
-              >Pick a song (optional)</label
-            >
+            <label class="mb-2 inline-block" for="songUrl">{{
+              $t("createPage.pickSong")
+            }}</label>
             <UInput
               v-model="formState.songUrl"
               placeholder="https://www.youtube.com/watch?v=4ZWKR2zJESk"
@@ -43,9 +47,9 @@
           </UFormGroup>
 
           <UFormGroup name="theme">
-            <label class="mb-2 inline-block" for="theme"
-              >Choose the theme</label
-            >
+            <label class="mb-2 inline-block" for="theme">{{
+              $t("createPage.chooseTheme")
+            }}</label>
             <USelectMenu
               @change="selectedTheme"
               class="border border-[#FF4E6D]"
@@ -64,9 +68,9 @@
             </USelectMenu>
           </UFormGroup>
           <UFormGroup class="mt-8" name="name">
-            <label class="mb-2 inline-block" for="name"
-              >Person or people's name</label
-            >
+            <label class="mb-2 inline-block" for="name">{{
+              $t("createPage.personName")
+            }}</label>
             <UInput
               v-model="formState.name"
               placeholder="Sarah, Peter, John..."
@@ -81,7 +85,7 @@
           >
             <UFormGroup :name="'message-' + index">
               <label class="mb-2 mt-5 inline-block" :for="'message-' + index">
-                Write your message {{ index + 1 }}
+                {{ $t("createPage.writeMessage") }} {{ index + 1 }}
                 <span class="ml-5"
                   >{{ formState.messages[index].message.length }} /600
                 </span>
@@ -92,14 +96,16 @@
                 :rows="10"
                 class="border border-[#FF4E6D]"
                 variant="outline"
-                :placeholder="'Message ' + (index + 1)"
+                :placeholder="
+                  $t('createPage.messagePlaceholder') + ' ' + (index + 1)
+                "
               />
             </UFormGroup>
 
             <!-- Image Upload Input for Each Message -->
             <UFormGroup :name="'image-' + index" class="mt-4">
               <label class="mb-2 inline-block" :for="'dropzone-file-' + index">
-                Pick or update a picture for Message {{ index + 1 }}
+                {{ $t("createPage.pickOrUpdateImage") }} {{ index + 1 }}
               </label>
               <label
                 v-if="!field.image"
@@ -125,8 +131,10 @@
                     />
                   </svg>
                   <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span class="font-semibold">Click to upload</span> or drag
-                    and drop
+                    <span class="font-semibold">{{
+                      $t("createPage.clickToUpload")
+                    }}</span>
+                    {{ $t("createPage.orDragAndDrop") }}
                   </p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
                     SVG, PNG, JPG, Webp
@@ -145,7 +153,7 @@
             <!-- Image Preview Section -->
             <div v-if="field.image" class="mt-4">
               <h3 class="text-lg font-bold">
-                Image Preview for Message {{ index + 1 }}:
+                {{ $t("createPage.imagePreview") }} {{ index + 1 }}:
               </h3>
               <NuxtPicture
                 :src="field.image"
@@ -161,7 +169,7 @@
                 class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
                 block
               >
-                Remove Image
+                {{ $t("createPage.removeImage") }}
               </UButton>
             </div>
           </div>
@@ -177,7 +185,11 @@
             block
             type="submit"
           >
-            {{ isSubmitting ? "Creating..." : "Create your website" }}
+            {{
+              isSubmitting
+                ? $t($t("createPage.creating"))
+                : $t("createPage.createButton")
+            }}
           </UButton>
         </UForm>
 
@@ -228,6 +240,13 @@ const schemas = z.object({
           .min(1)
           .max(600)
           .trim(),
+        image: z
+          .string()
+          .optional()
+          .nullable()
+          .refine((value) => {
+            return value === null || value.startsWith("data:image");
+          }),
       })
     )
     .min(1),
@@ -264,7 +283,6 @@ function handleSetPlanUrl(url: string) {
 }
 
 function closeModal(modal: boolean) {
-  console.log(modal);
   isOpen.value = modal;
 }
 
@@ -466,7 +484,6 @@ async function uploadImageForMessage(event: Event, index: number) {
   if (input.files && input.files.length > 0) {
     const base64 = await getBase64(input.files[0]);
     formState.messages[index].image = base64;
-    console.log(formState);
   }
 }
 

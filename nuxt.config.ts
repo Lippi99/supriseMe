@@ -14,8 +14,13 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@unlok-co/nuxt-stripe",
     "@nuxt/scripts",
+    "@nuxtjs/i18n",
   ],
-
+  i18n: {
+    vueI18n: "./i18n.config.ts",
+    locales: ["en", "pt"],
+    defaultLocale: "pt",
+  },
   stripe: {
     server: {
       key: process.env.STRIPE_SERVER_SECRET_KEY,
