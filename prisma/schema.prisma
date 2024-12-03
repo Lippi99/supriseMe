@@ -1,34 +1,3 @@
-model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String
-  active    Boolean   @default(false)
-  image     String?
-  Websites  Website[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Website {
-  id        Int       @id @default(autoincrement())
-  name      String
-  theme     String
-  active    Boolean   @default(false)
-  songUrl   String?
-  plan      String?
-  messages  Message[]
-  userEmail String
-  user      User      @relation(fields: [userEmail], references: [email])
-}
-
-model Message {
-  id        Int     @id @default(autoincrement())
-  message   String  @db.VarChar(600)
-  image     String
-  websiteId Int
-  website   Website @relation(fields: [websiteId], references: [id], onDelete: Cascade)
-}
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -36,4 +5,39 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model message {
+  id        Int     @id @default(autoincrement())
+  message   String  @db.VarChar(600)
+  image     String
+  websiteId Int
+  website   website @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
+
+  @@index([websiteId], map: "Message_websiteId_fkey")
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique(map: "User_email_key")
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  active    Boolean   @default(false)
+  image     String?
+  websites  website[]
+}
+
+model website {
+  id        Int       @id @default(autoincrement())
+  name      String
+  theme     String
+  userEmail String
+  plan      String?
+  active    Boolean   @default(false)
+  songUrl   String?
+  messages  message[]
+  user      user      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
+
+  @@index([userEmail], map: "Website_userEmail_fkey")
 }

@@ -55,14 +55,14 @@ export const deleteWebsiteFailure = async (
 ) => {
   const user = await prisma.user.findUnique({
     where: { email: customerEmail },
-    include: { Websites: true },
+    include: { websites: true },
   });
 
   if (!user) {
     throw new Error("User not found");
   }
 
-  const website = user.Websites.find((site) => site.id === parseInt(websiteId));
+  const website = user.websites.find((site) => site.id === parseInt(websiteId));
   if (!website) {
     throw new Error("Website not found for the given user");
   }
@@ -80,14 +80,14 @@ export const updateWebsiteSuccess = async (
 ) => {
   await prisma.user.update({
     include: {
-      Websites: true,
+      websites: true,
     },
     where: {
       email: customerEmail,
     },
     data: {
       active: true,
-      Websites: {
+      websites: {
         update: {
           where: {
             id: parseInt(websiteId as string),
