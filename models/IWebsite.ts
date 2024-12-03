@@ -9,6 +9,7 @@ export interface IWebsite {
   plan: string;
   name: string;
   theme: string;
+  songUrl: string;
   messages: IWebsiteMessages[];
   image: string;
 }

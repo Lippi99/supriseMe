@@ -40,6 +40,7 @@ export const createWebsite = async (website: IWebsite) => {
       name: website.name,
       theme: website.theme,
       plan: website.plan,
+      songUrl: website.songUrl,
       messages: {
         create: messages,
       },

@@ -1,4 +1,5 @@
 <template>
+  <VitePwaManifest />
   <NuxtLayout name="custom">
     <section class="py-[47px] pl-24 pr-24 lg:pr-0 lg:max-w-7xl m-auto">
       <div

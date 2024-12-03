@@ -6,6 +6,7 @@
       <div
         class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
       >
+        <YoutubeMusic :isDetail="false" :url="formState.songUrl" />
         <UForm
           ref="form"
           :schema="schemas"
@@ -24,6 +25,21 @@
               option-attribute="name"
             >
             </USelectMenu>
+          </UFormGroup>
+
+          <UFormGroup
+            v-if="formState.plan === 'Premium'"
+            class="mb-8"
+            name="songUrl"
+          >
+            <label class="mb-2 inline-block" for="songUrl"
+              >Pick a song (optional)</label
+            >
+            <UInput
+              v-model="formState.songUrl"
+              placeholder="https://www.youtube.com/watch?v=4ZWKR2zJESk"
+              class="border border-[#FF4E6D]"
+            />
           </UFormGroup>
 
           <UFormGroup name="theme">
@@ -190,11 +206,12 @@ const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 
-const { status, data: googleUserData, signOut } = useAuth();
+const { status, data: googleUserData } = useAuth();
 
 const schemas = z.object({
   plan: z.enum(["Basic", "Premium"], { message: "Plan is empty or invalid" }),
   theme: z.string({ required_error: "Theme is required" }).min(1),
+  songUrl: z.string().optional(),
   name: z
     .string({
       required_error: "Name is required",
@@ -219,22 +236,31 @@ const schemas = z.object({
 
 export type Schema = z.output<typeof schemas>;
 const formState = reactive({
-  plan: route.query.plan as string | undefined,
+  plan: (route.query.plan as string) || "Basic",
   theme: undefined,
   name: undefined,
-  messages: [
-    { message: "", image: null },
-    { message: "", image: null },
-    { message: "", image: null },
-  ] as Array<{ message: string; image: string | null }>,
+  songUrl: "",
+  messages: [] as Array<{ message: string; image: string | null }>,
   images: [] as string[],
 });
 
 const form = ref<Form<Schema>>();
 
 function handleSetPlanUrl(url: string) {
-  console.log(url);
   router.push({ query: { plan: url } });
+
+  // Reset formState.messages to avoid accumulating extra fields
+  formState.messages = [];
+
+  if (url === "Basic") {
+    for (let i = 0; i < 3; i++) {
+      formState.messages.push({ message: "", image: null });
+    }
+  } else if (url === "Premium") {
+    for (let i = 0; i < 5; i++) {
+      formState.messages.push({ message: "", image: null });
+    }
+  }
 }
 
 function closeModal(modal: boolean) {
@@ -273,6 +299,21 @@ const isSubmitting = ref(false);
 onMounted(async () => {
   if (status.value === "unauthenticated") {
     isOpen.value = true;
+  }
+
+  if (!route.query.plan) {
+    router.push({ query: { plan: "Basic" } });
+    formState.plan = route.query.plan as string;
+  }
+
+  if (formState.plan === "Basic") {
+    for (let i = 0; i < 3; i++) {
+      formState.messages.push({ message: "", image: null });
+    }
+  } else if (formState.plan === "Premium") {
+    for (let i = 0; i < 5; i++) {
+      formState.messages.push({ message: "", image: null });
+    }
   }
 });
 
@@ -349,6 +390,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         messages: event.data.messages,
         plan: event.data.plan,
         googleUserData: googleUserData.value?.user,
+        songUrl: event.data.songUrl,
       },
     });
 

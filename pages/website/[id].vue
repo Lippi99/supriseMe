@@ -1,59 +1,38 @@
 <template>
-  <title>{{ data?.website.name }}</title>
+  <title>{{ data?.website?.name }}</title>
   <NuxtLayout>
-    <main
-      class="absolute left-0 top-0 right-0 bottom-0 flex pt-32 items-center flex-col"
-    >
-      <h1 class="text-6xl">{{ data?.website?.name }}</h1>
+    <main class="relative left-0 top-0 right-0 bottom-0 h-full pt-10">
+      <h1 class="text-6xl text-center mb-10">{{ data?.website?.name }}</h1>
 
-      <div class="max-w-md w-full mt-10 flex flex-col items-center">
-        <div class="w-full flex flex-col items-center">
-          <NuxtImg
-            class="rounded-md"
-            width="500"
-            height="500"
-            :alt="data?.website?.messages[0]?.message"
-            :src="data?.website?.messages[0]?.image"
-          />
+      <YoutubeMusic isDetail :url="linkUrl || ''" />
+
+      <div class="max-w-md m-auto w-full flex flex-col items-center">
+        <!-- Dynamically Iterate Over Messages -->
+        <div
+          v-for="(message, index) in data?.website?.messages"
+          :key="index"
+          class="w-full flex flex-col items-center mt-32 pb-10"
+        >
+          <PolaroidPhoto>
+            <NuxtImg
+              class="w-full max-w-[500px] h-[400px] rounded-md object-cover"
+              :alt="message?.message"
+              :src="message?.image"
+            />
+          </PolaroidPhoto>
           <div class="my-10 w-full h-px bg-gray-500" />
           <div class="w-full break-words">
-            <h2>{{ data?.website?.messages[0]?.message }}</h2>
-          </div>
-        </div>
-
-        <div class="w-full flex flex-col items-center mt-32">
-          <NuxtImg
-            class="rounded-md"
-            width="500"
-            height="500"
-            :alt="data?.website?.messages[1]?.message"
-            :src="data?.website?.messages[1]?.image"
-          />
-          <div class="my-10 w-full h-px bg-gray-500" />
-          <div class="w-full break-words">
-            <h2>{{ data?.website?.messages[1]?.message }}</h2>
-          </div>
-        </div>
-
-        <div class="w-full flex flex-col items-center mt-32">
-          <NuxtImg
-            class="rounded-md"
-            width="500"
-            height="500"
-            :alt="data?.website?.messages[2]?.message"
-            :src="data?.website?.messages[2]?.image"
-          />
-          <div class="my-10 w-full h-px bg-gray-500" />
-          <div class="w-full break-words">
-            <h2>{{ data?.website?.messages[2]?.message }}</h2>
+            <h2>{{ message?.message }}</h2>
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
+import Footer from "~/components/Footer.vue";
 import type { IWebsiteClient } from "~/models/IWebsite";
 import { useThemeStore } from "~/store/useTheme";
 
@@ -71,8 +50,6 @@ const { data, error } = await useFetch<IWebsiteClient>(
   }
 );
 
-console.log(data.value);
-
 const { startGlobal } = useThemeStore();
 
 onMounted(() => {
@@ -81,5 +58,9 @@ onMounted(() => {
     return;
   }
   startGlobal(data?.value?.website?.theme as string);
+});
+
+const linkUrl = computed(() => {
+  return data?.value?.website?.songUrl;
 });
 </script>

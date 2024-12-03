@@ -12,58 +12,28 @@
 
         <h1 class="text-center my-5">{{ form.name }}</h1>
 
+        <!-- Iterate through form.messages -->
         <div
-          class="w-full break-all mt-5 px-3 flex-col gap-6 flex items-center"
+          v-for="(message, index) in form.messages"
+          :key="index"
+          class="w-full break-all mt-10 px-3 flex flex-col gap-6 items-center"
         >
+          <!-- Image Display -->
           <NuxtPicture
-            v-if="form.messages[0].image"
+            v-if="message.image"
             class="w-11/12 h-[200px] object-cover flex items-center justify-center"
             :img-attrs="{
               alt: 'Image preview',
               style: 'w-full; height: 100%; object-fit: cover;',
             }"
-            :src="form.messages[0].image"
+            :src="message.image"
           />
 
+          <!-- Separator -->
           <div class="w-1/2 h-0.5 dark:bg-gray-500 flex items-center" />
 
-          <p class="break-words">{{ form.messages[0]?.message }}</p>
-        </div>
-
-        <div
-          class="w-full break-all mt-20 px-3 flex flex-col gap-6 items-center"
-        >
-          <NuxtPicture
-            v-if="form.messages[1].image"
-            class="w-11/12 h-[200px] object-cover flex items-center justify-center"
-            :img-attrs="{
-              alt: 'Image preview',
-              style: 'w-full; height: 100%; object-fit: cover;',
-            }"
-            :src="form.messages[1].image"
-          />
-
-          <div class="w-1/2 h-0.5 dark:bg-gray-500 dark:text-red-500" />
-
-          <p class="break-words">{{ form.messages[1]?.message }}</p>
-        </div>
-
-        <div
-          class="w-full mt-20 break-all px-3 flex flex-col gap-6 items-center"
-        >
-          <NuxtPicture
-            v-if="form.messages[2].image"
-            class="w-11/12 h-[200px] object-cover flex items-center justify-center"
-            :img-attrs="{
-              alt: 'Image preview',
-              style: 'w-full; height: 100%; object-fit: cover;',
-            }"
-            :src="form.messages[2].image"
-          />
-
-          <div class="w-1/2 h-0.5 dark:bg-gray-500 flex items-center" />
-
-          <p class="break-words">{{ form.messages[2]?.message }}</p>
+          <!-- Text Display -->
+          <p class="break-words">{{ message.message }}</p>
         </div>
       </ThemeConfetti>
     </div>
