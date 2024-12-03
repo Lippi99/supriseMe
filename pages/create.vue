@@ -299,11 +299,12 @@ const isSubmitting = ref(false);
 onMounted(async () => {
   if (status.value === "unauthenticated") {
     isOpen.value = true;
+    return;
   }
 
   if (!route.query.plan) {
     router.push({ query: { plan: "Basic" } });
-    formState.plan = route.query.plan as string;
+    formState.plan = route.query.plan || "Basic";
   }
 
   if (formState.plan === "Basic") {

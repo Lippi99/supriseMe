@@ -30,7 +30,7 @@ defineProps({
 });
 
 async function signInGoogle() {
-  await signIn("google");
+  await signIn("google", { callbackUrl: "/create" });
   closeModal();
 }
 

@@ -4,7 +4,7 @@
     <main class="relative left-0 top-0 right-0 bottom-0 h-full pt-10">
       <h1 class="text-6xl text-center mb-10">{{ data?.website?.name }}</h1>
 
-      <YoutubeMusic isDetail :url="linkUrl || ''" />
+      <YoutubeMusic v-if="linkUrlNotEmpty" isDetail :url="linkUrl || ''" />
 
       <div class="max-w-md m-auto w-full flex flex-col items-center">
         <!-- Dynamically Iterate Over Messages -->
@@ -62,5 +62,9 @@ onMounted(() => {
 
 const linkUrl = computed(() => {
   return data?.value?.website?.songUrl;
+});
+
+const linkUrlNotEmpty = computed(() => {
+  return !!linkUrl.value;
 });
 </script>
