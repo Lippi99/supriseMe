@@ -1,4 +1,11 @@
 export default defineNuxtConfig({
+  devtools: {
+    enabled: true,
+  },
+  nitro: {
+    preset: "aws-lambda",
+    serveStatic: true,
+  },
   plugins: [
     {
       src: "~/plugins/confetti.client",
@@ -15,6 +22,7 @@ export default defineNuxtConfig({
     "@unlok-co/nuxt-stripe",
     "@nuxt/scripts",
     "@nuxtjs/i18n",
+    "@nuxthub/core",
   ],
   i18n: {
     vueI18n: "./i18n.config.ts",
