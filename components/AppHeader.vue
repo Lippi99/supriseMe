@@ -8,7 +8,7 @@
           src="/icons/surpriseme_512_512.png"
         />
       </NuxtLinkLocale>
-      <div class="flex gap-5">
+      <div class="flex gap-5 items-center">
         <UButton
           v-if="isLogged"
           @click="isOpen = true"
@@ -18,11 +18,21 @@
           color="red"
           >{{ $t("header.myWebsites") }}
         </UButton>
-        <button @click="setLocale('pt')" type="button" class="cursor-pointer">
-          PT
+        <button
+          aria-label="lang"
+          @click="setLocale('pt')"
+          type="button"
+          class="cursor-pointer"
+        >
+          <UIcon aria-label="br" class="w-10 h-10" name="i-flag:br-4x3" />
         </button>
-        <button type="button" @click="setLocale('en')" class="cursor-pointer">
-          EN
+        <button
+          aria-label="lang"
+          type="button"
+          @click="setLocale('en')"
+          class="cursor-pointer"
+        >
+          <UIcon aria-label="us" class="w-10 h-10" name="i-flag:us-4x3" />
         </button>
       </div>
     </div>
@@ -36,11 +46,7 @@ import { ref } from "vue";
 const { setLocale } = useI18n();
 
 const isOpen = ref(false);
-const { status, signOut } = useAuth();
-
-function logout() {
-  signOut({ redirect: false });
-}
+const { status } = useAuth();
 
 const isLogged = computed(() => status.value === "authenticated");
 </script>

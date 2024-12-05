@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     },
   ],
   auth: {
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.NUXT_BASE_URL,
   },
   modules: [
     "@sidebase/nuxt-auth",

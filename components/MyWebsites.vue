@@ -7,7 +7,7 @@
       }"
     >
       <template #header>
-        <h1 class="text-center text-3xl">Your websites 🔥</h1>
+        <h1 class="text-center text-3xl">{{ $t("myWebsites.title") }} 🔥</h1>
       </template>
       <div v-if="hasData">
         <ul class="flex flex-col gap-8">
@@ -20,12 +20,12 @@
               target="_blank"
               class="font-bold"
               v-if="site.active"
-              :href="'http://localhost:3000/website/' + site.id"
+              :href="VITE_BASE_URL + '/website/' + site.id"
             >
-              {{ "http://localhost:3000/website/" + site.id }}
+              {{ VITE_BASE_URL + "/website/" + site.id }}
             </a>
             <span class="text-gray-500" v-else>{{
-              "http://localhost:3000/website/" + site.id
+              VITE_BASE_URL + "website/" + site.id
             }}</span>
 
             <div class="relative">
@@ -46,21 +46,25 @@
                 @click="stripeBuyNotActive(site.id, site.plan)"
                 :color="'red'"
               >
-                Não ativo</UButton
+                {{ $t("myWebsites.statusInactive") }}</UButton
               >
-              <UButton color="green" v-else> Ativo </UButton>
+              <UButton color="green" v-else>
+                {{ $t("myWebsites.statusActive") }}
+              </UButton>
             </div>
           </li>
         </ul>
       </div>
 
       <div v-else>
-        <p class="text-center">You don't have any websites yet</p>
+        <span class="text-center">{{ $t("myWebsites.noWebSite") }}</span>
       </div>
 
       <template #footer>
         <div class="flex items-end justify-end">
-          <UButton @click="updateIsOpen(false)">Close</UButton>
+          <UButton @click="updateIsOpen(false)">
+            {{ $t("myWebsites.close") }}</UButton
+          >
         </div>
       </template>
     </UCard>
@@ -69,6 +73,7 @@
 </template>
 
 <script lang="ts" setup>
+import { getUserLocationFromIP } from "~/utils/geolocation";
 import type { IWebsiteActiveClients } from "~/models/IWebsite";
 
 defineProps<{
@@ -76,6 +81,11 @@ defineProps<{
 }>();
 
 const emit = defineEmits(["update:isOpen"]);
+
+const countryCode = ref<string>("");
+onMounted(async () => {
+  countryCode.value = await getUserLocationFromIP();
+});
 
 const updateIsOpen = (value: boolean) => {
   emit("update:isOpen", value);
@@ -111,8 +121,9 @@ async function stripeBuyNotActive(websiteId: number, plan: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        amount,
+        plan,
         websiteId,
+        countryCode: countryCode.value,
       }),
     });
 
@@ -128,7 +139,7 @@ async function stripeBuyNotActive(websiteId: number, plan: string) {
       color: "red",
     });
   } finally {
-    loadingStates[websiteId] = true;
+    loadingStates[websiteId] = false;
   }
 }
 </script>

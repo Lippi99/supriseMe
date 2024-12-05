@@ -5,48 +5,51 @@
         <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm/6 font-semibold text-white">Solutions</h3>
+              <h3 class="text-sm/6 font-semibold text-white">
+                {{ $t("footer.socialMedia") }}
+              </h3>
               <ul role="list" class="mt-6 space-y-4">
-                <li v-for="item in navigation.solutions" :key="item.name">
+                <li
+                  class="flex gap-4 items-center"
+                  v-for="item in navigation.socialMedia"
+                  :key="item.href"
+                >
                   <a
+                    target="_blank"
                     :href="item.href"
                     class="text-sm/6 text-gray-400 hover:text-white"
-                    >{{ item.name }}</a
                   >
+                    <UIcon size="30" :name="item.icon" />
+                  </a>
                 </li>
               </ul>
             </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm/6 font-semibold text-white">Support</h3>
+              <h3 class="text-sm/6 font-semibold text-white">
+                {{ $t("footer.support") }}
+              </h3>
               <ul role="list" class="mt-6 space-y-4">
-                <li v-for="item in navigation.support" :key="item.name">
+                <li v-for="item in navigation.support" :key="item.href">
                   <a
+                    target="_blank"
                     :href="item.href"
                     class="text-sm/6 text-gray-400 hover:text-white"
-                    >{{ item.name }}</a
                   >
+                    <UIcon size="30" :name="item.icon"
+                  /></a>
                 </li>
               </ul>
             </div>
           </div>
           <div class="md:grid md:grid-cols-2 md:gap-8">
-            <div>
-              <h3 class="text-sm/6 font-semibold text-white">Company</h3>
-              <ul role="list" class="mt-6 space-y-4">
-                <li v-for="item in navigation.company" :key="item.name">
-                  <a
-                    :href="item.href"
-                    class="text-sm/6 text-gray-400 hover:text-white"
-                    >{{ item.name }}</a
-                  >
-                </li>
-              </ul>
-            </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm/6 font-semibold text-white">Legal</h3>
+              <h3 class="text-sm/6 font-semibold text-white">
+                {{ $t("footer.legal.title") }}
+              </h3>
               <ul role="list" class="mt-6 space-y-4">
                 <li v-for="item in navigation.legal" :key="item.name">
                   <a
+                    target="_blank"
                     :href="item.href"
                     class="text-sm/6 text-gray-400 hover:text-white"
                     >{{ item.name }}</a
@@ -61,30 +64,28 @@
   </footer>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+const { t } = useI18n();
 const navigation = {
-  solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Automation", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
+  socialMedia: [
+    {
+      icon: "i-skill-icons:instagram",
+      href: "#",
+    },
+    {
+      icon: "i-logos:facebook",
+      href: "#",
+    },
+    {
+      icon: "i-logos:tiktok-icon",
+      href: "#",
+    },
   ],
-  support: [
-    { name: "Submit ticket", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
-  ],
-  company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Jobs", href: "#" },
-    { name: "Press", href: "#" },
-  ],
+  support: [{ icon: "i-logos:whatsapp-icon", href: "#" }],
+
   legal: [
-    { name: "Terms of service", href: "#" },
-    { name: "Privacy policy", href: "#" },
-    { name: "License", href: "#" },
+    { name: t("footer.legal.termsOfService"), href: "/term-services" },
+    { name: t("footer.legal.privacyPolicy"), href: "/privacy-policy" },
   ],
 };
 </script>

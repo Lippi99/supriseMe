@@ -212,11 +212,20 @@ import { z } from "zod";
 import { useThemeStore } from "~/store/useTheme";
 import type { Form, FormSubmitEvent } from "#ui/types";
 import { reactive, ref } from "vue";
+import { getUserLocationFromIP } from "~/utils/geolocation";
 
 const theme = useThemeStore();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
+const { t, locale } = useI18n();
+
+useSeoMeta({
+  title: t("seo.create.title"),
+  ogTitle: t("seo.create.ogTitle"),
+  description: t("seo.create.description"),
+  ogDescription: t("seo.create.ogDescription"),
+});
 
 const { status, data: googleUserData } = useAuth();
 
@@ -245,7 +254,7 @@ const schemas = z.object({
           .optional()
           .nullable()
           .refine((value) => {
-            return value === null || value.startsWith("data:image");
+            return value === null || value?.startsWith("data:image");
           }),
       })
     )
@@ -313,8 +322,11 @@ const plans = [
 const selected = ref(themes[0]);
 const isOpen = ref(false);
 const isSubmitting = ref(false);
+const countryCode = ref("");
 
 onMounted(async () => {
+  countryCode.value = await getUserLocationFromIP();
+
   if (status.value === "unauthenticated") {
     isOpen.value = true;
     return;
@@ -348,7 +360,6 @@ function selectedTheme(value: string) {
   }
 }
 
-const total = formState.plan === "Basic" ? 400 : 1000;
 const { stripe } = useClientStripe();
 
 async function subscribeStripe(websiteId: number) {
@@ -359,26 +370,29 @@ async function subscribeStripe(websiteId: number) {
     });
     return;
   }
+  try {
+    const { data } = await useFetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        plan: formState.plan,
+        websiteId,
+        countryCode,
+      }),
+    });
+    const sessionId = data.value?.sessionId;
 
-  const { data } = await useFetch("/api/stripe/checkout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      amount: total,
-      websiteId,
-    }),
-  });
+    if (!sessionId) {
+      throw new Error("Failed to create Checkout session");
+    }
 
-  const sessionId = data.value?.sessionId;
-
-  if (!sessionId) {
-    throw new Error("Failed to create Checkout session");
+    // Redirect to Stripe Checkout
+    await stripe.value.redirectToCheckout({ sessionId });
+  } catch (error) {
+    console.log(error);
   }
-
-  // Redirect to Stripe Checkout
-  await stripe.value.redirectToCheckout({ sessionId });
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -424,13 +438,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       return;
     }
 
-    if (websiteError.value?.statusCode === 500) {
-      toast.add({
-        title: "Houve um erro ao criar a página",
-        color: "red",
-      });
-      return;
-    }
+    console.log(websiteError.value);
 
     await subscribeStripe(websiteId as number);
 
@@ -451,7 +459,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       color: "green",
       timeout: 4000,
     });
-  } catch {
+  } catch (e) {
+    console.log(e);
     toast.add({
       title: "Houve um erro ao criar a página",
       color: "red",

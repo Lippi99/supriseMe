@@ -55,7 +55,7 @@
       <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
         <Plans
           :title="$t('indexPage.sectionThree.basic.title')"
-          :price="4"
+          :price="priceBasic as string"
           :benefits="[
             $t('indexPage.sectionThree.basic.descriptionOne'),
             $t('indexPage.sectionThree.basic.descriptionTwo'),
@@ -64,9 +64,9 @@
           @set-plan-url="handleSetPlanUrl"
         />
         <Plans
-          :most-picked="true"
+          mostPicked
           :title="$t('indexPage.sectionThree.premium.title')"
-          :price="10"
+          :price="pricePremium as string"
           :benefits="[
             $t('indexPage.sectionThree.premium.descriptionOne'),
             $t('indexPage.sectionThree.premium.descriptionTwo'),
@@ -88,14 +88,29 @@
 
 <script setup lang="ts">
 const route = useRouter();
-const { signOut } = useAuth();
+const { t } = useI18n();
+
+const { data } = useFetch("/api/stripe/prices");
+
+const { locale } = useI18n();
+
+const priceBasic = computed(() => {
+  return locale.value === "en"
+    ? `$ ${data.value?.prices[0].usd}`
+    : `R$ ${data.value?.prices[0].brl}`;
+});
+
+const pricePremium = computed(() => {
+  return locale.value === "en"
+    ? `$ ${data.value?.prices[1].usd}`
+    : `R$ ${data.value?.prices[1].brl}`;
+});
 
 useSeoMeta({
-  title: "SurpriseMe - Make a surprise for someone special",
-  description:
-    "SurpriseMe is a platform destinated to create a surprise letter for someone special. You can choose a template, write a message and send it to the person you want to surprise.",
-  ogDescription:
-    "SurpriseMe is a platform destinated to create a surprise letter for someone special. You can choose a template, write a message and send it to the person you want to surprise.",
+  title: t("seo.index.title"),
+  ogTitle: t("seo.index.ogTitle"),
+  description: t("seo.index.description"),
+  ogDescription: t("seo.index.ogDescription"),
 });
 
 function handleSetPlanUrl(url: string) {

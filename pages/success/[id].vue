@@ -52,6 +52,11 @@ import { useThemeStore } from "~/store/useTheme";
 
 const { startGlobal } = useThemeStore();
 
+useSeoMeta({
+  title: "Success",
+  description: "Success",
+});
+
 onMounted(() => {
   startGlobal("Confetti");
 });
@@ -61,5 +66,5 @@ const isOpen = ref(true);
 const route = useRoute();
 const id = route.params.id as string;
 
-const link = `http://localhost:3000/website/${id}`;
+const link = `${VITE_BASE_URL}/website/${id}`;
 </script>

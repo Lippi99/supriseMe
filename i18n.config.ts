@@ -3,6 +3,31 @@ export default defineI18nConfig(() => ({
   locale: "pt",
   messages: {
     en: {
+      myWebsites: {
+        title: "Your Websites",
+        statusActive: "Active",
+        noWebSite: "You haven't created any website yet",
+        statusInactive: "Inactive",
+        close: "Close",
+      },
+      seo: {
+        index: {
+          title: "SurpriseMe - Make a surprise for someone special",
+          ogTitle: "SurpriseMe - Make a surprise for someone special",
+          description:
+            "SurpriseMe is a platform destinated to create a surprise letter for someone special. You can choose a template, write a message and send it to the person you want to surprise.",
+          ogDescription:
+            "SurpriseMe is a platform destinated to create a surprise letter for someone special. You can choose a template, write a message and send it to the person you want to surprise.",
+        },
+        create: {
+          title: "Create your page",
+          ogTitle: "Create your page",
+          description:
+            "Create your page for someone special, choose a theme, write a message and send it to the person you want to surprise.",
+          ogDescription:
+            "Create your page for someone special, choose a theme, write a message and send it to the person you want to surprise.",
+        },
+      },
       header: {
         myWebsites: "My Websites",
       },
@@ -78,8 +103,42 @@ export default defineI18nConfig(() => ({
         creating: "Creating...",
         createButton: "Create your website",
       },
+      footer: {
+        socialMedia: "Social Media",
+        support: "Support",
+        legal: {
+          title: "Legal terms",
+          termsOfService: "Terms of Service",
+          privacyPolicy: "Privacy Policy",
+        },
+      },
     },
     pt: {
+      myWebsites: {
+        title: "Seus sites",
+        statusActive: "Ativo",
+        noWebSite: "Você ainda não criou nenhum site",
+        statusInactive: "Inativo",
+        close: "Fechar",
+      },
+      seo: {
+        index: {
+          title: "SurpriseMe - Faça uma surpresa para alguém especial",
+          ogTitle: "SurpriseMe - Faça uma surpresa para alguém especial",
+          description:
+            "SurpriseMe é uma plataforma destinada a criar uma carta surpresa para alguém especial. Você pode escolher um modelo, escrever uma mensagem e enviá-la para a pessoa que deseja surpreender.",
+          ogDescription:
+            "SurpriseMe é uma plataforma destinada a criar uma carta surpresa para alguém especial. Você pode escolher um modelo, escrever uma mensagem e enviá-la para a pessoa que deseja surpreender.",
+        },
+        create: {
+          title: "Crie sua página",
+          ogTitle: "Crie sua página",
+          description:
+            "Crie sua página para alguém especial, escolha um tema, escreva uma mensagem e envie para a pessoa que deseja surpreender.",
+          ogDescription:
+            "Crie sua página para alguém especial, escolha um tema, escreva uma mensagem e envie para a pessoa que deseja surpreender.",
+        },
+      },
       header: {
         myWebsites: "Meus sites",
       },
@@ -154,6 +213,15 @@ export default defineI18nConfig(() => ({
         removeImage: "Remover Imagem",
         creating: "Criando...",
         createButton: "Crie seu site",
+      },
+      footer: {
+        socialMedia: "Redes Sociais",
+        support: "Suporte",
+        legal: {
+          title: "Termos legais",
+          termsOfService: "Termos de Serviço",
+          privacyPolicy: "Política de Privacidade",
+        },
       },
     },
   },

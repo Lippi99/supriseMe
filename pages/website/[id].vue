@@ -50,6 +50,13 @@ const { data, error } = await useFetch<IWebsiteClient>(
   }
 );
 
+useSeoMeta({
+  title: data?.value?.website?.name,
+  ogTitle: data?.value?.website?.name,
+  description: data?.value?.website?.name,
+  ogDescription: data?.value?.website?.name,
+});
+
 const { startGlobal } = useThemeStore();
 
 onMounted(() => {

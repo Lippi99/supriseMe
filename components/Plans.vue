@@ -13,9 +13,7 @@
         >{{ $t("indexPage.sectionThree.premium.tag") }}</span
       >
     </div>
-    <span class="text-5xl font-extrabold mb-10 inline-block"
-      >$ {{ price }}</span
-    >
+    <span class="text-5xl font-extrabold mb-10 inline-block">{{ price }}</span>
     <ul class="mb-10 flex flex-col gap-3">
       <li
         class="flex items-center gap-3"
@@ -44,7 +42,7 @@ const props = defineProps({
     required: true,
   },
   price: {
-    type: Number,
+    type: String,
     required: true,
   },
   benefits: {

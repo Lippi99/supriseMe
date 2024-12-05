@@ -3,30 +3,45 @@ import { useServerStripe } from "#stripe/server";
 export default defineEventHandler(async (event) => {
   const stripe = await useServerStripe(event);
   const body = await readBody(event);
-  const orderAmount = body.amount || 0;
+
+  const userCountry = body.country;
   const websiteId = body.websiteId as number;
+  const plan = body.plan as string;
 
   try {
+    const { data: prices } = await stripe.prices.list({
+      product: process.env.STRIPE_PRODUCT_ID,
+    });
+
+    const preferredCurrency = userCountry === "BR" ? "brl" : "usd";
+
+    const priceData = prices.find(
+      (price) =>
+        price.currency === preferredCurrency.toLowerCase() &&
+        price.nickname?.includes(plan)
+    );
+
+    if (!priceData) {
+      throw new Error(
+        `Price not available for plan: ${plan} and currency: ${preferredCurrency}`
+      );
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: process.env.STRIPE_PRODUCT_NAME as string,
-            },
-            unit_amount: orderAmount,
-          },
+          price: priceData.id,
           quantity: 1,
         },
       ],
       metadata: {
         websiteId,
+        plan,
       },
       mode: "payment",
-      success_url: `http://localhost:3000/success/${websiteId}`,
-      cancel_url: "http://localhost:3000/",
+      success_url: `${process.env.NUXT_BASE_URL}/success/${websiteId}`,
+      cancel_url: `${process.env.NUXT_BASE_URL}/`,
     });
 
     return {
@@ -35,9 +50,8 @@ export default defineEventHandler(async (event) => {
     };
   } catch (e) {
     return {
-      form: null,
       sessionId: null,
-      error: "Something went wrong" + e,
+      error: `Something went wrong: ${e}`,
     };
   }
 });
