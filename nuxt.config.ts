@@ -2,16 +2,21 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
-  nitro: {
-    preset: "cloudflare-pages",
-  },
   plugins: [
     {
       src: "~/plugins/confetti.client",
     },
   ],
   auth: {
-    baseURL: process.env.NUXT_BASE_URL,
+    isEnabled: true,
+    disableServerSideAuth: false,
+    baseURL: `${process.env.NUXT_BASE_URL}/api/auth`,
+  },
+  runtimeConfig: {
+    public: {
+      authBaseUrl: `${process.env.NUXT_BASE_URL}/api/auth`,
+    },
+    authSecret: process.env.NUXT_AUTH_SECRET,
   },
   modules: [
     "@sidebase/nuxt-auth",
@@ -21,6 +26,7 @@ export default defineNuxtConfig({
     "@unlok-co/nuxt-stripe",
     "@nuxt/scripts",
     "@nuxtjs/i18n",
+    "@nuxthub/core",
   ],
   i18n: {
     vueI18n: "./i18n.config.ts",
