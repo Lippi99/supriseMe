@@ -18,19 +18,19 @@ export default defineNuxtConfig({
     "@nuxthub/core",
   ],
   auth: {
-    baseURL: "/api/auth",
+    baseURL: `${process.env.AUTH_ORIGIN}/api/auth`,
     isEnabled: true,
-    provider: {
-      type: "local"
-    },
+    // provider: {
+    //   type: "local"
+    // },
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: false,
     },
   },
-  runtimeConfig: {
-    authSecret:"asldfkhw8973zx69023aab38742",
-    },
+  // runtimeConfig: {
+  //   authSecret:"asldfkhw8973zx69023aab38742",
+  //   },
   i18n: {
     vueI18n: "./i18n.config.ts",
     locales: ["en", "pt"],

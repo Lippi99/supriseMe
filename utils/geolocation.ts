@@ -1,4 +1,4 @@
 export async function getUserLocationFromIP() {
-  const data = await $fetch<{countryCode: string}>("http://ip-api.com/json/");
-  return data?.countryCode || "US";
+  const data = await $fetch<{country_code: string}>("https://geolocation-db.com/json/");
+  return data?.country_code || "US";
 }
