@@ -18,13 +18,11 @@ export default defineNuxtConfig({
     "@nuxthub/core",
   ],
   auth: {
-    baseURL: "https://surprise-me.nuxt.dev/api/auth",
+    baseURL: "/api/auth",
     isEnabled: true,
     provider: {
-      type: "authjs"
+      type: "local"
     },
-    disableServerSideAuth: false,
-    originEnvKey: "https://surprise-me.nuxt.dev",
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: false,
