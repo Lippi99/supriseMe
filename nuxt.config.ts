@@ -20,6 +20,9 @@ export default defineNuxtConfig({
   auth: {
     baseURL: "https://surprise-me.nuxt.dev/api/auth",
     isEnabled: true,
+    provider: {
+      type: "authjs"
+    },
     disableServerSideAuth: false,
     originEnvKey: "https://surprise-me.nuxt.dev",
     sessionRefresh: {
