@@ -1,4 +1,10 @@
 export default defineEventHandler(async () => {
-  const data = await $fetch<{country_code: string}>("https://geolocation-db.com/json/");
-  return data?.country_code || "US";
+  const data = await $fetch<{country: string}>("https://api.country.is/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    
+    }
+  });
+  return data?.country || "US";
 });

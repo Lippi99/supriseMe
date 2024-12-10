@@ -73,7 +73,6 @@
 </template>
 
 <script lang="ts" setup>
-import { getUserLocationFromIP } from "~/utils/geolocation";
 import type { IWebsiteActiveClients } from "~/models/IWebsite";
 
 defineProps<{
@@ -82,7 +81,12 @@ defineProps<{
 
 const emit = defineEmits(["update:isOpen"]);
 
-const { data: countryCode }= await useFetch("/api/location/geo")
+const { data: countryCode }= await useFetch("/api/location/geoip", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 const updateIsOpen = (value: boolean) => {
   emit("update:isOpen", value);

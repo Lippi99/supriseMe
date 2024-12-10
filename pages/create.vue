@@ -212,7 +212,7 @@ import { z } from "zod";
 import { useThemeStore } from "~/store/useTheme";
 import type { Form, FormSubmitEvent } from "#ui/types";
 import { reactive, ref } from "vue";
-import { getUserLocationFromIP } from "~/utils/geolocation";
+
 
 const theme = useThemeStore();
 const toast = useToast();
@@ -322,11 +322,15 @@ const plans = [
 const selected = ref(themes[0]);
 const isOpen = ref(false);
 const isSubmitting = ref(false);
-const countryCode = ref("");
+
+const { data: countryCode }= await useFetch("/api/location/geoip", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 onMounted(async () => {
-  countryCode.value = await getUserLocationFromIP();
-
   if (status.value === "unauthenticated") {
     isOpen.value = true;
     return;

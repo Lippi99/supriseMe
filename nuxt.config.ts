@@ -20,9 +20,9 @@ export default defineNuxtConfig({
   auth: {
     baseURL: `${process.env.AUTH_ORIGIN}/api/auth`,
     isEnabled: true,
-    provider: {
-      type: "local"
-    },
+    // provider: {
+    //   type: "local"
+    // },
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: false,
