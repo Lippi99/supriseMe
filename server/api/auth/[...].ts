@@ -10,5 +10,15 @@ export default NuxtAuthHandler({
       clientSecret: process.env.NUXT_GOOGLE_SECRET,
     }),
   ],
-  callbacks: {},
+  debug: true,
+  callbacks: {
+    async session({ session, token, user }) {
+      console.log("Session callback triggered:", session, token, user);
+      return session;
+    },
+    async signIn({ user, account, profile }) {
+      console.log("Sign-in callback triggered:", user, account, profile);
+      return true; // Always allow sign-in
+    },
+  }
 });

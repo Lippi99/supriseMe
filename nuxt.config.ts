@@ -7,17 +7,6 @@ export default defineNuxtConfig({
       src: "~/plugins/confetti.client",
     },
   ],
-  auth: {
-    isEnabled: true,
-    disableServerSideAuth: false,
-    baseURL: `${process.env.NUXT_BASE_URL}/api/auth`,
-  },
-  runtimeConfig: {
-    public: {
-      authBaseUrl: `${process.env.NUXT_BASE_URL}/api/auth`,
-    },
-    authSecret: process.env.NUXT_AUTH_SECRET,
-  },
   modules: [
     "@sidebase/nuxt-auth",
     "@nuxt/ui",
@@ -28,6 +17,19 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxthub/core",
   ],
+  auth: {
+    baseURL: "https://surprise-me.nuxt.dev/api/auth",
+    isEnabled: true,
+    disableServerSideAuth: false,
+    originEnvKey: "https://surprise-me.nuxt.dev",
+    sessionRefresh: {
+      enablePeriodically: true,
+      enableOnWindowFocus: false,
+    },
+  },
+  runtimeConfig: {
+    authSecret:"asldfkhw8973zx69023aab38742",
+    },
   i18n: {
     vueI18n: "./i18n.config.ts",
     locales: ["en", "pt"],
