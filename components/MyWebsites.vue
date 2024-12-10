@@ -82,21 +82,19 @@ defineProps<{
 
 const emit = defineEmits(["update:isOpen"]);
 
-const countryCode = ref<string>("");
-onMounted(async () => {
-  countryCode.value = await getUserLocationFromIP();
-});
+const { data: countryCode }= await useFetch("/api/location/geo")
 
 const updateIsOpen = (value: boolean) => {
   emit("update:isOpen", value);
 };
 const { stripe } = useClientStripe();
-const { data: googleData } = useAuth();
+const { data: googleData,  } = useAuth();
 const toast = useToast();
 
 const loadingStates = reactive<Record<number, boolean>>({});
 
 const googleEmail = googleData.value?.user?.email;
+
 
 const { data } = await useFetch<IWebsiteActiveClients>(
   `/api/website/email/${googleEmail}`,
