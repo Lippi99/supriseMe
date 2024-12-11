@@ -2,7 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { NuxtAuthHandler } from "#auth";
 
 export default NuxtAuthHandler({
-  secret: process.env.NUXT_AUTH_SECRET,
+  secret: useRuntimeConfig().authSecret,
   providers: [
     // @ts-expect-error Use .default here for it to work during SSR.
     GoogleProvider.default({

@@ -2,6 +2,9 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+  runtimeConfig: {
+    authSecret: "asldfkhw8973zx69023aab3874",
+  },
   nitro: {
     preset: "cloudflare-pages"
   },
@@ -11,7 +14,16 @@ export default defineNuxtConfig({
     },
   ],
   auth: {
-    baseURL: process.env.AUTH_ORIGIN,
+    provider: {
+      type: "authjs"
+    },
+    isEnabled: true,
+    baseURL: `${process.env.AUTH_ORIGIN}/api/auth`,
+    originEnvKey: `${process.env.NUXT_AUTH_ORIGIN}`,
+    sessionRefresh: {
+      enablePeriodically: true,
+      enableOnWindowFocus: true,
+    }
   },
   modules: [
     "@sidebase/nuxt-auth",
