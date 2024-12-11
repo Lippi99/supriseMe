@@ -38,16 +38,16 @@ export default defineNuxtConfig({
       src: "~/plugins/confetti.client",
     },
   ],
-  auth: {
-    isEnabled: true,
-    baseURL: `https://supriseme.pages.dev/api/auth`,
-    sessionRefresh: {
-      enablePeriodically: true,
-      enableOnWindowFocus: true,
-    }
-  },
+  // auth: {
+  //   isEnabled: true,
+  //   baseURL: `https://supriseme.pages.dev/api/auth`,
+  //   sessionRefresh: {
+  //     enablePeriodically: true,
+  //     enableOnWindowFocus: true,
+  //   }
+  // },
   modules: [
-    "@sidebase/nuxt-auth",
+    // "@sidebase/nuxt-auth",
     "@nuxt/ui",
     "@nuxt/image",
     "@pinia/nuxt",
