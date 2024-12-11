@@ -10,6 +10,5 @@ export default NuxtAuthHandler({
       clientSecret: process.env.NUXT_GOOGLE_SECRET,
     }),
   ],
-  callbacks: {
-  }
+  callbacks: {},
 });

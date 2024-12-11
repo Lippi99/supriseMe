@@ -81,7 +81,7 @@ defineProps<{
 
 const emit = defineEmits(["update:isOpen"]);
 
-const { data: countryCode }= await useFetch("/api/location/geoip", {
+const { data: countryCode }= await useFetch("/api/location/geo", {
   method: "GET",
   headers: {
     "Content-Type": "application/json",

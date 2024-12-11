@@ -323,7 +323,7 @@ const selected = ref(themes[0]);
 const isOpen = ref(false);
 const isSubmitting = ref(false);
 
-const { data: countryCode }= await useFetch("/api/location/geoip", {
+const { data: countryCode }= await useFetch("/api/location/geo", {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -331,16 +331,10 @@ const { data: countryCode }= await useFetch("/api/location/geoip", {
 });
 
 onMounted(async () => {
-  if (status.value === "unauthenticated") {
-    isOpen.value = true;
-    return;
-  }
-
   if (!route.query.plan) {
     router.push({ query: { plan: "Basic" } });
     formState.plan = route.query.plan || "Basic";
   }
-
   if (formState.plan === "Basic") {
     for (let i = 0; i < 3; i++) {
       formState.messages.push({ message: "", image: null });
@@ -350,6 +344,11 @@ onMounted(async () => {
       formState.messages.push({ message: "", image: null });
     }
   }
+  if (status.value === "unauthenticated") {
+    isOpen.value = true;
+    return;
+  }
+
 });
 
 function selectedTheme(value: string) {

@@ -2,11 +2,17 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+  nitro: {
+    preset: "cloudflare-pages"
+  },
   plugins: [
     {
       src: "~/plugins/confetti.client",
     },
   ],
+  auth: {
+    baseURL: process.env.AUTH_ORIGIN,
+  },
   modules: [
     "@sidebase/nuxt-auth",
     "@nuxt/ui",
@@ -15,22 +21,7 @@ export default defineNuxtConfig({
     "@unlok-co/nuxt-stripe",
     "@nuxt/scripts",
     "@nuxtjs/i18n",
-    "@nuxthub/core",
   ],
-  auth: {
-    baseURL: `${process.env.AUTH_ORIGIN}/api/auth`,
-    isEnabled: true,
-    provider: {
-      type: "local"
-    },
-    sessionRefresh: {
-      enablePeriodically: true,
-      enableOnWindowFocus: false,
-    },
-  },
-  // runtimeConfig: {
-  //   authSecret:"asldfkhw8973zx69023aab38742",
-  //   },
   i18n: {
     vueI18n: "./i18n.config.ts",
     locales: ["en", "pt"],
