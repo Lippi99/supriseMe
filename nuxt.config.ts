@@ -39,11 +39,12 @@ export default defineNuxtConfig({
     },
   ],
   auth: {
+
     provider: {
       type: "authjs"
     },
     isEnabled: true,
-    baseURL: `/api/auth`,
+    baseURL: `${process.env.NUXT_PUBLIC_BASE_URL}/api/auth`,
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: true,
