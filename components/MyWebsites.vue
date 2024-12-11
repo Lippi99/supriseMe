@@ -20,12 +20,12 @@
               target="_blank"
               class="font-bold"
               v-if="site.active"
-              :href="VITE_BASE_URL + '/website/' + site.id"
+              :href="CLIENT_BASE_URL + '/website/' + site.id"
             >
-              {{ VITE_BASE_URL + "/website/" + site.id }}
+              {{ CLIENT_BASE_URL + "/website/" + site.id }}
             </a>
             <span class="text-gray-500" v-else>{{
-              VITE_BASE_URL + "website/" + site.id
+              CLIENT_BASE_URL + "website/" + site.id
             }}</span>
 
             <div class="relative">
@@ -74,6 +74,7 @@
 
 <script lang="ts" setup>
 import type { IWebsiteActiveClients } from "~/models/IWebsite";
+import { CLIENT_BASE_URL } from "~/utils/constant";
 
 defineProps<{
   isOpen: boolean;

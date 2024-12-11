@@ -1,10 +1,12 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
+const config = useRuntimeConfig()
+
 const client = new S3Client({
   region: "sa-east-1",
   credentials: {
-    accessKeyId: process.env.S3_AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.S3_AWS_SECRET_ACCESS_KEY as string,
+    accessKeyId: config.s3.accessKeyId as string,
+    secretAccessKey: config.s3.secretKeyId as string,
   },
 });
 

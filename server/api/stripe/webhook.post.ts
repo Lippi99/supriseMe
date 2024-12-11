@@ -6,6 +6,8 @@ import {
 } from "~/server/services/website";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig(event);
+
   const stripe = await useServerStripe(event);
   const sig = event.node.req.headers["stripe-signature"];
   const body = await readRawBody(event);
@@ -13,7 +15,7 @@ export default defineEventHandler(async (event) => {
     const stripeEvent = stripe.webhooks.constructEvent(
       body as string,
       sig as string | string[],
-      process.env.STRIPE_WEBHOOK_SECRET as string
+      config.stripe.webhook.secret as string
     );
 
     if (stripeEvent.type === "checkout.session.async_payment_succeeded") {

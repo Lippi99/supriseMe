@@ -4,9 +4,31 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      authBaseURL: process.env.AUTH_ORIGIN || "http://localhost:3000",
+      baseUrl: ''
     },
-    authSecret: process.env.NUXT_AUTH_SECRET
+    auth: {
+      secret: '',
+      providers: {
+        google: {
+          client: '',
+          secret: ''
+        }
+      },
+    },
+    stripe: {
+      productId: '',
+      productName: '',
+      webhook: {
+        secret: '',
+      },
+    },
+    s3: {
+      accessKeyId: '',
+      secretKeyId: '',
+    },
+    database: {
+      url: '',
+    }
   },
   nitro: {
     preset: "cloudflare-pages"
@@ -21,7 +43,7 @@ export default defineNuxtConfig({
       type: "authjs"
     },
     isEnabled: true,
-    baseURL: `${process.env.AUTH_ORIGIN}/api/auth` || "http://localhost:3000/api/auth",
+    baseURL: `/api/auth`,
     sessionRefresh: {
       enablePeriodically: true,
       enableOnWindowFocus: true,
@@ -43,10 +65,10 @@ export default defineNuxtConfig({
   },
   stripe: {
     server: {
-      key: process.env.STRIPE_SERVER_SECRET_KEY,
+      key: process.env.NUXT_STRIPE_SECRET_KEY,
     },
     client: {
-      key: process.env.NUXT_STRIPE_PUBLIC_KEY,
+      key: process.env.NUXT_STRIPE_CLIENT_KEY,
     },
   },
 

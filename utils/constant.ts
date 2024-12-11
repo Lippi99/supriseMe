@@ -1,1 +1,3 @@
-export const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+const config = useRuntimeConfig();
+
+export const CLIENT_BASE_URL = config.public.baseUrl;

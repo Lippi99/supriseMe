@@ -1,11 +1,12 @@
 import { useServerStripe } from "#stripe/server";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig(event);
   const stripe = await useServerStripe(event);
 
   try {
     const { data } = await stripe.prices.list({
-      product: process.env.STRIPE_PRODUCT_ID,
+      product: config.stripe.productId,
       expand: ["data.currency_options"],
     });
 

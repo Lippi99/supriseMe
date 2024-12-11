@@ -49,6 +49,7 @@
 <script setup lang="ts">
 import QrcodeVue from "qrcode.vue";
 import { useThemeStore } from "~/store/useTheme";
+import { CLIENT_BASE_URL } from "~/utils/constant";
 
 const { startGlobal } = useThemeStore();
 
@@ -66,5 +67,5 @@ const isOpen = ref(true);
 const route = useRoute();
 const id = route.params.id as string;
 
-const link = `${VITE_BASE_URL}/website/${id}`;
+const link = `${CLIENT_BASE_URL}/website/${id}`;
 </script>

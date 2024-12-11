@@ -1,6 +1,8 @@
 import { useServerStripe } from "#stripe/server";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig(event);
+
   const stripe = await useServerStripe(event);
   const body = await readBody(event);
 
@@ -10,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data: prices } = await stripe.prices.list({
-      product: process.env.STRIPE_PRODUCT_ID,
+      product:  config.stripe.productId,
     });
 
     const preferredCurrency = userCountry === "BR" ? "brl" : "usd";
@@ -40,8 +42,8 @@ export default defineEventHandler(async (event) => {
         plan,
       },
       mode: "payment",
-      success_url: `${process.env.NUXT_BASE_URL}/success/${websiteId}`,
-      cancel_url: `${process.env.NUXT_BASE_URL}/`,
+      success_url: `${config.public.baseUrl}/success/${websiteId}`,
+      cancel_url: `${config.public.baseUrl}/`,
     });
 
     return {
