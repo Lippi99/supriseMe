@@ -1,4 +1,4 @@
-import { getUser } from "~/server/services/user";
+import { createUser, getUser } from "~/server/services/user";
 import { createWebsite } from "~/server/services/website";
 
 export default defineEventHandler(async (event) => {
@@ -6,6 +6,10 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
 
     const user = await getUser(body.userEmail);
+
+    if (!user) {
+      await createUser(body.googleUserData);
+    }
 
     if (!user?.active) {
       return createError({
