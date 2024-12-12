@@ -8,11 +8,13 @@ datasource db {
 }
 
 model message {
-  id        Int     @id @default(autoincrement())
-  message   String  @db.VarChar(600)
+  id        Int      @id @default(autoincrement())
+  message   String   @db.VarChar(600)
   image     String
   websiteId Int
-  website   website @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
+  website   website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([websiteId], map: "Message_websiteId_fkey")
 }
@@ -22,7 +24,7 @@ model user {
   email     String    @unique(map: "User_email_key")
   name      String
   createdAt DateTime  @default(now())
-  updatedAt DateTime
+  updatedAt DateTime  @updatedAt
   active    Boolean   @default(false)
   image     String?
   websites  website[]
@@ -38,6 +40,8 @@ model website {
   songUrl   String?
   messages  message[]
   user      user      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@index([userEmail], map: "Website_userEmail_fkey")
 }

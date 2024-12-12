@@ -1,4 +1,4 @@
-import { getUser } from "~/server/services/user";
+import { createUser, getUser } from "~/server/services/user";
 import { createWebsite } from "~/server/services/website";
 
 export default defineEventHandler(async (event) => {
@@ -7,12 +7,17 @@ export default defineEventHandler(async (event) => {
 
     const user = await getUser(body.userEmail);
 
-    if (!user?.active) {
-      return createError({
-        statusCode: 400,
-        statusMessage: "User is not subscribed",
-      });
+    if (!user) {
+      console.log(user)
+      await createUser(body.googleUserData);
     }
+
+    // if (!user?.active) {
+    //   return createError({
+    //     statusCode: 400,
+    //     statusMessage: "User is not subscribed",
+    //   });
+    // }
 
     const website = await createWebsite(body);
     if (!website) {

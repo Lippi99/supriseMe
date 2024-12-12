@@ -25,12 +25,10 @@
             >Acesse seu site pelo QRCode</span
           >
         </template>
-
         <div class="flex flex-col items-center justify-center">
           <QrcodeVue :value="link" :size="300" level="H" render-as="svg" />
           <span class="text-xl mt-5">OU</span>
         </div>
-
         <template #footer>
           <span class="text-xl text-center w-full inline-block"
             >Acesse
@@ -49,23 +47,21 @@
 <script setup lang="ts">
 import QrcodeVue from "qrcode.vue";
 import { useThemeStore } from "~/store/useTheme";
-import { CLIENT_BASE_URL } from "~/utils/constant";
-
 const { startGlobal } = useThemeStore();
 
-useSeoMeta({
-  title: "Success",
-  description: "Success",
+useServerSeoMeta({
+  title: "Seu site foi criado com sucesso!",
+  description: "Acesse seu site pelo QRCode ou pelo link",
 });
 
 onMounted(() => {
   startGlobal("Confetti");
 });
-
+const config = useRuntimeConfig();
 const isOpen = ref(true);
-
 const route = useRoute();
-const id = route.params.id as string;
-
-const link = `${CLIENT_BASE_URL}/website/${id}`;
+const link = computed(() => {
+  const id = route.params.id as string;
+  return `${config.public.baseUrl}/website/${id}`;
+});
 </script>

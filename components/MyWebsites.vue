@@ -20,12 +20,12 @@
               target="_blank"
               class="font-bold"
               v-if="site.active"
-              :href="CLIENT_BASE_URL + '/website/' + site.id"
+              :href="config.public.baseUrl + '/website/' + site.id"
             >
-              {{ CLIENT_BASE_URL + "/website/" + site.id }}
+              {{ config.public.baseUrl + "/website/" + site.id }}
             </a>
             <span class="text-gray-500" v-else>{{
-              CLIENT_BASE_URL + "website/" + site.id
+              config.public.baseUrl + "website/" + site.id
             }}</span>
 
             <div class="relative">
@@ -74,7 +74,6 @@
 
 <script lang="ts" setup>
 import type { IWebsiteActiveClients } from "~/models/IWebsite";
-import { CLIENT_BASE_URL } from "~/utils/constant";
 
 defineProps<{
   isOpen: boolean;
@@ -92,6 +91,7 @@ const { data: countryCode }= await useFetch("/api/location/geo", {
 const updateIsOpen = (value: boolean) => {
   emit("update:isOpen", value);
 };
+const config = useRuntimeConfig()
 const { stripe } = useClientStripe();
 const { data: googleData,  } = useAuth();
 const toast = useToast();
