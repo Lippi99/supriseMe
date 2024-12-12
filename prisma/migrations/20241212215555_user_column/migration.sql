@@ -1,8 +1,8 @@
 /*
   Warnings:
 
-  - Added the required column `updatedAt` to the `message` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `updatedAt` to the `website` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `updatedAt` to the `Message` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `updatedAt` to the `Website` table without a default value. This is not possible if the table is not empty.
 
 */
 -- AlterTable

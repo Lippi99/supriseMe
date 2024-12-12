@@ -453,8 +453,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       googleUserData: googleUserData.value?.user,
     };
 
-    localStorage.setItem("formState", JSON.stringify(body));
-
     form.value!.clear();
     clearFields();
     toast.add({

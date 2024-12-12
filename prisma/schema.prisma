@@ -7,19 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model message {
+model Message {
   id        Int      @id @default(autoincrement())
   message   String   @db.VarChar(600)
   image     String
   websiteId Int
-  website   website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
+  website   Website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([websiteId], map: "Message_websiteId_fkey")
 }
 
-model user {
+model User {
   id        Int       @id @default(autoincrement())
   email     String    @unique(map: "User_email_key")
   name      String
@@ -27,10 +27,10 @@ model user {
   updatedAt DateTime  @updatedAt
   active    Boolean   @default(false)
   image     String?
-  websites  website[]
+  websites  Website[]
 }
 
-model website {
+model Website {
   id        Int       @id @default(autoincrement())
   name      String
   theme     String
@@ -38,8 +38,8 @@ model website {
   plan      String?
   active    Boolean   @default(false)
   songUrl   String?
-  messages  message[]
-  user      user      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
+  messages  Message[]
+  user      User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
