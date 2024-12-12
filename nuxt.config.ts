@@ -31,23 +31,23 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: "cloudflare-pages"
+    preset: "netlify",
   },
   plugins: [
     {
       src: "~/plugins/confetti.client",
     },
   ],
-  // auth: {
-  //   isEnabled: true,
-  //   baseURL: `https://supriseme.pages.dev/api/auth`,
-  //   sessionRefresh: {
-  //     enablePeriodically: true,
-  //     enableOnWindowFocus: true,
-  //   }
-  // },
+  auth: {
+    isEnabled: true,
+    baseURL: `${process.env.NUXT_PUBLIC_BASE_URL}/api/auth`,
+    sessionRefresh: {
+      enablePeriodically: true,
+      enableOnWindowFocus: true,
+    }
+  },
   modules: [
-    // "@sidebase/nuxt-auth",
+    "@sidebase/nuxt-auth",
     "@nuxt/ui",
     "@nuxt/image",
     "@pinia/nuxt",
