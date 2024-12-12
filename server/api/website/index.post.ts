@@ -8,15 +8,16 @@ export default defineEventHandler(async (event) => {
     const user = await getUser(body.userEmail);
 
     if (!user) {
+      console.log(user)
       await createUser(body.googleUserData);
     }
 
-    if (!user?.active) {
-      return createError({
-        statusCode: 400,
-        statusMessage: "User is not subscribed",
-      });
-    }
+    // if (!user?.active) {
+    //   return createError({
+    //     statusCode: 400,
+    //     statusMessage: "User is not subscribed",
+    //   });
+    // }
 
     const website = await createWebsite(body);
     if (!website) {

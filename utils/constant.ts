@@ -1,3 +1,1 @@
-const config = useRuntimeConfig();
-
-export const CLIENT_BASE_URL = config.public.baseUrl;
+export const WEBSITE_CLIENT_BASE_URL = process.env.NUXT_PUBLIC_BASE_URL;
