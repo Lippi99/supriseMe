@@ -42,8 +42,8 @@ export default defineNuxtConfig({
     isEnabled: true,
     baseURL: `${process.env.NUXT_PUBLIC_BASE_URL}/api/auth`,
     sessionRefresh: {
-      enablePeriodically: true,
-      enableOnWindowFocus: true,
+      enablePeriodically: 1000 * 60 * 60,
+      enableOnWindowFocus: false,
     }
   },
   modules: [
