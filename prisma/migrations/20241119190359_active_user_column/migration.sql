@@ -6,4 +6,4 @@
 */
 -- AlterTable
 ALTER TABLE `user` ADD COLUMN `active` BOOLEAN NOT NULL DEFAULT false,
-    ADD COLUMN `birthDate` DATETIME(3) NULL;
+    ADD COLUMN `birthDate` DATETIME(3) NULL DEFAULT NULL;
