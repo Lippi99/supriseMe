@@ -12,16 +12,16 @@ model Message {
   message   String   @db.VarChar(600)
   image     String
   websiteId Int
-  website   Website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  website   Website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
 
   @@index([websiteId], map: "Message_websiteId_fkey")
 }
 
 model User {
   id        Int       @id @default(autoincrement())
-  email     String    @unique(map: "User_email_key")
+  email     String    @unique
   name      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -38,10 +38,10 @@ model Website {
   plan      String?
   active    Boolean   @default(false)
   songUrl   String?
-  messages  Message[]
-  user      User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  messages  Message[]
+  user      User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
 
   @@index([userEmail], map: "Website_userEmail_fkey")
 }
