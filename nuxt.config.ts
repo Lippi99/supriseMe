@@ -4,34 +4,31 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseUrl: ''
+      baseUrl: process.env.NUXT_PUBLIC_BASE_URL
     },
     auth: {
-      secret: '',
+      secret: process.env.NUXT_AUTH_SECRET,
       providers: {
         google: {
-          client: '',
-          secret: ''
+          client: process.env.NUXT_AUTH_PROVIDERS_GOOGLE_CLIENT,
+          secret: process.env.NUXT_AUTH_PROVIDERS_GOOGLE_SECRET,
         }
       },
     },
     stripe: {
-      productId: '',
-      productName: '',
+      productId: process.env.NUXT_STRIPE_PRODUCT_ID,
+      productName: process.env.NUXT_STRIPE_PRODUCT_NAME,
       webhook: {
-        secret: '',
+        secret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
       },
     },
     s3: {
-      accessKeyId: '',
-      secretKeyId: '',
+      accessKeyId: process.env.NUXT_STRIPE_CLIENT_KEY,
+      secretKeyId: process.env.NUXT_STRIPE_SECRET_KEY,
     },
     database: {
-      url: '',
+      url: process.env.NUXT_DATABASE_URL,
     }
-  },
-  nitro: {
-    preset: "netlify",
   },
   plugins: [
     {
