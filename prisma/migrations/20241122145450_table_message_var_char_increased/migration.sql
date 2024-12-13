@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `message` MODIFY `message` VARCHAR(200) NOT NULL;
+ALTER TABLE `Message` MODIFY `message` VARCHAR(200) NOT NULL;

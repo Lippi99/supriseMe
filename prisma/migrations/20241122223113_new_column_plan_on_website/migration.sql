@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `website` ADD COLUMN `plan` VARCHAR(191) NULL;
+ALTER TABLE `Website` ADD COLUMN `plan` VARCHAR(191) NULL;

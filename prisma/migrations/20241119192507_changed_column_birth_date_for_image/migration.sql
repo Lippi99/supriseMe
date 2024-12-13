@@ -5,5 +5,5 @@
 
 */
 -- AlterTable
-ALTER TABLE `user` DROP COLUMN `birthDate`,
+ALTER TABLE `User` DROP COLUMN `birthDate`,
     ADD COLUMN `image` VARCHAR(191) NULL;

@@ -6,10 +6,10 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `website` DROP FOREIGN KEY `Website_userId_fkey`;
+ALTER TABLE `Website` DROP FOREIGN KEY `Website_userId_fkey`;
 
 -- AlterTable
-ALTER TABLE `website` DROP COLUMN `userId`,
+ALTER TABLE `Website` DROP COLUMN `userId`,
     ADD COLUMN `userEmail` VARCHAR(191) NOT NULL;
 
 -- AddForeignKey
