@@ -1,11 +1,26 @@
 <template>
   <NuxtLayout name="custom">
-    <div class="py-[17px] px-14 lg:pr-0 lg:max-w-7xl m-auto">
-      <h1 class="text-5xl font-bold">{{ $t("createPage.title") }}</h1>
+    <main class="py-[17px] px-14 lg:pr-0 lg:max-w-7xl m-auto" role="main">
+      <header>
+        <h1 class="text-5xl font-bold">{{ $t("createPage.title") }}</h1>
+      </header>
       <span class="ml-1 mt-5 inline-block">{{
         $t("createPage.instructions")
       }}</span>
-      <YoutubeMusic :isDetail="false" :url="formState.songUrl" />
+
+      <!-- YouTube Player -->
+      <div v-if="youtubeEmbedUrl" class="w-full max-w-4xl mx-auto mt-6">
+        <iframe
+          :src="youtubeEmbedUrl"
+          width="100%"
+          height="500"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          class="rounded-lg hidden"
+        ></iframe>
+      </div>
       <div
         class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
       >
@@ -67,6 +82,83 @@
               </template>
             </USelectMenu>
           </UFormGroup>
+
+          <!-- Custom Theme Image Upload -->
+          <UFormGroup
+            v-if="formState.theme === 'Custom'"
+            class="mt-8"
+            name="customThemeImage"
+          >
+            <label class="mb-2 inline-block" for="customThemeImage">{{
+              $t("createPage.uploadThemeImage")
+            }}</label>
+            <label
+              v-if="!formState.customThemeImage"
+              for="theme-dropzone-file"
+              class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-[#FF4E6D] dark:hover:border-[#FF4E6D] dark:hover:bg-gray-800"
+            >
+              <div class="flex flex-col items-center justify-center pt-3 pb-3">
+                <svg
+                  class="w-6 h-6 mb-2 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                  />
+                </svg>
+                <p class="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                  <span class="font-semibold">{{
+                    $t("createPage.clickToUpload")
+                  }}</span>
+                  {{ $t("createPage.orDragAndDrop") }}
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  PNG, JPG, SVG (max 2MB)
+                </p>
+              </div>
+              <input
+                @change="uploadCustomThemeImage"
+                id="theme-dropzone-file"
+                accept="image/*"
+                type="file"
+                class="hidden"
+              />
+            </label>
+
+            <!-- Theme Image Preview -->
+            <div v-if="formState.customThemeImage" class="mt-4">
+              <h3 class="text-lg font-bold mb-2">
+                {{ $t("createPage.themeImagePreview") }}:
+              </h3>
+              <NuxtPicture
+                :src="formState.customThemeImage"
+                class="w-full h-48 object-cover rounded-lg"
+                loading="lazy"
+                width="400"
+                height="192"
+                :img-attrs="{
+                  alt: 'Preview of custom theme image',
+                  style: 'width: 100%; height: 100%; object-fit: cover;',
+                }"
+              />
+              <UButton
+                color="red"
+                @click="removeCustomThemeImage"
+                class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-1 dark:text-white text-sm"
+                size="sm"
+              >
+                {{ $t("createPage.removeThemeImage") }}
+              </UButton>
+            </div>
+          </UFormGroup>
+
           <UFormGroup class="mt-8" name="name">
             <label class="mb-2 inline-block" for="name">{{
               $t("createPage.personName")
@@ -158,8 +250,11 @@
               <NuxtPicture
                 :src="field.image"
                 class="w-full h-96 object-cover inline-block"
+                loading="lazy"
+                width="400"
+                height="384"
                 :img-attrs="{
-                  alt: 'Image preview',
+                  alt: `Preview of uploaded image ${index + 1} for message`,
                   style: 'width: 100%; height: 100%; object-fit: cover;',
                 }"
               />
@@ -195,7 +290,7 @@
 
         <Preview :form="formState" />
       </div>
-    </div>
+    </main>
     <PaymentModal :isOpen="isOpen" @closeModal="closeModal" />
     <UNotifications />
   </NuxtLayout>
@@ -211,56 +306,135 @@ useSeoMeta({
 import { z } from "zod";
 import { useThemeStore } from "~/store/useTheme";
 import type { Form, FormSubmitEvent } from "#ui/types";
-import { reactive, ref } from "vue";
-
+import { reactive, ref, computed } from "vue";
 
 const theme = useThemeStore();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
-const { t, locale } = useI18n();
+const { t } = useI18n();
 
 useSeoMeta({
   title: t("seo.create.title"),
   ogTitle: t("seo.create.ogTitle"),
   description: t("seo.create.description"),
   ogDescription: t("seo.create.ogDescription"),
+  ogImage: "/icons/surpriseme_512_512.png",
+  ogImageAlt: "Create your surprise page - SurpriseMe",
+  twitterCard: "summary_large_image",
+  twitterImage: "/icons/surpriseme_512_512.png",
+  twitterTitle: t("seo.create.title"),
+  twitterDescription: t("seo.create.description"),
+  robots: "index, follow",
+  keywords:
+    "create surprise page, personalized messages, photo upload, themes, birthday, wedding, christmas",
+});
+
+useHead({
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: t("seo.create.title"),
+        description: t("seo.create.description"),
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://surpriseme.app",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Create",
+              item: "https://surpriseme.app/create",
+            },
+          ],
+        },
+      }),
+    },
+  ],
 });
 
 const { status, data: googleUserData } = useAuth();
 
-const schemas = z.object({
-  plan: z.enum(["Basic", "Premium"], { message: "Plan is empty or invalid" }),
-  theme: z.string({ required_error: "Theme is required" }).min(1),
-  songUrl: z.string().optional(),
-  name: z
-    .string({
-      required_error: "Name is required",
-    })
-    .trim(),
-  messages: z
-    .array(
-      z.object({
-        message: z
-          .string({
-            required_error: "Message is required",
-            invalid_type_error: "Must be a text",
-          })
-          .min(1)
-          .max(600)
-          .trim(),
-        image: z
-          .string()
-          .optional()
-          .nullable()
-          .refine((value) => {
-            return value === null || value?.startsWith("data:image");
-          }),
+const schemas = z
+  .object({
+    plan: z.enum(["Basic", "Premium"], {
+      required_error: "Plan is required",
+      invalid_type_error: "Plan is required",
+    }),
+    theme: z
+      .string({
+        required_error: "Theme is required",
       })
-    )
-    .min(1),
-  images: z.array(z.string()).max(3),
-});
+      .min(1, "Theme is required"),
+    songUrl: z.string().optional(),
+    name: z
+      .string({
+        required_error: "Name is required",
+      })
+      .min(1, "Name is required")
+      .trim(),
+    messages: z
+      .array(
+        z.object({
+          message: z
+            .string({
+              required_error: "Message is required",
+              invalid_type_error: "Message must be text",
+            })
+            .min(1, "Message is required")
+            .max(600, "Message must be 600 characters or less")
+            .trim(),
+          image: z
+            .string({
+              required_error: "Image is required",
+            })
+            .min(1, "Image is required")
+            .refine((value) => {
+              return value?.startsWith("data:image");
+            }, "Invalid image format"),
+        })
+      )
+      .min(1, "At least one message is required"),
+    images: z.array(z.string()).max(3),
+    customThemeImage: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.plan === "Premium") {
+        return data.songUrl && data.songUrl.trim().length > 0;
+      }
+      return true;
+    },
+    {
+      message: "Song URL is required for Premium plan",
+      path: ["songUrl"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.theme === "Custom") {
+        return (
+          data.customThemeImage &&
+          data.customThemeImage.trim().length > 0 &&
+          (data.customThemeImage.startsWith("data:image") ||
+            data.customThemeImage.startsWith("http"))
+        );
+      }
+      return true;
+    },
+    {
+      message: "Custom theme image is required when Custom theme is selected",
+      path: ["customThemeImage"],
+    }
+  );
 
 export type Schema = z.output<typeof schemas>;
 const formState = reactive({
@@ -270,6 +444,7 @@ const formState = reactive({
   songUrl: "",
   messages: [] as Array<{ message: string; image: string | null }>,
   images: [] as string[],
+  customThemeImage: null as string | null,
 });
 
 const form = ref<Form<Schema>>();
@@ -308,6 +483,10 @@ const themes = [
     name: "Wedding",
     icon: "i-fluent-emoji-high-contrast-wedding",
   },
+  {
+    name: "Custom",
+    icon: "i-heroicons-photo-20-solid",
+  },
 ];
 
 const plans = [
@@ -323,11 +502,25 @@ const selected = ref(themes[0]);
 const isOpen = ref(false);
 const isSubmitting = ref(false);
 
-const { data: countryCode }= await useFetch("/api/location/geo", {
+const { data: countryCode } = await useFetch("/api/location/geo", {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+// Extract YouTube video ID from URL
+function extractYouTubeId(url: string): string | null {
+  if (!url) return null;
+  const match = url.match(/(?:v=|\/v\/|youtu\.be\/|\/embed\/)([^&?/]+)/);
+  return match ? match[1] : null;
+}
+
+// Create YouTube embed URL with autoplay (unmuted)
+const youtubeEmbedUrl = computed(() => {
+  const videoId = extractYouTubeId(formState.songUrl);
+  if (!videoId) return null;
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
 });
 
 onMounted(async () => {
@@ -348,7 +541,6 @@ onMounted(async () => {
     isOpen.value = true;
     return;
   }
-
 });
 
 function selectedTheme(value: string) {
@@ -358,6 +550,11 @@ function selectedTheme(value: string) {
     theme.snowTheme(true);
   } else if (value == "Wedding") {
     theme.loveTheme(true);
+  } else if (value === "Custom" && formState.customThemeImage) {
+    theme.customTheme(true, formState.customThemeImage);
+  } else if (value === "Custom") {
+    // Show regular confetti if no custom image yet
+    theme.start(true);
   } else {
     theme.start(true);
   }
@@ -365,7 +562,7 @@ function selectedTheme(value: string) {
 
 const { stripe } = useClientStripe();
 
-async function subscribeStripe(websiteId: number) {
+async function subscribeStripe(websiteId: number, websiteGuid: string) {
   if (!websiteId) {
     toast.add({
       title: "Failed to create website",
@@ -382,6 +579,7 @@ async function subscribeStripe(websiteId: number) {
       body: JSON.stringify({
         plan: formState.plan,
         websiteId,
+        websiteGuid,
         countryCode,
       }),
     });
@@ -412,8 +610,46 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
   isSubmitting.value = true;
   try {
+    let customThemeImageUrl = null;
+
+    // Upload custom theme image to R2 if it exists and is base64
+    if (
+      event.data.customThemeImage &&
+      event.data.customThemeImage.startsWith("data:image")
+    ) {
+      try {
+        const { data: uploadData } = await useFetch<{
+          imageUrl: string;
+          success: boolean;
+        }>("/api/theme/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image: event.data.customThemeImage,
+            userEmail: googleUserData.value?.user?.email,
+          }),
+        });
+
+        if (uploadData.value?.imageUrl) {
+          customThemeImageUrl = uploadData.value.imageUrl;
+        }
+      } catch (uploadError) {
+        console.error("Failed to upload custom theme image:", uploadError);
+        toast.add({
+          title: "Failed to upload custom theme image",
+          color: "red",
+        });
+        return;
+      }
+    } else if (event.data.customThemeImage) {
+      // If it's already a URL (not base64), use it as is
+      customThemeImageUrl = event.data.customThemeImage;
+    }
+
     const { data, error: websiteError } = await useFetch<{
-      body: { websiteId: number };
+      body: { websiteId: number; websiteGuid: string };
     }>("/api/website", {
       method: "POST",
       headers: {
@@ -427,11 +663,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         plan: event.data.plan,
         googleUserData: googleUserData.value?.user,
         songUrl: event.data.songUrl,
+        customThemeImage: customThemeImageUrl,
       },
     });
 
     const parsedBody = JSON.parse(data.value?.body as any);
     const websiteId = parsedBody.websiteId;
+    const websiteGuid = parsedBody.websiteGuid;
 
     if (websiteError.value?.statusCode === 400) {
       toast.add({
@@ -443,15 +681,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     console.log(websiteError.value);
 
-    await subscribeStripe(websiteId as number);
-
-    const body = {
-      userEmail: googleUserData.value?.user?.email,
-      name: event.data.name,
-      theme: event.data.theme,
-      messages: event.data.messages,
-      googleUserData: googleUserData.value?.user,
-    };
+    await subscribeStripe(websiteId as number, websiteGuid as string);
 
     form.value!.clear();
     clearFields();
@@ -474,6 +704,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 function clearFields() {
   formState.theme = undefined;
   formState.name = undefined;
+  formState.customThemeImage = null;
   formState.messages = [
     { message: "", image: null },
     { message: "", image: null },
@@ -485,7 +716,8 @@ function areFieldsEmpty() {
   return (
     formState.theme === undefined ||
     formState.name === undefined ||
-    formState.messages.some((message) => message.message === "")
+    formState.messages.some((message) => message.message === "") ||
+    (formState.theme === "Custom" && !formState.customThemeImage)
   );
 }
 
@@ -523,6 +755,54 @@ function limitTextAreaLength(event: Event, index: number) {
   if (input.value.length > 600) {
     input.value = input.value.slice(0, 600);
     formState.messages[index].message = input.value;
+  }
+}
+
+async function uploadCustomThemeImage(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+
+    // Check file size (2MB limit)
+    if (file.size > 2 * 1024 * 1024) {
+      toast.add({
+        title: "Image too large. Please use an image smaller than 2MB.",
+        color: "red",
+      });
+      return;
+    }
+
+    try {
+      const base64 = await getBase64(file);
+
+      // Store base64 for preview (just like message images)
+      formState.customThemeImage = base64;
+
+      // Trigger theme preview if custom theme is selected
+      if (formState.theme === "Custom") {
+        theme.customTheme(true, base64);
+      }
+
+      toast.add({
+        title: "Custom theme image added!",
+        color: "green",
+      });
+    } catch (error) {
+      toast.add({
+        title: "Failed to load theme image",
+        color: "red",
+      });
+      console.error("Theme image load error:", error);
+    }
+  }
+}
+
+function removeCustomThemeImage() {
+  formState.customThemeImage = null;
+
+  // Re-trigger theme preview without custom image
+  if (formState.theme === "Custom") {
+    theme.start(true);
   }
 }
 </script>

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /success/
+Disallow: /_nuxt/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://surpriseme.app/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

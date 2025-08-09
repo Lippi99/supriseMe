@@ -1,9 +1,22 @@
 import { v4 as uuidv4 } from "uuid";
 import prisma from "~/lib/prisma";
-import { uploadFile } from "./aws";
+import { uploadFile, generateUserFolder } from "./r2";
 import { IWebsite } from "~/models/IWebsite";
 
-export const getWebsite = async (websiteId: string) => {
+export const getWebsite = async (websiteGuid: string) => {
+  const website = await prisma.website.findUnique({
+    include: {
+      messages: true,
+    },
+    where: {
+      guid: websiteGuid,
+      active: true,
+    },
+  });
+  return website;
+};
+
+export const getWebsiteById = async (websiteId: string) => {
   const website = await prisma.website.findUnique({
     include: {
       messages: true,
@@ -26,10 +39,11 @@ export const getWebsites = async (customerEmail: string) => {
 };
 
 export const createWebsite = async (website: IWebsite) => {
+  const userFolder = generateUserFolder(website.userEmail);
   const messages = await Promise.all(
     website.messages.map(async (msg) => ({
       message: msg.message,
-      image: await uploadFile(msg.image, `${website.name.trim()}-${uuidv4()}`),
+      image: await uploadFile(msg.image, `${userFolder}/${website.name.trim()}-${uuidv4()}`),
     }))
   );
 
@@ -40,6 +54,7 @@ export const createWebsite = async (website: IWebsite) => {
       theme: website.theme,
       plan: website.plan,
       songUrl: website.songUrl,
+      customThemeImage: website.customThemeImage,
       messages: {
         create: messages,
       },

@@ -20,12 +20,12 @@
               target="_blank"
               class="font-bold"
               v-if="site.active"
-              :href="config.public.baseUrl + '/website/' + site.id"
+              :href="config.public.baseUrl + '/website/' + site.guid"
             >
-              {{ config.public.baseUrl + "/website/" + site.id }}
+              {{ config.public.baseUrl + "/website/" + site.guid }}
             </a>
             <span class="text-gray-500" v-else>{{
-              config.public.baseUrl + "website/" + site.id
+              config.public.baseUrl + "website/" + site.guid
             }}</span>
 
             <div class="relative">
@@ -43,7 +43,7 @@
               <UButton
                 :loading="loadingStates[site.id]"
                 v-if="!site.active"
-                @click="stripeBuyNotActive(site.id, site.plan)"
+                @click="stripeBuyNotActive(site.id, site.guid, site.plan)"
                 :color="'red'"
               >
                 {{ $t("myWebsites.statusInactive") }}</UButton
@@ -113,7 +113,7 @@ const { data } = await useFetch<IWebsiteActiveClients>(
 
 const hasData = computed(() => !!data.value?.websites.length);
 
-async function stripeBuyNotActive(websiteId: number, plan: string) {
+async function stripeBuyNotActive(websiteId: number, websiteGuid: string, plan: string) {
   const amount = plan === "Basic" ? 400 : 1000;
   loadingStates[websiteId] = true;
 
@@ -126,6 +126,7 @@ async function stripeBuyNotActive(websiteId: number, plan: string) {
       body: JSON.stringify({
         plan,
         websiteId,
+        websiteGuid,
         countryCode: countryCode.value,
       }),
     });

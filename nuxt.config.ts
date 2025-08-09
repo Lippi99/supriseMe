@@ -2,17 +2,30 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+  nitro: {
+    prerender: {
+      routes: ["/sitemap.xml"],
+      autoSubfolderIndex: false,
+    },
+  },
+  site: {
+    url: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
+    name: "SurpriseMe",
+    description:
+      "Create surprise pages for someone special with photos, messages and themes",
+    defaultLocale: "pt",
+  },
   runtimeConfig: {
     public: {
-      baseUrl: process.env.NUXT_PUBLIC_BASE_URL
+      baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
     },
     auth: {
       secret: process.env.NUXT_AUTH_SECRET,
       providers: {
         google: {
-          client: process.env.NUXT_AUTH_PROVIDERS_GOOGLE_CLIENT,
-          secret: process.env.NUXT_AUTH_PROVIDERS_GOOGLE_SECRET,
-        }
+          client: process.env.NUXT_GOOGLE_CLIENT,
+          secret: process.env.NUXT_GOOGLE_SECRET,
+        },
       },
     },
     stripe: {
@@ -22,13 +35,15 @@ export default defineNuxtConfig({
         secret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
       },
     },
-    s3: {
-      accessKeyId: process.env.NUXT_STRIPE_CLIENT_KEY,
-      secretKeyId: process.env.NUXT_STRIPE_SECRET_KEY,
+    r2: {
+      accountId: process.env.NUXT_R2_ACCOUNT_ID,
+      apiToken: process.env.NUXT_R2_API_TOKEN,
+      bucketName: process.env.NUXT_R2_BUCKET_NAME,
+      publicDomain: process.env.NUXT_R2_PUBLIC_DOMAIN,
     },
     database: {
-      url: process.env.NUXT_DATABASE_URL,
-    }
+      url: process.env.DATABASE_URL,
+    },
   },
   plugins: [
     {
@@ -41,7 +56,7 @@ export default defineNuxtConfig({
     sessionRefresh: {
       enablePeriodically: 1000 * 60 * 60,
       enableOnWindowFocus: false,
-    }
+    },
   },
   modules: [
     "@sidebase/nuxt-auth",
@@ -51,6 +66,9 @@ export default defineNuxtConfig({
     "@unlok-co/nuxt-stripe",
     "@nuxt/scripts",
     "@nuxtjs/i18n",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+    "@nuxtjs/seo",
   ],
   i18n: {
     vueI18n: "./i18n.config.ts",
@@ -59,24 +77,48 @@ export default defineNuxtConfig({
   },
   stripe: {
     server: {
-      key: process.env.NUXT_STRIPE_SECRET_KEY,
+      key: process.env.NUXT_STRIPE_SECRET_KEY || "",
     },
     client: {
-      key: process.env.NUXT_STRIPE_CLIENT_KEY,
+      key: process.env.NUXT_STRIPE_CLIENT_KEY || "",
     },
   },
 
   postcss: {
     plugins: {
+      "postcss-import": {},
       tailwindcss: {},
       autoprefixer: {},
     },
   },
 
+  css: ["~/public/css/tailwind.css"],
+
   colorMode: {
     preference: "dark",
   },
 
-  css: ["~/public/css/tailwind.css"],
+  sitemap: {
+    hostname: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
+    gzip: true,
+    routes: ["/", "/create", "/privacy-policy", "/term-services"],
+  },
+
+  robots: {
+    hostname: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
+    sitemap: "/sitemap.xml",
+    rules: [
+      {
+        UserAgent: "*",
+        Allow: "/",
+        Disallow: ["/api/*", "/success/*"],
+      },
+    ],
+  },
+
+  seo: {
+    redirectToCanonicalSiteUrl: true,
+  },
+
   compatibilityDate: "2024-11-19",
 });

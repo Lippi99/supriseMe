@@ -31,17 +31,20 @@ model User {
 }
 
 model Website {
-  id        Int       @id @default(autoincrement())
-  name      String
-  theme     String
-  userEmail String
-  plan      String?
-  active    Boolean   @default(false)
-  songUrl   String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  messages  Message[]
-  user      User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
+  id               Int       @id @default(autoincrement())
+  guid             String    @unique @default(uuid())
+  name             String
+  theme            String
+  userEmail        String
+  plan             String?
+  active           Boolean   @default(false)
+  songUrl          String?
+  customThemeImage String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  messages         Message[]
+  user             User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
 
   @@index([userEmail], map: "Website_userEmail_fkey")
+  @@index([guid], map: "Website_guid_idx")
 }

@@ -32,6 +32,7 @@ export default defineEventHandler(async (event) => {
       body: JSON.stringify({
         message: "Website created",
         websiteId: website.id,
+        websiteGuid: website.guid,
       }),
     };
   } catch (e) {

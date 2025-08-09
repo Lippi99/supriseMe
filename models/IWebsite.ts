@@ -12,6 +12,7 @@ export interface IWebsite {
   songUrl: string;
   messages: IWebsiteMessages[];
   image: string;
+  customThemeImage?: string;
 }
 
 export interface IWebsiteClient {

@@ -35,13 +35,15 @@ export const useThemeStore = defineStore("theme", () => {
     }, 10000);
   }
 
-  function startGlobal(theme: string) {
+  function startGlobal(theme: string, customThemeImage?: string) {
     start(); // Start with global confetti
 
     if (theme === "Christmas") {
       snowTheme(false);
     } else if (theme === "Wedding") {
       loveTheme(false);
+    } else if (theme === "Custom" && customThemeImage) {
+      customTheme(false, customThemeImage);
     } else if (theme === "Confetti") {
       confettiTheme(false);
     }
@@ -93,6 +95,23 @@ export const useThemeStore = defineStore("theme", () => {
     });
   }
 
+  function customTheme(preview: boolean = false, imageUrl: string) {
+    start(preview);
+    confetti.update({
+      ...(preview && { canvasId: "preview" }), // Apply only for preview
+      defaultSize: 10,
+      defaultDropRate: 7,
+      particlesPerFrame: 0.5,
+      windSpeedMax: 0.5,
+      particles: [
+        {
+          type: "image",
+          url: imageUrl,
+        },
+      ],
+    });
+  }
+
   function adjustCanvasResolution(canvas: HTMLCanvasElement) {
     const dpr = window.devicePixelRatio || 1;
     canvas.width = canvas.clientWidth * dpr;
@@ -112,5 +131,6 @@ export const useThemeStore = defineStore("theme", () => {
     stop,
     loveTheme,
     snowTheme,
+    customTheme,
   };
 });
