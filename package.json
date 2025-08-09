@@ -11,7 +11,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "prisma": "npx prisma"
+    "prisma": "npx prisma",
+    "d1:setup": "npx wrangler d1 execute surpriseme-db --file=./scripts/d1-setup.sql",
+    "deploy": "npm run build && npx wrangler pages deploy dist --project-name=surpriseme-app"
   },
   "dependencies": {
     "20": "^3.1.9",

@@ -3,10 +3,16 @@ export default defineNuxtConfig({
     enabled: true,
   },
   nitro: {
+    experimental: {
+      wasm: true
+    },
     prerender: {
       routes: ["/sitemap.xml"],
       autoSubfolderIndex: false,
     },
+    rollupConfig: {
+      external: ['sharp']
+    }
   },
   site: {
     url: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
@@ -44,6 +50,11 @@ export default defineNuxtConfig({
     database: {
       url: process.env.DATABASE_URL,
     },
+    d1: {
+      databaseId: process.env.NUXT_CLOUDFLARE_D1_DATABASE_ID,
+      token: process.env.NUXT_CLOUDFLARE_D1_TOKEN,
+      accountId: process.env.NUXT_CLOUDFLARE_ACCOUNT_ID,
+    },
   },
   plugins: [
     {
@@ -69,7 +80,13 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@nuxtjs/robots",
     "@nuxtjs/seo",
+    "@nuxthub/core",
   ],
+  image: {
+    cloudflare: {
+      baseURL: 'https://imagedelivery.net'
+    }
+  },
   i18n: {
     vueI18n: "./i18n.config.ts",
     locales: ["en", "pt"],
