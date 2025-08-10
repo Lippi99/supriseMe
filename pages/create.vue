@@ -361,7 +361,7 @@ useHead({
   ],
 });
 
-const { status, data: googleUserData } = useAuth();
+const { status, data: googleUserData } = useAuthState();
 
 const schemas = z
   .object({
@@ -581,6 +581,7 @@ async function subscribeStripe(websiteId: number, websiteGuid: string) {
         websiteId,
         websiteGuid,
         countryCode,
+        userEmail: googleUserData.value?.user?.email,
       }),
     });
     const sessionId = data.value?.sessionId;

@@ -1,6 +1,5 @@
 import { useServerStripe } from "#stripe/server";
 import { z } from "zod";
-import { getServerSession } from "#auth";
 import prisma from "~/lib/prisma";
 
 // Input validation schema
@@ -10,6 +9,7 @@ const checkoutSchema = z.object({
   plan: z.enum(["Basic", "Premium"], {
     message: "Plan must be Basic or Premium",
   }),
+  userEmail: z.string().email("Valid email is required"),
 });
 
 export default defineEventHandler(async (event) => {
@@ -24,14 +24,12 @@ export default defineEventHandler(async (event) => {
 
     // Validate input
     const validatedData = checkoutSchema.parse(body);
-    const { websiteId, websiteGuid, plan } = validatedData;
+    const { websiteId, websiteGuid, plan, userEmail } = validatedData;
 
-    // Get authenticated user info
-    const session = await getServerSession(event);
-    if (!session?.user?.email) {
+    if (!userEmail) {
       throw createError({
         statusCode: 401,
-        statusMessage: "Authentication required",
+        statusMessage: "User email is required",
       });
     }
 
@@ -39,7 +37,7 @@ export default defineEventHandler(async (event) => {
     const website = await prisma.website.findFirst({
       where: {
         id: websiteId,
-        userEmail: session.user.email,
+        userEmail: userEmail,
       },
     });
 
@@ -91,9 +89,9 @@ export default defineEventHandler(async (event) => {
       metadata: {
         websiteId: websiteId.toString(),
         plan,
-        userEmail: session.user.email,
+        userEmail: userEmail,
       },
-      customer_email: session.user.email,
+      customer_email: userEmail,
       mode: "payment",
       success_url: `${config.public.baseUrl}/success/${websiteGuid}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${config.public.baseUrl}/create?canceled=true`,

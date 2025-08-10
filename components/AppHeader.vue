@@ -18,6 +18,15 @@
           color="red"
           >{{ $t("header.myWebsites") }}
         </UButton>
+        <UButton
+          v-if="isLogged"
+          @click="logout"
+          size="lg"
+          variant="outline"
+          class="dark:text-white"
+          color="gray"
+          >Logout
+        </UButton>
         <button
           aria-label="lang"
           @click="setLocale('pt')"
@@ -46,7 +55,13 @@ import { ref } from "vue";
 const { setLocale } = useI18n();
 
 const isOpen = ref(false);
-const { status } = useAuth();
+const { status, clearUser } = useAuthState();
 
 const isLogged = computed(() => status.value === "authenticated");
+
+const logout = () => {
+  clearUser();
+  // Optionally redirect to home page
+  navigateTo('/');
+};
 </script>

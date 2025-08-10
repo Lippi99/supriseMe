@@ -1,16 +1,8 @@
-import { getServerSession } from "#auth";
-
-export default eventHandler(async (event) => {
-  const session = await getServerSession(event);
-  if (session) {
-    return {
-      status: 200,
-      message: "Authorized",
-      ...session,
-    };
-  }
+export default eventHandler(async () => {
+  // TODO: Implement server-side session management
+  // For now, this endpoint is not needed with client-side auth
   return {
-    status: 401,
-    message: "Unauthorized",
+    status: 501,
+    message: "Not implemented - client-side auth only",
   };
 });

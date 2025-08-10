@@ -93,7 +93,7 @@ const updateIsOpen = (value: boolean) => {
 };
 const config = useRuntimeConfig()
 const { stripe } = useClientStripe();
-const { data: googleData,  } = useAuth();
+const { data: googleData } = useAuthState();
 const toast = useToast();
 
 const loadingStates = reactive<Record<number, boolean>>({});
@@ -128,6 +128,7 @@ async function stripeBuyNotActive(websiteId: number, websiteGuid: string, plan: 
         websiteId,
         websiteGuid,
         countryCode: countryCode.value,
+        userEmail: googleData.value?.user?.email,
       }),
     });
 

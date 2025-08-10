@@ -24,15 +24,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
-    },
-    auth: {
-      secret: process.env.NUXT_AUTH_SECRET,
-      providers: {
-        google: {
-          client: process.env.NUXT_GOOGLE_CLIENT,
-          secret: process.env.NUXT_GOOGLE_SECRET,
-        },
-      },
+      googleSignInClientId: process.env.NUXT_GOOGLE_CLIENT,
     },
     stripe: {
       productId: process.env.NUXT_STRIPE_PRODUCT_ID,
@@ -61,16 +53,11 @@ export default defineNuxtConfig({
       src: "~/plugins/confetti.client",
     },
   ],
-  auth: {
-    isEnabled: true,
-    baseURL: `${process.env.NUXT_PUBLIC_BASE_URL}/api/auth`,
-    sessionRefresh: {
-      enablePeriodically: 1000 * 60 * 60,
-      enableOnWindowFocus: false,
-    },
+  googleSignIn: {
+    clientId: process.env.NUXT_GOOGLE_CLIENT,
   },
   modules: [
-    "@sidebase/nuxt-auth",
+    "nuxt-vue3-google-signin",
     "@nuxt/ui",
     "@nuxt/image",
     "@pinia/nuxt",
