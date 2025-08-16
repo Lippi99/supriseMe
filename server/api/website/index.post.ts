@@ -9,7 +9,8 @@ export default defineEventHandler(async (event) => {
 
     if (!user) {
       console.log(user)
-      await createUser(body.googleUserData);
+      const { createdAt, updatedAt, ...cleanUserData } = body.googleUserData || {};
+      await createUser(cleanUserData);
     }
 
     // if (!user?.active) {
@@ -19,7 +20,8 @@ export default defineEventHandler(async (event) => {
     //   });
     // }
 
-    const website = await createWebsite(body);
+    const { googleUserData, createdAt, updatedAt, ...cleanWebsiteData } = body;
+    const website = await createWebsite(cleanWebsiteData);
     if (!website) {
       return createError({
         statusCode: 400,

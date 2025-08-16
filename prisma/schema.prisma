@@ -3,20 +3,20 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Message {
   id        Int      @id @default(autoincrement())
-  message   String   @db.VarChar(600)
+  message   String
   image     String
   websiteId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  website   Website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
+  website   Website  @relation(fields: [websiteId], references: [id], onDelete: Cascade)
 
-  @@index([websiteId], map: "Message_websiteId_fkey")
+  @@index([websiteId])
 }
 
 model User {
@@ -32,19 +32,19 @@ model User {
 
 model Website {
   id               Int       @id @default(autoincrement())
-  guid             String    @unique @default(uuid())
   name             String
   theme            String
   userEmail        String
   plan             String?
   active           Boolean   @default(false)
   songUrl          String?
-  customThemeImage String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+  customThemeImage String?
+  guid             String    @unique @default(uuid())
   messages         Message[]
-  user             User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
+  user             User      @relation(fields: [userEmail], references: [email])
 
-  @@index([userEmail], map: "Website_userEmail_fkey")
-  @@index([guid], map: "Website_guid_idx")
+  @@index([userEmail])
+  @@index([guid])
 }
