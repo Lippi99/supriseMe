@@ -27,8 +27,8 @@
         <UForm
           ref="form"
           :state="formState"
-          class="flex-1"
           :schema="schema"
+          class="flex-1"
           @submit="onSubmit"
         >
           <UFormGroup class="mb-8" name="plan">
@@ -581,7 +581,6 @@ async function subscribeStripe(websiteId: number, websiteGuid: string) {
         websiteId,
         websiteGuid,
         countryCode,
-        userEmail: googleUserData.value?.user?.email,
       }),
     });
     const sessionId = data.value?.sessionId;

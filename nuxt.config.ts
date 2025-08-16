@@ -125,4 +125,10 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: "2024-11-19",
+
+  hub: {
+    database: true,
+    blob: false,
+    kv: false,
+  },
 });
