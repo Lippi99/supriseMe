@@ -1,8 +1,9 @@
 import prisma from "~/lib/prisma";
 
 export const createUser = async (data: any) => {
+  const { createdAt, updatedAt, ...userData } = data;
   const user = await prisma.user.create({
-    data,
+    data: userData,
   });
   return user;
 };

@@ -6,7 +6,8 @@ export default defineEventHandler(async (event) => {
     const user = await getUser(body.email);
 
     if (!user) {
-      await createUser(body);
+      const { createdAt, updatedAt, ...cleanUserData } = body;
+      await createUser(cleanUserData);
       return {
         statusCode: 201,
         body: JSON.stringify({ message: "User created" }),

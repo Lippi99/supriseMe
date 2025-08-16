@@ -24,3 +24,7 @@ logs
 !.env.example
 
 .wrangler
+
+# Prisma (SQLite local dev DBs)
+prisma/*.db
+prisma/*.db-journal

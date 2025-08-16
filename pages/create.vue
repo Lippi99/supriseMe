@@ -26,9 +26,9 @@
       >
         <UForm
           ref="form"
-          :schema="schemas"
           :state="formState"
           class="flex-1"
+          :schema="schema"
           @submit="onSubmit"
         >
           <UFormGroup class="mb-8" name="plan">
@@ -716,7 +716,9 @@ function areFieldsEmpty() {
   return (
     formState.theme === undefined ||
     formState.name === undefined ||
-    formState.messages.some((message) => message.message === "") ||
+    formState.messages.some(
+      (message) => message.message === "" || !message.image
+    ) ||
     (formState.theme === "Custom" && !formState.customThemeImage)
   );
 }
