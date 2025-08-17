@@ -9,7 +9,7 @@ datasource db {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  message   String
+  message   String   @db.VarChar(600)
   image     String
   websiteId Int
   createdAt DateTime @default(now())
@@ -32,16 +32,16 @@ model User {
 
 model Website {
   id               Int       @id @default(autoincrement())
+  guid             String    @unique @default(uuid())
   name             String
   theme            String
   userEmail        String
   plan             String?
   active           Boolean   @default(false)
   songUrl          String?
+  customThemeImage String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
-  customThemeImage String?
-  guid             String    @unique @default(uuid())
   messages         Message[]
   user             User      @relation(fields: [userEmail], references: [email])
 
