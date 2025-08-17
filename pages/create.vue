@@ -24,13 +24,7 @@
       <div
         class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
       >
-        <UForm
-          ref="form"
-          :schema="schemas"
-          :state="formState"
-          class="flex-1"
-          @submit="onSubmit"
-        >
+        <UForm ref="form" :state="formState" class="flex-1" @submit="onSubmit">
           <UFormGroup class="mb-8" name="plan">
             <label class="mb-2 inline-block" for="plan">{{
               $t("createPage.choosePlan")
@@ -403,7 +397,6 @@ const schemas = z
         })
       )
       .min(1, "At least one message is required"),
-    images: z.array(z.string()).max(3),
     customThemeImage: z.string().optional(),
   })
   .refine(
@@ -443,7 +436,6 @@ const formState = reactive({
   name: undefined,
   songUrl: "",
   messages: [] as Array<{ message: string; image: string | null }>,
-  images: [] as string[],
   customThemeImage: null as string | null,
 });
 
@@ -717,7 +709,9 @@ function areFieldsEmpty() {
   return (
     formState.theme === undefined ||
     formState.name === undefined ||
-    formState.messages.some((message) => message.message === "") ||
+    formState.messages.some(
+      (message) => message.message === "" || !message.image
+    ) ||
     (formState.theme === "Custom" && !formState.customThemeImage)
   );
 }
@@ -733,10 +727,6 @@ async function uploadImageForMessage(event: Event, index: number) {
 function removeImage(index: number) {
   const imageToRemove = formState.messages[index].image;
   if (imageToRemove) {
-    const imageIndex = formState.images.indexOf(imageToRemove);
-    if (imageIndex > -1) {
-      formState.images.splice(imageIndex, 1);
-    }
     formState.messages[index].image = null;
   }
 }

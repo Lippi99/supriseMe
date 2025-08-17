@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -16,7 +16,7 @@ model Message {
   updatedAt DateTime @updatedAt
   website   Website  @relation(fields: [websiteId], references: [id], onDelete: Cascade, map: "Message_websiteId_fkey")
 
-  @@index([websiteId], map: "Message_websiteId_fkey")
+  @@index([websiteId])
 }
 
 model User {
@@ -45,6 +45,6 @@ model Website {
   messages         Message[]
   user             User      @relation(fields: [userEmail], references: [email], map: "Website_userEmail_fkey")
 
-  @@index([userEmail], map: "Website_userEmail_fkey")
-  @@index([guid], map: "Website_guid_idx")
+  @@index([userEmail])
+  @@index([guid])
 }
