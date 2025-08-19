@@ -9,7 +9,6 @@ const checkoutSchema = z.object({
   plan: z.enum(["Basic", "Premium"], {
     message: "Plan must be Basic or Premium",
   }),
-  userEmail: z.string().email("Valid email is required"),
 });
 
 export default defineEventHandler(async (event) => {
@@ -24,12 +23,30 @@ export default defineEventHandler(async (event) => {
 
     // Validate input
     const validatedData = checkoutSchema.parse(body);
-    const { websiteId, websiteGuid, plan, userEmail } = validatedData;
+    const { websiteId, websiteGuid, plan } = validatedData;
 
-    if (!userEmail) {
+    // Extract user email from cookie
+    const authCookie = getCookie(event, "surprise_me_auth_user");
+    let userEmail: string;
+
+    if (!authCookie) {
       throw createError({
         statusCode: 401,
-        statusMessage: "User email is required",
+        statusMessage: "Authentication required - please sign in",
+      });
+    }
+
+    try {
+      const userData = JSON.parse(decodeURIComponent(authCookie));
+      userEmail = userData.email;
+
+      if (!userEmail) {
+        throw new Error("No email found in auth cookie");
+      }
+    } catch (error) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: "Invalid authentication cookie",
       });
     }
 
@@ -49,9 +66,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Generate lookup key based on plan
-    const lookupKey = plan === "Basic" 
-      ? "surpriseme-website-basic" 
-      : "surpriseme-website-premium";
+    const lookupKey =
+      plan === "Basic"
+        ? "surpriseme-website-basic"
+        : "surpriseme-website-premium";
 
     // Get price using lookup key
     let priceData;
@@ -63,7 +81,10 @@ export default defineEventHandler(async (event) => {
 
       priceData = prices[0];
     } catch (error) {
-      console.error(`Failed to fetch price with lookup key: ${lookupKey}`, error);
+      console.error(
+        `Failed to fetch price with lookup key: ${lookupKey}`,
+        error
+      );
       throw createError({
         statusCode: 500,
         statusMessage: "Failed to retrieve pricing information",

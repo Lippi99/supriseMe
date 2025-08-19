@@ -66,6 +66,7 @@ export default defineNuxtConfig({
     cloudflare: {
       baseURL: "https://imagedelivery.net",
     },
+    domains: ["pub-10ca3048728847c5b410c357acd03135.r2.dev"],
   },
   i18n: {
     vueI18n: "./i18n.config.ts",
