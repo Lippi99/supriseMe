@@ -581,8 +581,17 @@ async function subscribeStripe(websiteId: number, websiteGuid: string) {
       throw new Error("Failed to create Checkout session");
     }
 
-    // Redirect to Stripe Checkout
-    await stripe.value.redirectToCheckout({ sessionId });
+    // Use direct redirect to avoid mobile popup blockers
+    const checkoutUrl = data.value?.url;
+    if (checkoutUrl) {
+      // Add slight delay to ensure UI updates before redirect
+      setTimeout(() => {
+        window.location.href = checkoutUrl;
+      }, 100);
+    } else {
+      // Fallback to sessionId redirect
+      await stripe.value.redirectToCheckout({ sessionId });
+    }
   } catch (error) {
     console.log(error);
   }

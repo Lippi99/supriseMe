@@ -46,13 +46,15 @@ export default defineEventHandler(async (event) => {
       return { received: true, message: "Event already processed" };
     }
 
-    console.log(`Processing Stripe event: ${stripeEvent.type} (${stripeEvent.id})`);
+    console.log(
+      `Processing Stripe event: ${stripeEvent.type} (${stripeEvent.id})`
+    );
 
     // Handle different event types
     switch (stripeEvent.type) {
       case "checkout.session.completed": {
         const session = stripeEvent.data.object as any;
-        
+
         // Validate required data
         if (!session.metadata?.websiteId || !session.customer_details?.email) {
           console.error("Missing required session data:", {
@@ -71,22 +73,28 @@ export default defineEventHandler(async (event) => {
             session.customer_details.email,
             session.metadata.websiteId
           );
-          console.log(`Website ${session.metadata.websiteId} activated successfully`);
+          console.log(
+            `Website ${session.metadata.websiteId} activated successfully`
+          );
         } else {
-          console.log(`Payment not completed for session ${session.id}, status: ${session.payment_status}`);
+          console.log(
+            `Payment not completed for session ${session.id}, status: ${session.payment_status}`
+          );
         }
         break;
       }
 
       case "checkout.session.async_payment_succeeded": {
         const session = stripeEvent.data.object as any;
-        
+
         if (session.metadata?.websiteId && session.customer_details?.email) {
           await updateWebsiteSuccess(
             session.customer_details.email,
             session.metadata.websiteId
           );
-          console.log(`Website ${session.metadata.websiteId} activated after async payment`);
+          console.log(
+            `Website ${session.metadata.websiteId} activated after async payment`
+          );
         }
         break;
       }
@@ -94,13 +102,15 @@ export default defineEventHandler(async (event) => {
       case "checkout.session.async_payment_failed":
       case "checkout.session.expired": {
         const session = stripeEvent.data.object as any;
-        
+
         if (session.metadata?.websiteId && session.customer_details?.email) {
           await deleteWebsiteFailure(
             session.customer_details.email,
             session.metadata.websiteId
           );
-          console.log(`Website ${session.metadata.websiteId} deleted due to payment failure/expiry`);
+          console.log(
+            `Website ${session.metadata.websiteId} deleted due to payment failure/expiry`
+          );
         }
         break;
       }
@@ -116,15 +126,14 @@ export default defineEventHandler(async (event) => {
     if (processedEvents.size > 1000) {
       const eventsArray = Array.from(processedEvents);
       processedEvents.clear();
-      eventsArray.slice(-500).forEach(id => processedEvents.add(id));
+      eventsArray.slice(-500).forEach((id) => processedEvents.add(id));
     }
 
-    return { 
-      received: true, 
+    return {
+      received: true,
       eventId: stripeEvent.id,
-      eventType: stripeEvent.type 
+      eventType: stripeEvent.type,
     };
-
   } catch (error: any) {
     console.error("Webhook processing error:", error);
 

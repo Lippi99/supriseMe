@@ -137,7 +137,17 @@ async function stripeBuyNotActive(websiteId: number, websiteGuid: string, plan: 
       throw new Error("Failed to create Checkout session");
     }
 
-    await stripe.value.redirectToCheckout({ sessionId });
+    // Use direct redirect to avoid mobile popup blockers
+    const checkoutUrl = data.value?.url;
+    if (checkoutUrl) {
+      // Add slight delay to ensure UI updates before redirect
+      setTimeout(() => {
+        window.location.href = checkoutUrl;
+      }, 100);
+    } else {
+      // Fallback to sessionId redirect
+      await stripe.value.redirectToCheckout({ sessionId });
+    }
   } catch {
     toast.add({
       title: "An error occurred while trying to buy",

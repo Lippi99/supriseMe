@@ -125,7 +125,7 @@ export default defineEventHandler(async (event) => {
       // Add phone number collection for better fraud prevention
       phone_number_collection: { enabled: true },
       // Set default locale to English
-      locale: "en",
+      locale: "pt-BR",
     });
 
     // Log successful session creation (without sensitive data)
