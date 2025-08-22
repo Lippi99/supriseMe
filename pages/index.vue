@@ -192,13 +192,8 @@
             ></div>
             <CardSupport
               :title="$t('indexPage.sectionTwo.descriptionOne')"
-              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-violet-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-violet-100 dark:border-violet-800 rounded-2xl sm:rounded-3xl"
+              class="relative max-w-[500px] w-full h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-violet-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-violet-100 dark:border-violet-800 rounded-2xl sm:rounded-3xl"
             />
-            <div
-              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
-            >
-              1
-            </div>
           </div>
 
           <div class="group relative touch-manipulation">
@@ -207,13 +202,8 @@
             ></div>
             <CardSupport
               :title="$t('indexPage.sectionTwo.descriptionTwo')"
-              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-purple-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-purple-100 dark:border-purple-800 rounded-2xl sm:rounded-3xl"
+              class="relative max-w-[500px] w-full h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-purple-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-purple-100 dark:border-purple-800 rounded-2xl sm:rounded-3xl"
             />
-            <div
-              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500 to-fuchsia-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
-            >
-              2
-            </div>
           </div>
 
           <div class="group relative touch-manipulation">
@@ -222,30 +212,18 @@
             ></div>
             <CardSupport
               :title="$t('indexPage.sectionTwo.descriptionThree')"
-              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-fuchsia-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-fuchsia-100 dark:border-fuchsia-800 rounded-2xl sm:rounded-3xl"
+              class="relative max-w-[500px] w-full h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-fuchsia-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-fuchsia-100 dark:border-fuchsia-800 rounded-2xl sm:rounded-3xl"
             />
-            <div
-              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
-            >
-              3
-            </div>
           </div>
 
-          <div
-            class="group relative touch-manipulation md:col-span-2 xl:col-span-1"
-          >
+          <div class="group relative touch-manipulation">
             <div
               class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-rose-100/50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
             ></div>
             <CardSupport
               :title="$t('indexPage.sectionTwo.descriptionFour')"
-              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-pink-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-pink-100 dark:border-pink-800 rounded-2xl sm:rounded-3xl"
+              class="relative max-w-[500px] w-full h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-pink-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-pink-100 dark:border-pink-800 rounded-2xl sm:rounded-3xl"
             />
-            <div
-              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
-            >
-              4
-            </div>
           </div>
         </div>
       </div>

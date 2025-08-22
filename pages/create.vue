@@ -2,7 +2,7 @@
   <NuxtLayout name="custom">
     <!-- Beautiful gradient background -->
     <div
-      class="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900/50 to-blue-950 relative overflow-hidden"
+      class="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900/50 to-blue-950 relative"
     >
       <!-- Background decorative elements -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -18,7 +18,7 @@
       </div>
 
       <main
-        class="relative z-10 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+        class="relative z-10 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen"
         role="main"
       >
         <!-- Enhanced header with modern styling -->
@@ -60,17 +60,7 @@
             <div
               class="absolute inset-0 bg-gradient-to-br from-violet-100/50 to-purple-100/50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-2xl sm:rounded-3xl blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
             ></div>
-            <iframe
-              :src="youtubeEmbedUrl"
-              width="100%"
-              height="400"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-              class="relative rounded-2xl sm:rounded-3xl shadow-xl border border-white/50 dark:border-gray-700/50 backdrop-blur-sm hidden sm:block"
-            ></iframe>
-            <!-- Mobile YouTube player with smaller height -->
+
             <iframe
               :src="youtubeEmbedUrl"
               width="100%"
@@ -86,10 +76,10 @@
 
         <!-- Main content with modern layout -->
         <div
-          class="flex flex-col gap-8 lg:gap-12 xl:gap-16 w-full max-w-screen-2xl mx-auto items-start"
+          class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 w-full max-w-screen-2xl mx-auto items-start lg:min-h-screen"
         >
           <!-- Form with glassmorphism styling -->
-          <div class="flex-1 lg:flex-[1.2] w-full">
+          <div class="w-full">
             <div class="relative group">
               <!-- Glowing background -->
 
@@ -523,8 +513,8 @@
           </div>
 
           <!-- Preview Section with Enhanced Styling -->
-          <div class="w-full">
-            <div class="lg:sticky lg:top-8">
+          <div class="w-full sticky top-32">
+            <div class="max-h-[calc(100vh-2rem)] overflow-y-auto">
               <div class="group">
                 <!-- Glowing background -->
 
