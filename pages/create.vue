@@ -7,13 +7,13 @@
       <!-- Background decorative elements -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          class="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-br from-blue-400/10 to-cyan-600/10 rounded-full blur-2xl sm:blur-3xl animate-pulse"
+          class="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-br from-violet-400/10 to-purple-600/10 rounded-full blur-2xl sm:blur-3xl animate-pulse"
         ></div>
         <div
-          class="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-tr from-teal-400/10 to-blue-600/10 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"
+          class="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-tr from-violet-400/10 to-purple-600/10 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"
         ></div>
         <div
-          class="absolute top-1/3 right-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-r from-blue-400/5 to-cyan-400/5 rounded-full blur-xl sm:blur-2xl animate-spin-slow"
+          class="absolute top-1/3 right-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-r from-violet-400/5 to-purple-400/5 rounded-full blur-xl sm:blur-2xl animate-spin-slow"
         ></div>
       </div>
 
@@ -92,9 +92,6 @@
           <div class="flex-1 lg:flex-[1.2] w-full">
             <div class="relative group">
               <!-- Glowing background -->
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-white/60 to-violet-50/60 dark:from-gray-800/60 dark:to-violet-900/30 rounded-2xl sm:rounded-3xl blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
-              ></div>
 
               <!-- Form container -->
               <div
@@ -308,12 +305,12 @@
                       </label>
                       <div class="relative group">
                         <div
-                          class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                          class="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
                         ></div>
                         <UInput
                           v-model="formState.name"
                           placeholder="Sarah, Peter, John..."
-                          class="relative border-2 border-blue-200 dark:border-blue-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-sm sm:text-base"
+                          class="relative border-2 border-violet-200 dark:border-violet-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-sm sm:text-base"
                         />
                       </div>
                     </div>
@@ -530,18 +527,15 @@
             <div class="lg:sticky lg:top-8">
               <div class="group">
                 <!-- Glowing background -->
-                <div
-                  class="absolute inset-0 bg-gradient-to-br from-amber-50/60 to-orange-50/60 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl sm:rounded-3xl blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
-                ></div>
 
                 <!-- Preview container -->
                 <div
-                  class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-amber-100 dark:border-amber-800"
+                  class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-violet-100 dark:border-violet-800"
                 >
                   <div class="mb-6">
                     <div class="flex items-center gap-3 mb-4">
                       <div
-                        class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-lg"
+                        class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg"
                       >
                         <svg
                           class="w-5 h-5 text-white"
@@ -564,13 +558,13 @@
                         </svg>
                       </div>
                       <h2
-                        class="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"
+                        class="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent"
                       >
                         Live Preview
                       </h2>
                     </div>
                     <div
-                      class="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full shadow-lg"
+                      class="w-20 h-1 bg-gradient-to-r from-violet-500 to-purple-500 rounded-full shadow-lg"
                     ></div>
                   </div>
 
