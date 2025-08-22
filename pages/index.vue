@@ -1,105 +1,414 @@
 <template>
   <NuxtLayout name="custom">
+    <!-- Hero Section -->
     <section
-      class="py-[47px] pl-24 pr-24 lg:pr-0 lg:max-w-7xl m-auto"
+      class="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-blue-950"
       aria-labelledby="hero-heading"
     >
+      <!-- Animated background elements - Responsive sizes -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div
+          class="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-br from-blue-400/20 to-cyan-600/20 rounded-full blur-2xl sm:blur-3xl animate-pulse"
+        ></div>
+        <div
+          class="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-tr from-teal-400/20 to-blue-600/20 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"
+        ></div>
+        <div
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-r from-blue-400/10 to-cyan-400/10 rounded-full blur-2xl sm:blur-3xl animate-spin-slow"
+        ></div>
+      </div>
+
       <div
-        class="flex flex-col-reverse items-center justify-center lg:flex-row"
+        class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-24 max-w-7xl relative z-10"
       >
         <div
-          class="flex-1 my-10 flex flex-col items-center justify-center lg:justify-start lg:items-start"
+          class="flex flex-col-reverse items-center justify-between gap-8 sm:gap-12 lg:flex-row lg:gap-16"
         >
-          <h1
-            id="hero-heading"
-            class="text-3xl w-11/12 xl:text-7xl lg:text-5xl md:text-4xl sm:text-3xl"
+          <div
+            class="flex-1 text-center lg:text-left space-y-6 sm:space-y-8 lg:space-y-10"
           >
-            {{ $t("indexPage.sectionOne.title") }}
-          </h1>
-          <p
-            class="text-lg w-11/12 mt-10 xl:text-2xl lg:text-lg md:text-lg sm:text-lg lg:w-3/4"
+            <!-- Badge - Mobile optimized -->
+            <div
+              class="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-violet-200 dark:border-violet-700 shadow-lg"
+            >
+              <span
+                class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent"
+              >
+                ✨ Create Magic Moments
+              </span>
+            </div>
+
+            <!-- Mobile-first responsive heading -->
+            <h1
+              id="hero-heading"
+              class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-[1.1] tracking-tight"
+            >
+              {{ $t("indexPage.sectionOne.title") }}
+            </h1>
+
+            <!-- Mobile-optimized description -->
+            <p
+              class="text-lg xs:text-xl sm:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light px-2 sm:px-0"
+            >
+              {{ $t("indexPage.sectionOne.description") }}
+            </p>
+
+            <!-- Mobile-optimized button layout -->
+            <div
+              class="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-stretch xs:items-center px-2 sm:px-0"
+            >
+              <NuxtLinkLocale to="/create" class="group w-full xs:w-auto">
+                <UButton
+                  class="w-full xs:w-auto text-lg sm:text-xl lg:text-2xl px-8 py-4 sm:px-10 sm:py-5 lg:px-12 lg:py-6 font-bold text-white bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 hover:from-violet-700 hover:via-purple-700 hover:to-fuchsia-700 transform transition-all duration-500 hover:scale-105 sm:hover:scale-110 hover:-translate-y-1 shadow-2xl hover:shadow-violet-500/25 rounded-2xl border-0 relative overflow-hidden touch-manipulation"
+                  block
+                  :label="$t('indexPage.sectionOne.button')"
+                />
+              </NuxtLinkLocale>
+
+              <!-- Mobile-friendly secondary button -->
+              <button
+                class="group flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300 py-4 px-4 xs:py-0 xs:px-0 touch-manipulation"
+              >
+                <svg
+                  class="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a2.5 2.5 0 110 5H9V10z"
+                  />
+                </svg>
+                <span class="font-medium text-sm sm:text-base">Watch Demo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile-optimized image section -->
+          <div
+            class="flex-1 relative w-full max-w-md sm:max-w-lg lg:max-w-none"
           >
-            {{ $t("indexPage.sectionOne.description") }}
-          </p>
-          <div class="max-w-72 w-full mt-8">
-            <NuxtLinkLocale to="/create">
-              <UButton
-                class="text-2xl py-5 dark:text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600"
-                block
-                :label="$t('indexPage.sectionOne.button')"
-              />
-            </NuxtLinkLocale>
+            <div class="relative">
+              <!-- Mobile-optimized floating cards -->
+              <div
+                class="absolute -top-4 -left-4 sm:-top-8 sm:-left-8 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl border border-violet-100 dark:border-violet-800 p-2 sm:p-3 lg:p-4 animate-float"
+              >
+                <div
+                  class="w-full h-full bg-gradient-to-br from-violet-400 to-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center"
+                >
+                  <span class="text-lg sm:text-xl lg:text-2xl">💝</span>
+                </div>
+              </div>
+
+              <div
+                class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl border border-fuchsia-100 dark:border-fuchsia-800 p-2 sm:p-3 animate-float-delayed"
+              >
+                <div
+                  class="w-full h-full bg-gradient-to-br from-fuchsia-400 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center"
+                >
+                  <span class="text-sm sm:text-lg lg:text-xl">🎉</span>
+                </div>
+              </div>
+
+              <div
+                class="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 w-18 h-18 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl border border-purple-100 dark:border-purple-800 p-2 sm:p-3 lg:p-4 animate-float-slow"
+              >
+                <div
+                  class="w-full h-full bg-gradient-to-br from-purple-400 to-indigo-500 rounded-lg sm:rounded-xl flex items-center justify-center"
+                >
+                  <span class="text-lg sm:text-xl lg:text-2xl">❤️</span>
+                </div>
+              </div>
+
+              <!-- Mobile-optimized main image -->
+              <div
+                class="relative transform transition-all duration-700 hover:scale-105 lg:hover:rotate-1"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-tr from-violet-600/20 via-purple-600/20 to-fuchsia-600/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-105"
+                ></div>
+                <NuxtImg
+                  class="relative w-full h-auto object-cover rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl border-2 sm:border-4 border-white/50 dark:border-gray-700/50 backdrop-blur-sm"
+                  alt="People celebrating and creating personalized surprise pages with photos and messages"
+                  src="/images/photo.svg"
+                  loading="eager"
+                  width="600"
+                  height="500"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 rounded-2xl sm:rounded-3xl"
+                ></div>
+              </div>
+            </div>
           </div>
         </div>
-        <NuxtImg
-          class="flex-1 min-w-96 w-full object-cover"
-          alt="People celebrating and creating personalized surprise pages with photos and messages"
-          src="/images/photo.svg"
-          loading="eager"
-          width="500"
-          height="400"
-        />
       </div>
     </section>
 
+    <!-- How It Works Section -->
     <section
-      class="py-[47px] px-10 lg:max-w-7xl lg:pl-24 m-auto"
+      class="py-12 sm:py-20 lg:py-32 bg-gradient-to-b from-gray-900 via-slate-900/30 to-gray-900 relative overflow-hidden"
       aria-labelledby="how-it-works"
     >
-      <h2 id="how-it-works" class="text-5xl">
-        {{ $t("indexPage.sectionTwo.title") }}
-      </h2>
+      <!-- Mobile-optimized background decorations -->
 
       <div
-        class="mt-9 grid grid-cols-1 gap-10 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2"
+        class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10"
       >
-        <CardSupport :title="$t('indexPage.sectionTwo.descriptionOne')" />
-        <CardSupport :title="$t('indexPage.sectionTwo.descriptionTwo')" />
-        <CardSupport :title="$t('indexPage.sectionTwo.descriptionThree')" />
-        <CardSupport :title="$t('indexPage.sectionTwo.descriptionFour')" />
+        <!-- Mobile-optimized header -->
+        <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div
+            class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-violet-100 to-purple-100 dark:from-violet-900/50 dark:to-purple-900/50 backdrop-blur-sm border border-violet-200 dark:border-violet-700 shadow-lg mb-4 sm:mb-6"
+          >
+            <span
+              class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-700 to-purple-700 bg-clip-text text-transparent"
+            >
+              🚀 Simple Process
+            </span>
+          </div>
+
+          <h2
+            id="how-it-works"
+            class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-violet-700 via-purple-700 to-fuchsia-700 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight px-2 sm:px-0"
+          >
+            {{ $t("indexPage.sectionTwo.title") }}
+          </h2>
+
+          <div
+            class="w-24 sm:w-32 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 mx-auto rounded-full shadow-lg"
+          ></div>
+        </div>
+
+        <!-- Mobile-first grid layout -->
+        <div
+          class="grid grid-cols-1 gap-6 sm:gap-8 md:gap-10 md:grid-cols-2 xl:grid-cols-4"
+        >
+          <div class="group relative touch-manipulation">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-violet-100/50 to-purple-100/50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+            <CardSupport
+              :title="$t('indexPage.sectionTwo.descriptionOne')"
+              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-violet-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-violet-100 dark:border-violet-800 rounded-2xl sm:rounded-3xl"
+            />
+            <div
+              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
+            >
+              1
+            </div>
+          </div>
+
+          <div class="group relative touch-manipulation">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-fuchsia-100/50 dark:from-purple-900/20 dark:to-fuchsia-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+            <CardSupport
+              :title="$t('indexPage.sectionTwo.descriptionTwo')"
+              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-purple-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-purple-100 dark:border-purple-800 rounded-2xl sm:rounded-3xl"
+            />
+            <div
+              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500 to-fuchsia-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
+            >
+              2
+            </div>
+          </div>
+
+          <div class="group relative touch-manipulation">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-fuchsia-100/50 to-pink-100/50 dark:from-fuchsia-900/20 dark:to-pink-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+            <CardSupport
+              :title="$t('indexPage.sectionTwo.descriptionThree')"
+              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-fuchsia-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-fuchsia-100 dark:border-fuchsia-800 rounded-2xl sm:rounded-3xl"
+            />
+            <div
+              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
+            >
+              3
+            </div>
+          </div>
+
+          <div
+            class="group relative touch-manipulation md:col-span-2 xl:col-span-1"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-rose-100/50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+            <CardSupport
+              :title="$t('indexPage.sectionTwo.descriptionFour')"
+              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-pink-500/25 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-pink-100 dark:border-pink-800 rounded-2xl sm:rounded-3xl"
+            />
+            <div
+              class="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg"
+            >
+              4
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- Pricing Section -->
     <section
-      class="py-[187px] px-10 lg:max-w-7xl lg:pl-24 m-auto"
+      class="py-12 sm:py-20 lg:py-32 bg-gradient-to-br from-gray-900 via-slate-800 to-blue-950/50 relative overflow-hidden"
       aria-labelledby="pricing-plans"
     >
-      <h2 id="pricing-plans" class="text-center text-5xl font-bold mb-16">
-        {{ $t("indexPage.sectionThree.title") }}
-      </h2>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
-        <Plans
-          :title="$t('indexPage.sectionThree.basic.title')"
-          :price="$t('indexPage.sectionThree.basic.price')"
-          :benefits="[
-            $t('indexPage.sectionThree.basic.descriptionOne'),
-            $t('indexPage.sectionThree.basic.descriptionTwo'),
-            $t('indexPage.sectionThree.basic.descriptionThree'),
-          ]"
-          @set-plan-url="handleSetPlanUrl"
-        />
-        <Plans
-          mostPicked
-          :title="$t('indexPage.sectionThree.premium.title')"
-          :price="$t('indexPage.sectionThree.premium.price')"
-          :benefits="[
-            $t('indexPage.sectionThree.premium.descriptionOne'),
-            $t('indexPage.sectionThree.premium.descriptionTwo'),
-            $t('indexPage.sectionThree.premium.descriptionThree'),
-          ]"
-          @set-plan-url="handleSetPlanUrl"
-        />
+      <!-- Mobile-optimized background decorations -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          class="absolute top-0 left-1/4 w-36 h-36 sm:w-72 sm:h-72 bg-gradient-to-br from-blue-300/20 to-cyan-400/20 rounded-full blur-2xl sm:blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-0 right-1/4 w-36 h-36 sm:w-72 sm:h-72 bg-gradient-to-tl from-teal-300/20 to-blue-400/20 rounded-full blur-2xl sm:blur-3xl"
+        ></div>
+      </div>
+
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10"
+      >
+        <!-- Mobile-optimized header -->
+        <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div
+            class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-emerald-100 to-teal-100 dark:from-emerald-900/50 dark:to-teal-900/50 backdrop-blur-sm border border-emerald-200 dark:border-emerald-700 shadow-lg mb-4 sm:mb-6"
+          >
+            <span
+              class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-emerald-700 to-teal-700 bg-clip-text text-transparent"
+            >
+              💎 Choose Your Plan
+            </span>
+          </div>
+
+          <h2
+            id="pricing-plans"
+            class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-violet-700 via-purple-700 to-fuchsia-700 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight px-2 sm:px-0"
+          >
+            {{ $t("indexPage.sectionThree.title") }}
+          </h2>
+
+          <div
+            class="w-24 sm:w-32 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 mx-auto rounded-full shadow-lg"
+          ></div>
+        </div>
+
+        <!-- Mobile-first pricing grid -->
+        <div
+          class="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:gap-12 max-w-5xl mx-auto"
+        >
+          <!-- Basic Plan -->
+          <div class="group relative touch-manipulation">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-100/50 to-indigo-100/50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+            <Plans
+              :title="$t('indexPage.sectionThree.basic.title')"
+              :price="$t('indexPage.sectionThree.basic.price')"
+              :benefits="[
+                $t('indexPage.sectionThree.basic.descriptionOne'),
+                $t('indexPage.sectionThree.basic.descriptionTwo'),
+                $t('indexPage.sectionThree.basic.descriptionThree'),
+              ]"
+              @set-plan-url="handleSetPlanUrl"
+              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 shadow-lg sm:shadow-xl hover:shadow-xl sm:hover:shadow-2xl hover:shadow-blue-500/25 bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg border border-blue-100 dark:border-blue-800 rounded-2xl sm:rounded-3xl"
+            />
+          </div>
+
+          <!-- Premium Plan -->
+          <div class="group relative touch-manipulation">
+            <!-- Mobile-optimized popular badge -->
+            <div
+              class="absolute -top-4 sm:-top-6 left-1/2 transform -translate-x-1/2 z-20"
+            >
+              <div class="relative">
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur-md sm:blur-lg opacity-75"
+                ></div>
+                <span
+                  class="relative bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg sm:shadow-xl border border-white/20 backdrop-blur-sm"
+                >
+                  ⭐ Most Popular
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-violet-100/50 to-fuchsia-100/50 dark:from-violet-900/30 dark:to-fuchsia-900/30 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+
+            <!-- Mobile-optimized glowing border effect -->
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 rounded-2xl sm:rounded-3xl opacity-75 blur-sm"
+            ></div>
+            <div
+              class="absolute inset-0.5 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl"
+            ></div>
+
+            <Plans
+              mostPicked
+              :title="$t('indexPage.sectionThree.premium.title')"
+              :price="$t('indexPage.sectionThree.premium.price')"
+              :benefits="[
+                $t('indexPage.sectionThree.premium.descriptionOne'),
+                $t('indexPage.sectionThree.premium.descriptionTwo'),
+                $t('indexPage.sectionThree.premium.descriptionThree'),
+              ]"
+              @set-plan-url="handleSetPlanUrl"
+              class="relative h-full transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-3 shadow-xl sm:shadow-2xl hover:shadow-violet-500/30 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl border-2 border-transparent"
+            />
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- FAQ Section -->
     <section
-      class="py-[27px] px-10 lg:max-w-7xl lg:pl-24 m-auto"
+      class="py-12 sm:py-20 lg:py-32 bg-gradient-to-b from-gray-900 via-gray-800/50 to-gray-900 relative overflow-hidden"
       aria-labelledby="faq-section"
     >
-      <h2 id="faq-section" class="text-center text-5xl font-bold mb-10">
-        {{ $t("indexPage.sectionFour.title") }}
-      </h2>
-      <Faq />
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10"
+      >
+        <!-- Mobile-optimized header -->
+        <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div
+            class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/50 dark:to-indigo-900/50 backdrop-blur-sm border border-blue-200 dark:border-blue-700 shadow-lg mb-4 sm:mb-6"
+          >
+            <span
+              class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent"
+            >
+              ❓ Got Questions?
+            </span>
+          </div>
+
+          <h2
+            id="faq-section"
+            class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight px-2 sm:px-0"
+          >
+            {{ $t("indexPage.sectionFour.title") }}
+          </h2>
+
+          <div
+            class="w-24 sm:w-32 h-1 sm:h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 mx-auto rounded-full shadow-lg"
+          ></div>
+        </div>
+
+        <!-- Mobile-optimized FAQ container -->
+        <div class="relative group touch-manipulation">
+          <!-- Mobile-friendly glowing background -->
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-blue-100/50 to-violet-100/50 dark:from-blue-900/20 dark:to-violet-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+          ></div>
+
+          <!-- Mobile-optimized FAQ container -->
+          <div
+            class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl sm:shadow-2xl border border-blue-100 dark:border-blue-800 transform transition-all duration-500 hover:-translate-y-1 hover:shadow-blue-500/25"
+          >
+            <Faq />
+          </div>
+        </div>
+      </div>
     </section>
   </NuxtLayout>
 </template>
@@ -107,16 +416,7 @@
 <script setup lang="ts">
 const route = useRouter();
 const { t } = useI18n();
-
-const { data } = useFetch("/api/stripe/prices");
-
 const { locale } = useI18n();
-
-const pricePremium = computed(() => {
-  return locale.value === "en"
-    ? `$ ${data.value?.prices[1].usd}`
-    : `R$ ${data.value?.prices[1].brl}`;
-});
 
 useSeoMeta({
   title: t("seo.index.title"),
@@ -170,3 +470,142 @@ function handleSetPlanUrl(url: string) {
   route.push(url);
 }
 </script>
+
+<style scoped>
+/* Keyframe animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Animation classes */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-float-slow {
+  animation: float-slow 10s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Reduce animation intensity on mobile for better performance */
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 10s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 12s ease-in-out infinite;
+    animation-delay: 0.5s;
+  }
+
+  /* Optimize hover effects for touch devices */
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.05);
+  }
+
+  /* Ensure proper touch targets */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Tablet-specific optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Slightly reduced animations for tablet */
+  .animate-spin-slow {
+    animation: spin-slow 25s linear infinite;
+  }
+}
+
+/* Ensure smooth scrolling on all devices */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-delayed,
+  .animate-float-slow,
+  .animate-spin-slow {
+    animation: none;
+  }
+
+  .transition-all,
+  .transition-transform,
+  .transition-colors,
+  .transition-shadow {
+    transition: none;
+  }
+}
+
+/* Custom width for extra small screens */
+.w-18 {
+  width: 4.5rem;
+}
+
+.h-18 {
+  height: 4.5rem;
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+</style>

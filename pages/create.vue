@@ -1,290 +1,589 @@
 <template>
   <NuxtLayout name="custom">
-    <main class="py-[17px] px-14 lg:pr-0 lg:max-w-7xl m-auto" role="main">
-      <header>
-        <h1 class="text-5xl font-bold">{{ $t("createPage.title") }}</h1>
-      </header>
-      <span class="ml-1 mt-5 inline-block">{{
-        $t("createPage.instructions")
-      }}</span>
-
-      <!-- YouTube Player -->
-      <div v-if="youtubeEmbedUrl" class="w-full max-w-4xl mx-auto mt-6">
-        <iframe
-          :src="youtubeEmbedUrl"
-          width="100%"
-          height="500"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-          class="rounded-lg hidden"
-        ></iframe>
+    <!-- Beautiful gradient background -->
+    <div
+      class="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900/50 to-blue-950 relative overflow-hidden"
+    >
+      <!-- Background decorative elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          class="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-br from-blue-400/10 to-cyan-600/10 rounded-full blur-2xl sm:blur-3xl animate-pulse"
+        ></div>
+        <div
+          class="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-40 h-40 sm:w-80 sm:h-80 bg-gradient-to-tr from-teal-400/10 to-blue-600/10 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"
+        ></div>
+        <div
+          class="absolute top-1/3 right-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-r from-blue-400/5 to-cyan-400/5 rounded-full blur-xl sm:blur-2xl animate-spin-slow"
+        ></div>
       </div>
-      <div
-        class="flex-col-reverse max-w-screen-xl w-full mt-10 flex items-center gap-32 lg:flex-row lg:items-start"
+
+      <main
+        class="relative z-10 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+        role="main"
       >
-        <UForm ref="form" :state="formState" class="flex-1" @submit="onSubmit">
-          <UFormGroup class="mb-8" name="plan">
-            <label class="mb-2 inline-block" for="plan">{{
-              $t("createPage.choosePlan")
-            }}</label>
-            <USelectMenu
-              @change="handleSetPlanUrl"
-              class="border border-[#FF4E6D]"
-              v-model="formState.plan"
-              value-attribute="name"
-              :options="plans"
-              option-attribute="name"
-            >
-            </USelectMenu>
-          </UFormGroup>
-
-          <UFormGroup
-            v-if="formState.plan === 'Premium'"
-            class="mb-8"
-            name="songUrl"
+        <!-- Enhanced header with modern styling -->
+        <header class="text-center mb-8 sm:mb-12 lg:mb-16">
+          <!-- Badge -->
+          <div
+            class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-violet-100 to-purple-100 dark:from-violet-900/50 dark:to-purple-900/50 backdrop-blur-sm border border-violet-200 dark:border-violet-700 shadow-lg mb-4 sm:mb-6"
           >
-            <label class="mb-2 inline-block" for="songUrl">{{
-              $t("createPage.pickSong")
-            }}</label>
-            <UInput
-              v-model="formState.songUrl"
-              placeholder="https://www.youtube.com/watch?v=4ZWKR2zJESk"
-              class="border border-[#FF4E6D]"
-            />
-          </UFormGroup>
-
-          <UFormGroup name="theme">
-            <label class="mb-2 inline-block" for="theme">{{
-              $t("createPage.chooseTheme")
-            }}</label>
-            <USelectMenu
-              @change="selectedTheme"
-              class="border border-[#FF4E6D]"
-              v-model="formState.theme"
-              value-attribute="name"
-              :options="themes"
-              option-attribute="name"
+            <span
+              class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-700 to-purple-700 bg-clip-text text-transparent"
             >
-              <template #leading>
-                <UIcon
-                  v-if="selected.icon"
-                  :name="(selected.icon as string)"
-                  class="w-5 h-5"
-                />
-              </template>
-            </USelectMenu>
-          </UFormGroup>
+              ✨ Create Your Magic
+            </span>
+          </div>
 
-          <!-- Custom Theme Image Upload -->
-          <UFormGroup
-            v-if="formState.theme === 'Custom'"
-            class="mt-8"
-            name="customThemeImage"
+          <h1
+            class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight mb-4 sm:mb-6"
           >
-            <label class="mb-2 inline-block" for="customThemeImage">{{
-              $t("createPage.uploadThemeImage")
-            }}</label>
-            <label
-              v-if="!formState.customThemeImage"
-              for="theme-dropzone-file"
-              class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-[#FF4E6D] dark:hover:border-[#FF4E6D] dark:hover:bg-gray-800"
-            >
-              <div class="flex flex-col items-center justify-center pt-3 pb-3">
-                <svg
-                  class="w-6 h-6 mb-2 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p class="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                  <span class="font-semibold">{{
-                    $t("createPage.clickToUpload")
-                  }}</span>
-                  {{ $t("createPage.orDragAndDrop") }}
-                </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  PNG, JPG, SVG (max 2MB)
-                </p>
-              </div>
-              <input
-                @change="uploadCustomThemeImage"
-                id="theme-dropzone-file"
-                accept="image/*"
-                type="file"
-                class="hidden"
-              />
-            </label>
-
-            <!-- Theme Image Preview -->
-            <div v-if="formState.customThemeImage" class="mt-4">
-              <h3 class="text-lg font-bold mb-2">
-                {{ $t("createPage.themeImagePreview") }}:
-              </h3>
-              <NuxtPicture
-                :src="formState.customThemeImage"
-                class="w-full h-48 object-cover rounded-lg"
-                loading="lazy"
-                width="400"
-                height="192"
-                :img-attrs="{
-                  alt: 'Preview of custom theme image',
-                  style: 'width: 100%; height: 100%; object-fit: cover;',
-                }"
-              />
-              <UButton
-                color="red"
-                @click="removeCustomThemeImage"
-                class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-1 dark:text-white text-sm"
-                size="sm"
-              >
-                {{ $t("createPage.removeThemeImage") }}
-              </UButton>
-            </div>
-          </UFormGroup>
-
-          <UFormGroup class="mt-8" name="name">
-            <label class="mb-2 inline-block" for="name">{{
-              $t("createPage.personName")
-            }}</label>
-            <UInput
-              v-model="formState.name"
-              placeholder="Sarah, Peter, John..."
-              class="border border-[#FF4E6D]"
-            />
-          </UFormGroup>
+            {{ $t("createPage.title") }}
+          </h1>
 
           <div
-            v-for="(field, index) in formState.messages"
-            :key="index"
-            class="mt-4 flex flex-col-reverse"
+            class="w-24 sm:w-32 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 mx-auto rounded-full shadow-lg mb-6 sm:mb-8"
+          ></div>
+
+          <p
+            class="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-light px-2 sm:px-0"
           >
-            <UFormGroup :name="'message-' + index">
-              <label class="mb-2 mt-5 inline-block" :for="'message-' + index">
-                {{ $t("createPage.writeMessage") }} {{ index + 1 }}
-                <span class="ml-5"
-                  >{{ formState.messages[index].message.length }} /600
-                </span>
-              </label>
-              <UTextarea
-                @input="(event: Event) => limitTextAreaLength(event, index)"
-                v-model="field.message"
-                :rows="10"
-                class="border border-[#FF4E6D]"
-                variant="outline"
-                :placeholder="
-                  $t('createPage.messagePlaceholder') + ' ' + (index + 1)
-                "
-              />
-            </UFormGroup>
+            {{ $t("createPage.instructions") }}
+          </p>
+        </header>
 
-            <!-- Image Upload Input for Each Message -->
-            <UFormGroup :name="'image-' + index" class="mt-4">
-              <label class="mb-2 inline-block" :for="'dropzone-file-' + index">
-                {{ $t("createPage.pickOrUpdateImage") }} {{ index + 1 }}
-              </label>
-              <label
-                v-if="!field.image"
-                :for="'dropzone-file-' + index"
-                class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer dark:bg-gray-900 hover:bg-gray-100 dark:border-[#FF4E6D] dark:hover:border-[#FF4E6D] dark:hover:bg-gray-800"
+        <!-- YouTube Player with modern styling -->
+        <div
+          v-if="youtubeEmbedUrl"
+          class="w-full max-w-4xl mx-auto mb-8 sm:mb-12"
+        >
+          <div class="relative group">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-violet-100/50 to-purple-100/50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-2xl sm:rounded-3xl blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+            ></div>
+            <iframe
+              :src="youtubeEmbedUrl"
+              width="100%"
+              height="400"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              class="relative rounded-2xl sm:rounded-3xl shadow-xl border border-white/50 dark:border-gray-700/50 backdrop-blur-sm hidden sm:block"
+            ></iframe>
+            <!-- Mobile YouTube player with smaller height -->
+            <iframe
+              :src="youtubeEmbedUrl"
+              width="100%"
+              height="250"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              class="relative rounded-2xl shadow-xl border border-white/50 dark:border-gray-700/50 backdrop-blur-sm sm:hidden"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Main content with modern layout -->
+        <div
+          class="flex flex-col gap-8 lg:gap-12 xl:gap-16 w-full max-w-screen-2xl mx-auto items-start"
+        >
+          <!-- Form with glassmorphism styling -->
+          <div class="flex-1 lg:flex-[1.2] w-full">
+            <div class="relative group">
+              <!-- Glowing background -->
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-white/60 to-violet-50/60 dark:from-gray-800/60 dark:to-violet-900/30 rounded-2xl sm:rounded-3xl blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+              ></div>
+
+              <!-- Form container -->
+              <div
+                class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-violet-100 dark:border-violet-800"
               >
-                <div
-                  class="flex flex-col items-center justify-center pt-5 pb-6"
+                <UForm
+                  ref="form"
+                  :state="formState"
+                  class="space-y-6 sm:space-y-8"
+                  @submit="onSubmit"
                 >
-                  <svg
-                    class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 16"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                    />
-                  </svg>
-                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span class="font-semibold">{{
-                      $t("createPage.clickToUpload")
-                    }}</span>
-                    {{ $t("createPage.orDragAndDrop") }}
-                  </p>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">
-                    SVG, PNG, JPG, Webp
-                  </p>
-                </div>
-                <input
-                  @change="(event) => uploadImageForMessage(event, index)"
-                  :id="'dropzone-file-' + index"
-                  accept="image/*"
-                  type="file"
-                  class="hidden"
-                />
-              </label>
-            </UFormGroup>
+                  <!-- Plan Selection -->
+                  <UFormGroup name="plan">
+                    <div class="mb-4">
+                      <label
+                        class="block text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3"
+                        for="plan"
+                      >
+                        {{ $t("createPage.choosePlan") }}
+                      </label>
+                      <div class="relative group">
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <USelectMenu
+                          @change="handleSetPlanUrl"
+                          class="relative border-2 border-violet-200 dark:border-violet-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm"
+                          v-model="formState.plan"
+                          value-attribute="name"
+                          :options="plans"
+                          option-attribute="name"
+                        />
+                      </div>
+                    </div>
+                  </UFormGroup>
 
-            <!-- Image Preview Section -->
-            <div v-if="field.image" class="mt-4">
-              <h3 class="text-lg font-bold">
-                {{ $t("createPage.imagePreview") }} {{ index + 1 }}:
-              </h3>
-              <NuxtPicture
-                :src="field.image"
-                class="w-full h-96 object-cover inline-block"
-                loading="lazy"
-                width="400"
-                height="384"
-                :img-attrs="{
-                  alt: `Preview of uploaded image ${index + 1} for message`,
-                  style: 'width: 100%; height: 100%; object-fit: cover;',
-                }"
-              />
-              <UButton
-                color="red"
-                @click="removeImage(index)"
-                class="mt-2 dark:bg-[#FF4E6D] dark:hover:bg-[#FF4E6D] py-2 dark:text-white text-lg"
-                block
-              >
-                {{ $t("createPage.removeImage") }}
-              </UButton>
+                  <!-- Song URL for Premium -->
+                  <UFormGroup
+                    v-if="formState.plan === 'Premium'"
+                    name="songUrl"
+                  >
+                    <div class="mb-4">
+                      <label
+                        class="block text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3"
+                        for="songUrl"
+                      >
+                        {{ $t("createPage.pickSong") }}
+                      </label>
+                      <div class="relative group">
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-fuchsia-500/20 to-pink-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <UInput
+                          v-model="formState.songUrl"
+                          placeholder="https://www.youtube.com/watch?v=4ZWKR2zJESk"
+                          class="relative border-2 border-fuchsia-200 dark:border-fuchsia-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-sm sm:text-base"
+                        />
+                      </div>
+                    </div>
+                  </UFormGroup>
+
+                  <!-- Theme Selection -->
+                  <UFormGroup name="theme">
+                    <div class="mb-4">
+                      <label
+                        class="block text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3"
+                        for="theme"
+                      >
+                        {{ $t("createPage.chooseTheme") }}
+                      </label>
+                      <div class="relative group">
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <USelectMenu
+                          @change="selectedTheme"
+                          class="relative border-2 border-purple-200 dark:border-purple-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm z-50"
+                          v-model="formState.theme"
+                          value-attribute="name"
+                          :options="themes"
+                          option-attribute="name"
+                        >
+                          <template #leading>
+                            <UIcon
+                              v-if="selected.icon"
+                              :name="(selected.icon as string)"
+                              class="w-5 h-5"
+                            />
+                          </template>
+                        </USelectMenu>
+                      </div>
+                    </div>
+                  </UFormGroup>
+
+                  <!-- Custom Theme Image Upload -->
+                  <UFormGroup
+                    v-if="formState.theme === 'Custom'"
+                    name="customThemeImage"
+                  >
+                    <div class="mb-4">
+                      <label
+                        class="block text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3"
+                        for="customThemeImage"
+                      >
+                        {{ $t("createPage.uploadThemeImage") }}
+                      </label>
+
+                      <!-- Upload area with modern styling -->
+                      <div
+                        v-if="!formState.customThemeImage"
+                        class="relative group"
+                      >
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <label
+                          for="theme-dropzone-file"
+                          class="relative flex flex-col items-center justify-center w-full h-32 sm:h-40 border-2 border-dashed border-emerald-300 dark:border-emerald-600 rounded-xl cursor-pointer bg-emerald-50/50 dark:bg-emerald-900/20 hover:bg-emerald-100/50 dark:hover:bg-emerald-800/30 backdrop-blur-sm transition-all duration-300 touch-manipulation"
+                        >
+                          <div
+                            class="flex flex-col items-center justify-center pt-3 pb-3"
+                          >
+                            <svg
+                              class="w-8 h-8 sm:w-10 sm:h-10 mb-3 text-emerald-500 dark:text-emerald-400"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 20 16"
+                            >
+                              <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                              />
+                            </svg>
+                            <p
+                              class="mb-1 text-sm sm:text-base text-emerald-600 dark:text-emerald-300 text-center px-2"
+                            >
+                              <span class="font-semibold">
+                                {{ $t("createPage.clickToUpload") }}
+                              </span>
+                              {{ $t("createPage.orDragAndDrop") }}
+                            </p>
+                            <p
+                              class="text-xs sm:text-sm text-emerald-500 dark:text-emerald-400"
+                            >
+                              PNG, JPG, SVG (max 2MB)
+                            </p>
+                          </div>
+                          <input
+                            @change="uploadCustomThemeImage"
+                            id="theme-dropzone-file"
+                            accept="image/*"
+                            type="file"
+                            class="hidden"
+                          />
+                        </label>
+                      </div>
+
+                      <!-- Theme Image Preview -->
+                      <div
+                        v-if="formState.customThemeImage"
+                        class="relative group"
+                      >
+                        <div
+                          class="absolute inset-0 bg-gradient-to-br from-emerald-100/50 to-teal-100/50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <div
+                          class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl p-4 border border-emerald-200 dark:border-emerald-700"
+                        >
+                          <h3
+                            class="text-base sm:text-lg font-bold mb-3 text-gray-800 dark:text-gray-200"
+                          >
+                            {{ $t("createPage.themeImagePreview") }}:
+                          </h3>
+                          <NuxtPicture
+                            :src="formState.customThemeImage"
+                            class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-lg"
+                            loading="lazy"
+                            width="400"
+                            height="192"
+                            :img-attrs="{
+                              alt: 'Preview of custom theme image',
+                              style:
+                                'width: 100%; height: 100%; object-fit: cover;',
+                            }"
+                          />
+                          <UButton
+                            color="red"
+                            @click="removeCustomThemeImage"
+                            class="mt-3 w-full sm:w-auto bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                            size="sm"
+                          >
+                            {{ $t("createPage.removeThemeImage") }}
+                          </UButton>
+                        </div>
+                      </div>
+                    </div>
+                  </UFormGroup>
+
+                  <!-- Person Name -->
+                  <UFormGroup name="name">
+                    <div class="mb-4">
+                      <label
+                        class="block text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3"
+                        for="name"
+                      >
+                        {{ $t("createPage.personName") }}
+                      </label>
+                      <div class="relative group">
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <UInput
+                          v-model="formState.name"
+                          placeholder="Sarah, Peter, John..."
+                          class="relative border-2 border-blue-200 dark:border-blue-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-sm sm:text-base"
+                        />
+                      </div>
+                    </div>
+                  </UFormGroup>
+
+                  <!-- Messages Section -->
+                  <div class="space-y-6 sm:space-y-8">
+                    <div
+                      v-for="(field, index) in formState.messages"
+                      :key="index"
+                      class="relative group"
+                    >
+                      <!-- Message card container -->
+                      <div class="relative">
+                        <div
+                          class="absolute inset-0 bg-gradient-to-br from-indigo-100/50 to-purple-100/50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                        ></div>
+                        <div
+                          class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl p-4 sm:p-6 border border-indigo-200 dark:border-indigo-700 space-y-4"
+                        >
+                          <!-- Message number badge -->
+                          <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                              <div
+                                class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg"
+                              >
+                                {{ index + 1 }}
+                              </div>
+                              <h3
+                                class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200"
+                              >
+                                {{ $t("createPage.writeMessage") }}
+                                {{ index + 1 }}
+                              </h3>
+                            </div>
+                            <span
+                              class="text-sm text-gray-500 dark:text-gray-400 font-medium"
+                            >
+                              {{ formState.messages[index].message.length }} /
+                              600
+                            </span>
+                          </div>
+
+                          <!-- Image Upload Section -->
+                          <UFormGroup :name="'image-' + index">
+                            <label
+                              class="block text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-3"
+                              :for="'dropzone-file-' + index"
+                            >
+                              {{ $t("createPage.pickOrUpdateImage") }}
+                              {{ index + 1 }}
+                            </label>
+
+                            <!-- Upload area -->
+                            <div
+                              v-if="!field.image"
+                              class="relative group/upload"
+                            >
+                              <div
+                                class="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 rounded-xl blur-sm scale-95 group-hover/upload:scale-100 transition-transform duration-300"
+                              ></div>
+                              <label
+                                :for="'dropzone-file-' + index"
+                                class="relative flex flex-col items-center justify-center w-full h-48 sm:h-64 border-2 border-dashed border-rose-300 dark:border-rose-600 rounded-xl cursor-pointer bg-rose-50/50 dark:bg-rose-900/20 hover:bg-rose-100/50 dark:hover:bg-rose-800/30 backdrop-blur-sm transition-all duration-300 touch-manipulation"
+                              >
+                                <div
+                                  class="flex flex-col items-center justify-center pt-5 pb-6"
+                                >
+                                  <svg
+                                    class="w-10 h-10 sm:w-12 sm:h-12 mb-4 text-rose-500 dark:text-rose-400"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 20 16"
+                                  >
+                                    <path
+                                      stroke="currentColor"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                    />
+                                  </svg>
+                                  <p
+                                    class="mb-2 text-sm sm:text-base text-rose-600 dark:text-rose-300 text-center px-2"
+                                  >
+                                    <span class="font-semibold">
+                                      {{ $t("createPage.clickToUpload") }}
+                                    </span>
+                                    {{ $t("createPage.orDragAndDrop") }}
+                                  </p>
+                                  <p
+                                    class="text-xs sm:text-sm text-rose-500 dark:text-rose-400"
+                                  >
+                                    SVG, PNG, JPG, WebP
+                                  </p>
+                                </div>
+                                <input
+                                  @change="
+                                    (event) =>
+                                      uploadImageForMessage(event, index)
+                                  "
+                                  :id="'dropzone-file-' + index"
+                                  accept="image/*"
+                                  type="file"
+                                  class="hidden"
+                                />
+                              </label>
+                            </div>
+
+                            <!-- Image Preview -->
+                            <div
+                              v-if="field.image"
+                              class="relative group/preview"
+                            >
+                              <div
+                                class="absolute inset-0 bg-gradient-to-br from-rose-100/50 to-orange-100/50 dark:from-rose-900/20 dark:to-orange-900/20 rounded-xl blur-sm scale-95 group-hover/preview:scale-100 transition-transform duration-300"
+                              ></div>
+                              <div
+                                class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl p-4 border border-rose-200 dark:border-rose-700"
+                              >
+                                <h4
+                                  class="text-base sm:text-lg font-bold mb-3 text-gray-800 dark:text-gray-200"
+                                >
+                                  {{ $t("createPage.imagePreview") }}
+                                  {{ index + 1 }}:
+                                </h4>
+                                <NuxtPicture
+                                  :src="field.image"
+                                  class="w-full h-48 sm:h-64 lg:h-80 object-cover rounded-lg shadow-lg"
+                                  loading="lazy"
+                                  width="400"
+                                  height="320"
+                                  :img-attrs="{
+                                    alt: `Preview of uploaded image ${
+                                      index + 1
+                                    } for message`,
+                                    style:
+                                      'width: 100%; height: 100%; object-fit: cover;',
+                                  }"
+                                />
+                                <UButton
+                                  color="red"
+                                  @click="removeImage(index)"
+                                  class="mt-3 w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                                  block
+                                >
+                                  {{ $t("createPage.removeImage") }}
+                                </UButton>
+                              </div>
+                            </div>
+                          </UFormGroup>
+
+                          <!-- Message Text Area -->
+                          <UFormGroup :name="'message-' + index">
+                            <label
+                              class="block text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-3"
+                              :for="'message-' + index"
+                            >
+                              {{ $t("createPage.writeMessage") }}
+                              {{ index + 1 }}
+                            </label>
+                            <div class="relative group/textarea">
+                              <div
+                                class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl blur-sm scale-95 group-hover/textarea:scale-100 transition-transform duration-300"
+                              ></div>
+                              <UTextarea
+                                @input="(event: Event) => limitTextAreaLength(event, index)"
+                                v-model="field.message"
+                                :rows="8"
+                                class="relative border-2 border-indigo-200 dark:border-indigo-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-sm sm:text-base resize-none"
+                                variant="outline"
+                                :placeholder="
+                                  $t('createPage.messagePlaceholder') +
+                                  ' ' +
+                                  (index + 1)
+                                "
+                              />
+                            </div>
+                          </UFormGroup>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Submit Button -->
+                  <div class="pt-6 sm:pt-8">
+                    <div class="relative group">
+                      <div
+                        class="absolute inset-0 bg-gradient-to-r from-violet-600/50 to-fuchsia-600/50 rounded-xl blur-sm scale-95 group-hover:scale-100 transition-transform duration-300"
+                      ></div>
+                      <UButton
+                        color="red"
+                        :loading="isSubmitting"
+                        class="relative w-full bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 hover:from-violet-700 hover:via-purple-700 hover:to-fuchsia-700 text-white font-bold py-4 sm:py-5 text-lg sm:text-xl rounded-xl shadow-2xl hover:shadow-violet-500/25 transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 touch-manipulation"
+                        block
+                        type="submit"
+                      >
+                        {{
+                          isSubmitting
+                            ? $t("createPage.creating")
+                            : $t("createPage.createButton")
+                        }}
+                      </UButton>
+                    </div>
+                  </div>
+                </UForm>
+              </div>
             </div>
           </div>
 
-          <UButton
-            color="red"
-            :loading="isSubmitting"
-            :class="
-              cn(
-                'mt-10 py-2 text-lg dark:bg-[#FF4E6D] dark:hover:bg-[#ff4e6eca] dark:text-white'
-              )
-            "
-            block
-            type="submit"
-          >
-            {{
-              isSubmitting
-                ? $t($t("createPage.creating"))
-                : $t("createPage.createButton")
-            }}
-          </UButton>
-        </UForm>
+          <!-- Preview Section with Enhanced Styling -->
+          <div class="w-full">
+            <div class="lg:sticky lg:top-8">
+              <div class="group">
+                <!-- Glowing background -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-amber-50/60 to-orange-50/60 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl sm:rounded-3xl blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
+                ></div>
 
-        <Preview :form="formState" />
-      </div>
-    </main>
+                <!-- Preview container -->
+                <div
+                  class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-amber-100 dark:border-amber-800"
+                >
+                  <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                      <div
+                        class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-lg"
+                      >
+                        <svg
+                          class="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
+                        </svg>
+                      </div>
+                      <h2
+                        class="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"
+                      >
+                        Live Preview
+                      </h2>
+                    </div>
+                    <div
+                      class="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full shadow-lg"
+                    ></div>
+                  </div>
+
+                  <Preview :form="formState" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modals and Notifications -->
     <PaymentModal :isOpen="isOpen" @closeModal="closeModal" />
     <UNotifications />
   </NuxtLayout>
@@ -805,3 +1104,174 @@ function removeCustomThemeImage() {
   }
 }
 </script>
+
+<style scoped>
+/* Enhanced animations from index page */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Reduce animation intensity on mobile for better performance */
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 30s linear infinite;
+  }
+
+  /* Optimize touch interactions */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better mobile form styling */
+  .group:hover .group-hover\:scale-100 {
+    transform: scale(1.02);
+  }
+}
+
+/* Tablet-specific optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .animate-spin-slow {
+    animation: spin-slow 25s linear infinite;
+  }
+}
+
+/* Ensure smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-spin-slow,
+  .animate-pulse {
+    animation: none;
+  }
+
+  .transition-all,
+  .transition-transform,
+  .transition-colors,
+  .transition-shadow {
+    transition: none;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* Custom gradient backgrounds for better visual hierarchy */
+.gradient-bg-1 {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(168, 85, 247, 0.1) 100%
+  );
+}
+
+.gradient-bg-2 {
+  background: linear-gradient(
+    135deg,
+    rgba(236, 72, 153, 0.1) 0%,
+    rgba(239, 68, 68, 0.1) 100%
+  );
+}
+
+.gradient-bg-3 {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(37, 99, 235, 0.1) 100%
+  );
+}
+
+/* Glassmorphism enhancements */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect-dark {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+</style>
