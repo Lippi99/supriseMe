@@ -402,7 +402,7 @@ useSeoMeta({
   description: t("seo.index.description"),
   ogDescription: t("seo.index.ogDescription"),
   ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   ogImageAlt: "SurpriseMe - Create surprise pages for loved ones",
   ogImageWidth: 512,
   ogImageHeight: 512,
@@ -411,7 +411,7 @@ useSeoMeta({
   ogUrl: "https://supriseme-production.up.railway.app",
   twitterCard: "summary_large_image",
   twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   twitterTitle: t("seo.index.title"),
   twitterDescription: t("seo.index.description"),
   twitterSite: "@surprisemeapp",
@@ -427,7 +427,6 @@ useSeoMeta({
   themeColor: "#8b5cf6",
   colorScheme: "light dark",
   viewport: "width=device-width, initial-scale=1.0",
-  canonical: "https://supriseme-production.up.railway.app",
 });
 
 useHead({
@@ -501,7 +500,7 @@ useHead({
         logo: {
           "@type": "ImageObject",
           "@id": "https://supriseme-production.up.railway.app/#logo",
-          url: "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          url: "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
           width: 512,
           height: 512,
           caption: "SurpriseMe Logo",

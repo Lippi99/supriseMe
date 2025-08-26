@@ -205,14 +205,14 @@ useSeoMeta({
   ogDescription:
     "Política de privacidade da SurpriseMe. Saiba como protegemos suas informações pessoais e respeitamos sua privacidade.",
   ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   ogImageAlt: "SurpriseMe Privacy Policy",
   ogType: "article",
   ogSiteName: "SurpriseMe",
   ogUrl: "https://supriseme-production.up.railway.app/privacy-policy",
   twitterCard: "summary",
   twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   twitterTitle: `${t("footer.legal.privacyPolicy")} - SurpriseMe`,
   twitterDescription:
     "Política de privacidade da SurpriseMe. Saiba como protegemos suas informações pessoais.",

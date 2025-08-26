@@ -180,14 +180,14 @@ useSeoMeta({
   ogDescription:
     "Termos de serviço da SurpriseMe. Conheça os termos e condições de uso da nossa plataforma.",
   ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   ogImageAlt: "SurpriseMe Terms of Service",
   ogType: "article",
   ogSiteName: "SurpriseMe",
   ogUrl: "https://supriseme-production.up.railway.app/term-services",
   twitterCard: "summary",
   twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   twitterTitle: `${t("footer.legal.termsOfService")} - SurpriseMe`,
   twitterDescription:
     "Termos de serviço da SurpriseMe. Conheça os termos e condições de uso da nossa plataforma.",

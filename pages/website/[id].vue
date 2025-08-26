@@ -8,11 +8,15 @@
       <!-- Hero Section -->
       <div class="relative overflow-hidden">
         <div class="absolute inset-0 opacity-30">
-          <div class="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-pink-100/50 dark:from-purple-900/20 dark:to-pink-900/20"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-pink-100/50 dark:from-purple-900/20 dark:to-pink-900/20"
+          ></div>
           <div class="absolute inset-0 dot-pattern"></div>
         </div>
-        
-        <header class="relative z-10 max-w-6xl mx-auto pt-8 sm:pt-16 lg:pt-20 pb-8 px-4">
+
+        <header
+          class="relative z-10 max-w-6xl mx-auto pt-8 sm:pt-16 lg:pt-20 pb-8 px-4"
+        >
           <div class="text-center">
             <div class="inline-block">
               <h1
@@ -20,16 +24,25 @@
               >
                 {{ data?.website?.name }}
               </h1>
-              <div class="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-20 mx-auto"></div>
+              <div
+                class="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-20 mx-auto"
+              ></div>
             </div>
-            <p class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-delay">
+            <p
+              class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-delay"
+            >
               A special collection of memories just for you ✨
             </p>
           </div>
         </header>
       </div>
 
-      <YoutubeMusic v-if="linkUrlNotEmpty" isDetail :url="linkUrl || ''" class="mb-12" />
+      <YoutubeMusic
+        v-if="linkUrlNotEmpty"
+        isDetail
+        :url="linkUrl || ''"
+        class="mb-12"
+      />
 
       <!-- Messages Section -->
       <section
@@ -47,21 +60,30 @@
           <div class="flex justify-center mb-8 sm:mb-12">
             <div class="relative group/photo">
               <!-- Shadow/Glow Effect -->
-              <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur-sm opacity-25 group-hover/photo:opacity-75 transition-opacity duration-700"></div>
-              
+              <div
+                class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur-sm opacity-25 group-hover/photo:opacity-75 transition-opacity duration-700"
+              ></div>
+
               <!-- Polaroid Frame -->
               <div class="relative">
-                <PolaroidPhoto class="transform group-hover:scale-105 transition-all duration-700 shadow-2xl hover:shadow-purple-500/25">
+                <PolaroidPhoto
+                  class="transform group-hover:scale-105 transition-all duration-700 shadow-2xl hover:shadow-purple-500/25"
+                >
                   <NuxtImg
                     class="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] rounded-lg h-auto"
-                    :alt="`Photo ${index + 1}: ${message?.message?.substring(0, 100)}${message?.message?.length > 100 ? '...' : ''}`"
+                    :alt="`Photo ${index + 1}: ${message?.message?.substring(
+                      0,
+                      100
+                    )}${message?.message?.length > 100 ? '...' : ''}`"
                     :src="message?.image"
                     loading="lazy"
                   />
                 </PolaroidPhoto>
-                
+
                 <!-- Floating Number Badge -->
-                <div class="absolute -top-3 -right-3 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                <div
+                  class="absolute -top-3 -right-3 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg"
+                >
                   {{ index + 1 }}
                 </div>
               </div>
@@ -70,20 +92,34 @@
 
           <!-- Decorative Divider -->
           <div class="flex items-center justify-center mb-8 sm:mb-12">
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent dark:via-purple-700"></div>
+            <div
+              class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent dark:via-purple-700"
+            ></div>
             <div class="mx-4">
-              <div class="w-3 h-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+              <div
+                class="w-3 h-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
+              ></div>
             </div>
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent dark:via-purple-700"></div>
+            <div
+              class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent dark:via-purple-700"
+            ></div>
           </div>
 
           <!-- Message Content -->
           <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative">
               <!-- Quote Marks -->
-              <div class="absolute -top-2 -left-2 text-6xl text-purple-200 dark:text-purple-800 font-serif leading-none">"</div>
-              <div class="absolute -bottom-8 -right-2 text-6xl text-purple-200 dark:text-purple-800 font-serif leading-none">"</div>
-              
+              <div
+                class="absolute -top-2 -left-2 text-6xl text-purple-200 dark:text-purple-800 font-serif leading-none"
+              >
+                "
+              </div>
+              <div
+                class="absolute -bottom-8 -right-2 text-6xl text-purple-200 dark:text-purple-800 font-serif leading-none"
+              >
+                "
+              </div>
+
               <!-- Message Text -->
               <blockquote
                 :id="`message-${index}`"
@@ -97,12 +133,22 @@
 
         <!-- End Decoration -->
         <div class="text-center mt-16">
-          <div class="inline-flex items-center space-x-2 text-purple-500 dark:text-purple-400">
+          <div
+            class="inline-flex items-center space-x-2 text-purple-500 dark:text-purple-400"
+          >
             <div class="w-2 h-2 rounded-full bg-current animate-pulse"></div>
-            <div class="w-2 h-2 rounded-full bg-current animate-pulse" style="animation-delay: 0.2s"></div>
-            <div class="w-2 h-2 rounded-full bg-current animate-pulse" style="animation-delay: 0.4s"></div>
+            <div
+              class="w-2 h-2 rounded-full bg-current animate-pulse"
+              style="animation-delay: 0.2s"
+            ></div>
+            <div
+              class="w-2 h-2 rounded-full bg-current animate-pulse"
+              style="animation-delay: 0.4s"
+            ></div>
           </div>
-          <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm">Made with 💜 on SurpriseMe</p>
+          <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm">
+            Made with 💜 on SurpriseMe
+          </p>
         </div>
       </section>
 
@@ -135,15 +181,19 @@ useSeoMeta({
   ogTitle: `A Special Surprise for ${data?.value?.website?.name}`,
   description: `${data?.value?.website?.name}, this special surprise page was created just for you! Discover personalized messages, beautiful photos, and heartfelt memories. Created with love on SurpriseMe.`,
   ogDescription: `A heartfelt surprise page created especially for ${data?.value?.website?.name}, filled with personalized messages and cherished photos.`,
-  ogImage: data?.value?.website?.messages?.[0]?.image || "https://surpriseme.app/icons/surpriseme_512_512.png",
+  ogImage:
+    data?.value?.website?.messages?.[0]?.image ||
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   ogImageAlt: `Personal photo from ${data?.value?.website?.name}'s surprise page`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogType: "article",
   ogSiteName: "SurpriseMe",
-  ogUrl: `https://surpriseme.app/website/${id.value}`,
+  ogUrl: `https://supriseme-production.up.railway.app/website/${id.value}`,
   twitterCard: "summary_large_image",
-  twitterImage: data?.value?.website?.messages?.[0]?.image || "https://surpriseme.app/icons/surpriseme_512_512.png",
+  twitterImage:
+    data?.value?.website?.messages?.[0]?.image ||
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   twitterTitle: `A Special Surprise for ${data?.value?.website?.name}`,
   twitterDescription: `Discover this beautiful collection of memories created especially for ${data?.value?.website?.name}`,
   twitterSite: "@surprisemeapp",
@@ -152,7 +202,11 @@ useSeoMeta({
   publisher: "SurpriseMe",
   themeColor: "#8b5cf6",
   colorScheme: "light dark",
-  keywords: `${data?.value?.website?.name}, surprise page, personal message, gift, special moment, memories, photos, ${data?.value?.website?.theme?.toLowerCase() || 'celebration'}`,
+  keywords: `${
+    data?.value?.website?.name
+  }, surprise page, personal message, gift, special moment, memories, photos, ${
+    data?.value?.website?.theme?.toLowerCase() || "celebration"
+  }`,
 });
 
 const { startGlobal } = useThemeStore();
@@ -179,28 +233,58 @@ const linkUrlNotEmpty = computed(() => {
 
 <style>
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fade-in-delay {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slide-up-0 {
-  from { opacity: 0; transform: translateY(60px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes slide-up-1 {
-  from { opacity: 0; transform: translateY(60px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes slide-up-2 {
-  from { opacity: 0; transform: translateY(60px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .animate-fade-in {
@@ -228,13 +312,21 @@ const linkUrlNotEmpty = computed(() => {
 }
 
 .dot-pattern {
-  background-image: radial-gradient(circle, rgba(147, 51, 234, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    rgba(147, 51, 234, 0.1) 1px,
+    transparent 1px
+  );
   background-size: 20px 20px;
 }
 
 @media (prefers-color-scheme: dark) {
   .dot-pattern {
-    background-image: radial-gradient(circle, rgba(147, 51, 234, 0.2) 1px, transparent 1px);
+    background-image: radial-gradient(
+      circle,
+      rgba(147, 51, 234, 0.2) 1px,
+      transparent 1px
+    );
   }
 }
 </style>

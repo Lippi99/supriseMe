@@ -597,7 +597,7 @@ useSeoMeta({
   description: t("seo.create.description"),
   ogDescription: t("seo.create.ogDescription"),
   ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   ogImageAlt: "Create your personalized surprise page with photos and messages",
   ogImageWidth: 512,
   ogImageHeight: 512,
@@ -606,7 +606,7 @@ useSeoMeta({
   ogUrl: `https://supriseme-production.up.railway.app${route.fullPath}`,
   twitterCard: "summary_large_image",
   twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
   twitterTitle: t("seo.create.title"),
   twitterDescription: t("seo.create.description"),
   twitterSite: "@surprisemeapp",
@@ -715,7 +715,7 @@ useHead({
         description:
           "Step by step guide to create a personalized surprise page for your loved ones",
         image:
-          "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
         totalTime: "PT10M",
         supply: [
           {
@@ -739,28 +739,28 @@ useHead({
             name: "Choose your plan",
             text: "Select between Basic (3 photos) or Premium (5 photos + music) plan",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
           },
           {
             "@type": "HowToStep",
             name: "Select a theme",
             text: "Choose from Christmas, Birthday, Wedding, or upload your custom theme",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
           },
           {
             "@type": "HowToStep",
             name: "Upload photos and write messages",
             text: "Add your favorite photos and write heartfelt messages for each one",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
           },
           {
             "@type": "HowToStep",
             name: "Complete payment and share",
             text: "Complete the payment and share the unique link with your loved one",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
           },
         ],
       }),
