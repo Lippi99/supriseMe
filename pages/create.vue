@@ -108,11 +108,19 @@
                         ></div>
                         <USelectMenu
                           @change="handleSetPlanUrl"
-                          class="relative border-2 border-violet-200 dark:border-violet-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm"
+                          class="relative border-2 border-violet-200 dark:border-violet-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm z-50"
                           v-model="formState.plan"
                           value-attribute="name"
                           :options="plans"
                           option-attribute="name"
+                          :ui="{ 
+                            wrapper: 'relative z-50',
+                            container: 'z-50 relative',
+                            base: 'relative z-50',
+                            option: {
+                              container: 'z-50 relative'
+                            }
+                          }"
                         />
                       </div>
                     </div>
@@ -158,11 +166,16 @@
                         ></div>
                         <USelectMenu
                           @change="selectedTheme"
-                          class="relative border-2 border-purple-200 dark:border-purple-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm z-50"
+                          class="relative border-2 border-purple-200 dark:border-purple-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm z-40"
                           v-model="formState.theme"
                           value-attribute="name"
                           :options="themes"
                           option-attribute="name"
+                          :ui="{ 
+                            wrapper: 'relative z-40',
+                            container: 'z-40 relative',
+                            base: 'relative z-40'
+                          }"
                         >
                           <template #leading>
                             <UIcon
@@ -621,7 +634,6 @@ useSeoMeta({
     "create surprise page, personalized messages, photo upload, custom themes, birthday surprise, wedding memories, christmas greetings, love letters, anniversary gifts, memory book creator",
   themeColor: "#8b5cf6",
   colorScheme: "light dark",
-  canonical: `https://supriseme-production.up.railway.app${route.fullPath}`,
 });
 
 useHead({
@@ -857,6 +869,14 @@ const form = ref<Form<Schema>>();
 function handleSetPlanUrl(url: string) {
   router.push({ query: { plan: url } });
 
+  // Reset theme to undefined if switching to Basic and it's Custom
+  if (url === "Basic" && formState.theme === "Custom") {
+    formState.theme = undefined;
+    formState.customThemeImage = null;
+    // Stop any active theme effects
+    theme.stop();
+  }
+
   // Reset formState.messages to avoid accumulating extra fields
   formState.messages = [];
 
@@ -875,24 +895,32 @@ function closeModal(modal: boolean) {
   isOpen.value = modal;
 }
 
-const themes = [
-  {
-    name: "Christmas",
-    icon: "i-icon-park-solid-christmas-tree-one",
-  },
-  {
-    name: "Birthday",
-    icon: "i-heroicons-cake-20-solid",
-  },
-  {
-    name: "Wedding",
-    icon: "i-fluent-emoji-high-contrast-wedding",
-  },
-  {
-    name: "Custom",
-    icon: "i-heroicons-photo-20-solid",
-  },
-];
+const themes = computed(() => {
+  const baseThemes = [
+    {
+      name: "Christmas",
+      icon: "i-icon-park-solid-christmas-tree-one",
+    },
+    {
+      name: "Birthday",
+      icon: "i-heroicons-cake-20-solid",
+    },
+    {
+      name: "Wedding",
+      icon: "i-fluent-emoji-high-contrast-wedding",
+    },
+  ];
+
+  // Only add Custom theme if plan is Premium
+  if (formState.plan === "Premium") {
+    baseThemes.push({
+      name: "Custom",
+      icon: "i-heroicons-photo-20-solid",
+    });
+  }
+
+  return baseThemes;
+});
 
 const plans = [
   {
@@ -903,7 +931,10 @@ const plans = [
   },
 ];
 
-const selected = ref(themes[0]);
+const selected = computed(() => {
+  const currentTheme = themes.value.find(theme => theme.name === formState.theme);
+  return currentTheme || themes.value[0] || { name: '', icon: '' };
+});
 const isOpen = ref(false);
 const isSubmitting = ref(false);
 
@@ -1282,6 +1313,21 @@ function removeCustomThemeImage() {
   /* Better mobile form styling */
   .group:hover .group-hover\:scale-100 {
     transform: scale(1.02);
+  }
+
+  /* Ensure dropdown menus are properly layered on mobile */
+  .relative.z-50 {
+    z-index: 50 !important;
+  }
+
+  .relative.z-40 {
+    z-index: 40 !important;
+  }
+
+  /* Fix mobile dropdown positioning */
+  [data-headlessui-state="open"] {
+    z-index: 60 !important;
+    position: relative;
   }
 }
 
