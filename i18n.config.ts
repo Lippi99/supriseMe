@@ -51,8 +51,8 @@ export default defineI18nConfig(() => ({
           title: "Plan prices",
           basic: {
             title: "Basic",
-            price: "$4",
-            descriptionOne: "6 months access",
+            price: "$2",
+            descriptionOne: "Lifetime access",
             descriptionTwo: "3 photos",
             descriptionThree: "No song",
             button: "Buy plan",
@@ -60,7 +60,7 @@ export default defineI18nConfig(() => ({
           premium: {
             title: "Premium",
             tag: "Most popular",
-            price: "$7",
+            price: "$4",
             descriptionOne: "Lifetime access",
             descriptionTwo: "5 photos",
             descriptionThree: "With song",
@@ -118,9 +118,11 @@ export default defineI18nConfig(() => ({
       },
       youtubeMusic: {
         playMusicTitle: "Play Music?",
-        specialSoundtrack: "This page includes a special soundtrack to enhance your experience",
+        specialSoundtrack:
+          "This page includes a special soundtrack to enhance your experience",
         backgroundMusicAvailable: "🎵 Background Music Available",
-        backgroundMusicDescription: "A YouTube track has been selected to accompany this surprise page. Would you like to play it in the background while you explore?",
+        backgroundMusicDescription:
+          "A YouTube track has been selected to accompany this surprise page. Would you like to play it in the background while you explore?",
         audioPlaysSoftly: "Audio will play softly in the background",
         yesPlayMusic: "Yes, Play Music",
         continueWithoutMusic: "Continue Without Music",
@@ -128,7 +130,8 @@ export default defineI18nConfig(() => ({
         clickToPlayOnYoutube: "Click to play on YouTube",
         external: "External",
         externalLinkDetected: "External Link Detected",
-        externalLinkDescription: "This appears to be a custom link or unsupported URL format. Click below to open it in a new tab.",
+        externalLinkDescription:
+          "This appears to be a custom link or unsupported URL format. Click below to open it in a new tab.",
         openLink: "Open Link",
         nowPlaying: "Now Playing",
         backgroundSoundtrack: "Background soundtrack",
@@ -193,8 +196,8 @@ export default defineI18nConfig(() => ({
           title: "Preços dos planos",
           basic: {
             title: "Básico",
-            price: "$4",
-            descriptionOne: "Acesso por 6 meses",
+            price: "$2",
+            descriptionOne: "Acesso por vitalício",
             descriptionTwo: "3 fotos",
             descriptionThree: "Sem música",
             button: "Comprar plano",
@@ -202,7 +205,7 @@ export default defineI18nConfig(() => ({
           premium: {
             title: "Premium",
             tag: "Mais popular",
-            price: "$7",
+            price: "$4",
             descriptionOne: "Acesso vitalício",
             descriptionTwo: "5 fotos",
             descriptionThree: "Com música",
@@ -260,17 +263,21 @@ export default defineI18nConfig(() => ({
       },
       youtubeMusic: {
         playMusicTitle: "Reproduzir Música?",
-        specialSoundtrack: "Esta página inclui uma trilha sonora especial para melhorar sua experiência",
+        specialSoundtrack:
+          "Esta página inclui uma trilha sonora especial para melhorar sua experiência",
         backgroundMusicAvailable: "🎵 Música de Fundo Disponível",
-        backgroundMusicDescription: "Uma faixa do YouTube foi selecionada para acompanhar esta página surpresa. Gostaria de reproduzi-la em segundo plano enquanto explora?",
-        audioPlaysSoftly: "O áudio será reproduzido suavemente em segundo plano",
+        backgroundMusicDescription:
+          "Uma faixa do YouTube foi selecionada para acompanhar esta página surpresa. Gostaria de reproduzi-la em segundo plano enquanto explora?",
+        audioPlaysSoftly:
+          "O áudio será reproduzido suavemente em segundo plano",
         yesPlayMusic: "Sim, Reproduzir Música",
         continueWithoutMusic: "Continuar Sem Música",
         backgroundMusicTrack: "Faixa de Música de Fundo",
         clickToPlayOnYoutube: "Clique para reproduzir no YouTube",
         external: "Externo",
         externalLinkDetected: "Link Externo Detectado",
-        externalLinkDescription: "Este parece ser um link personalizado ou formato de URL não suportado. Clique abaixo para abri-lo em uma nova aba.",
+        externalLinkDescription:
+          "Este parece ser um link personalizado ou formato de URL não suportado. Clique abaixo para abri-lo em uma nova aba.",
         openLink: "Abrir Link",
         nowPlaying: "Reproduzindo Agora",
         backgroundSoundtrack: "Trilha sonora de fundo",
