@@ -8,6 +8,7 @@ export interface IWebsite {
   userEmail: string;
   plan: string;
   name: string;
+  guid: string;
   theme: string;
   songUrl: string;
   messages: IWebsiteMessages[];

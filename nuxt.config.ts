@@ -17,7 +17,9 @@ export default defineNuxtConfig({
     },
   },
   site: {
-    url: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
+    url:
+      process.env.NUXT_PUBLIC_BASE_URL ||
+      "https://supriseme-production.up.railway.app",
     name: "SurpriseMe",
     description:
       "Create surprise pages for someone special with photos, messages and themes",
@@ -97,13 +99,17 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
-    hostname: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
+    hostname:
+      process.env.NUXT_PUBLIC_BASE_URL ||
+      "https://supriseme-production.up.railway.app",
     gzip: true,
     routes: ["/", "/create", "/privacy-policy", "/term-services"],
   },
 
   robots: {
-    hostname: process.env.NUXT_PUBLIC_BASE_URL || "https://surpriseme.app",
+    hostname:
+      process.env.NUXT_PUBLIC_BASE_URL ||
+      "https://supriseme-production.up.railway.app",
     sitemap: "/sitemap.xml",
     rules: [
       {

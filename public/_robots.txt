@@ -6,7 +6,7 @@ Disallow: /_nuxt/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://surpriseme.app/sitemap.xml
+Sitemap: https://supriseme-production.up.railway.app/sitemap.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1

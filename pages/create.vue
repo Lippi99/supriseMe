@@ -589,33 +589,68 @@ const theme = useThemeStore();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 useSeoMeta({
   title: t("seo.create.title"),
   ogTitle: t("seo.create.ogTitle"),
   description: t("seo.create.description"),
   ogDescription: t("seo.create.ogDescription"),
-  ogImage: "/icons/surpriseme_512_512.png",
-  ogImageAlt: "Create your surprise page - SurpriseMe",
+  ogImage:
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+  ogImageAlt: "Create your personalized surprise page with photos and messages",
+  ogImageWidth: 512,
+  ogImageHeight: 512,
+  ogType: "website",
+  ogSiteName: "SurpriseMe",
+  ogUrl: `https://supriseme-production.up.railway.app${route.fullPath}`,
   twitterCard: "summary_large_image",
-  twitterImage: "/icons/surpriseme_512_512.png",
+  twitterImage:
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
   twitterTitle: t("seo.create.title"),
   twitterDescription: t("seo.create.description"),
-  robots: "index, follow",
+  twitterSite: "@surprisemeapp",
+  twitterCreator: "@surprisemeapp",
+  robots:
+    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  author: "SurpriseMe Team",
+  publisher: "SurpriseMe",
+  applicationName: "SurpriseMe",
+  referrer: "origin-when-cross-origin",
   keywords:
-    "create surprise page, personalized messages, photo upload, themes, birthday, wedding, christmas",
+    "create surprise page, personalized messages, photo upload, custom themes, birthday surprise, wedding memories, christmas greetings, love letters, anniversary gifts, memory book creator",
+  themeColor: "#8b5cf6",
+  colorScheme: "light dark",
+  canonical: `https://supriseme-production.up.railway.app${route.fullPath}`,
 });
 
 useHead({
+  link: [
+    {
+      rel: "canonical",
+      href: `https://supriseme-production.up.railway.app${route.fullPath}`,
+    },
+  ],
   script: [
     {
       type: "application/ld+json",
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
+        "@id": `https://supriseme-production.up.railway.app${route.fullPath}#webpage`,
+        url: `https://supriseme-production.up.railway.app${route.fullPath}`,
         name: t("seo.create.title"),
         description: t("seo.create.description"),
+        inLanguage: locale.value,
+        isPartOf: {
+          "@id": "https://supriseme-production.up.railway.app/#website",
+        },
+        about: {
+          "@type": "CreativeWork",
+          name: "Surprise Page Creation Tool",
+          description:
+            "Interactive tool to create personalized surprise pages with photos, messages, and themes",
+        },
         breadcrumb: {
           "@type": "BreadcrumbList",
           itemListElement: [
@@ -623,16 +658,111 @@ useHead({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://surpriseme.app",
+              item: "https://supriseme-production.up.railway.app",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Create",
-              item: "https://surpriseme.app/create",
+              item: "https://supriseme-production.up.railway.app/create",
             },
           ],
         },
+        mainEntity: {
+          "@type": "WebApplication",
+          "@id": `https://supriseme-production.up.railway.app${route.fullPath}#application`,
+          name: "SurpriseMe Page Creator",
+          description:
+            "Create beautiful surprise pages with photos and personalized messages",
+          applicationCategory: "CreativeWorkSoftware",
+          operatingSystem: "Web Browser",
+          offers: [
+            {
+              "@type": "Offer",
+              name: "Basic Plan",
+              description:
+                "Create surprise pages with 3 photos and 6 months access",
+              price: "4.00",
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+            },
+            {
+              "@type": "Offer",
+              name: "Premium Plan",
+              description:
+                "Create surprise pages with 5 photos, lifetime access, and background music",
+              price: "7.00",
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+            },
+          ],
+          featureList: [
+            "Upload photos",
+            "Add personalized messages",
+            "Choose from multiple themes",
+            "Add background music (Premium)",
+            "Share with loved ones",
+          ],
+        },
+      }),
+    },
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: "How to Create a Surprise Page",
+        description:
+          "Step by step guide to create a personalized surprise page for your loved ones",
+        image:
+          "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+        totalTime: "PT10M",
+        supply: [
+          {
+            "@type": "HowToSupply",
+            name: "Photos of memories",
+          },
+          {
+            "@type": "HowToSupply",
+            name: "Personal messages",
+          },
+        ],
+        tool: [
+          {
+            "@type": "HowToTool",
+            name: "SurpriseMe platform",
+          },
+        ],
+        step: [
+          {
+            "@type": "HowToStep",
+            name: "Choose your plan",
+            text: "Select between Basic (3 photos) or Premium (5 photos + music) plan",
+            image:
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          },
+          {
+            "@type": "HowToStep",
+            name: "Select a theme",
+            text: "Choose from Christmas, Birthday, Wedding, or upload your custom theme",
+            image:
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          },
+          {
+            "@type": "HowToStep",
+            name: "Upload photos and write messages",
+            text: "Add your favorite photos and write heartfelt messages for each one",
+            image:
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          },
+          {
+            "@type": "HowToStep",
+            name: "Complete payment and share",
+            text: "Complete the payment and share the unique link with your loved one",
+            image:
+              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          },
+        ],
       }),
     },
   ],

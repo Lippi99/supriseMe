@@ -401,33 +401,91 @@ useSeoMeta({
   ogTitle: t("seo.index.ogTitle"),
   description: t("seo.index.description"),
   ogDescription: t("seo.index.ogDescription"),
-  ogImage: "/icons/surpriseme_512_512.png",
-  ogImageAlt: "SurpriseMe - Create surprise pages",
+  ogImage:
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+  ogImageAlt: "SurpriseMe - Create surprise pages for loved ones",
+  ogImageWidth: 512,
+  ogImageHeight: 512,
+  ogType: "website",
+  ogSiteName: "SurpriseMe",
+  ogUrl: "https://supriseme-production.up.railway.app",
   twitterCard: "summary_large_image",
-  twitterImage: "/icons/surpriseme_512_512.png",
+  twitterImage:
+    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
   twitterTitle: t("seo.index.title"),
   twitterDescription: t("seo.index.description"),
-  robots: "index, follow",
-  author: "SurpriseMe",
+  twitterSite: "@surprisemeapp",
+  twitterCreator: "@surprisemeapp",
+  robots:
+    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  author: "SurpriseMe Team",
+  publisher: "SurpriseMe",
+  applicationName: "SurpriseMe",
+  referrer: "origin-when-cross-origin",
   keywords:
-    "surprise, gift, personalized page, messages, photos, love letter, special moments",
+    "surprise page, personalized gift, love letter, photo messages, special moments, birthday surprise, anniversary gift, custom webpage, romantic surprise, memory book",
+  themeColor: "#8b5cf6",
+  colorScheme: "light dark",
+  viewport: "width=device-width, initial-scale=1.0",
+  canonical: "https://supriseme-production.up.railway.app",
 });
 
 useHead({
+  link: [
+    {
+      rel: "canonical",
+      href: "https://supriseme-production.up.railway.app",
+    },
+    {
+      rel: "alternate",
+      hreflang: "en",
+      href: "https://supriseme-production.up.railway.app/en",
+    },
+    {
+      rel: "alternate",
+      hreflang: "pt",
+      href: "https://supriseme-production.up.railway.app",
+    },
+    {
+      rel: "alternate",
+      hreflang: "x-default",
+      href: "https://supriseme-production.up.railway.app",
+    },
+  ],
   script: [
     {
       type: "application/ld+json",
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": "https://supriseme-production.up.railway.app/#website",
         name: "SurpriseMe",
-        url: "https://surpriseme.app",
+        alternateName: "Surprise Me",
+        url: "https://supriseme-production.up.railway.app",
         description: t("seo.index.description"),
-        inLanguage: locale.value,
+        inLanguage: [locale.value, locale.value === "pt" ? "pt-BR" : "en-US"],
+        isPartOf: {
+          "@id": "https://supriseme-production.up.railway.app/#organization",
+        },
+        about: {
+          "@type": "Thing",
+          name: "Personalized surprise pages",
+        },
+        mainEntity: {
+          "@type": "WebPage",
+          "@id": "https://supriseme-production.up.railway.app/#webpage",
+        },
         potentialAction: {
           "@type": "SearchAction",
-          target: "https://surpriseme.app/search?q={search_term_string}",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate:
+              "https://supriseme-production.up.railway.app/search?q={search_term_string}",
+          },
           "query-input": "required name=search_term_string",
+        },
+        publisher: {
+          "@id": "https://supriseme-production.up.railway.app/#organization",
         },
       }),
     },
@@ -436,9 +494,114 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://supriseme-production.up.railway.app/#organization",
         name: "SurpriseMe",
-        url: "https://surpriseme.app",
-        logo: "https://surpriseme.app/icons/surpriseme_512_512.png",
+        alternateName: "Surprise Me",
+        url: "https://supriseme-production.up.railway.app",
+        logo: {
+          "@type": "ImageObject",
+          "@id": "https://supriseme-production.up.railway.app/#logo",
+          url: "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.png",
+          width: 512,
+          height: 512,
+          caption: "SurpriseMe Logo",
+        },
+        image: {
+          "@id": "https://supriseme-production.up.railway.app/#logo",
+        },
+        description: t("seo.index.description"),
+        sameAs: [
+          "https://twitter.com/surprisemeapp",
+          "https://facebook.com/surprisemeapp",
+          "https://instagram.com/surprisemeapp",
+        ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          availableLanguage: ["English", "Portuguese"],
+        },
+      }),
+    },
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://supriseme-production.up.railway.app/#webpage",
+        url: "https://supriseme-production.up.railway.app",
+        name: t("seo.index.title"),
+        description: t("seo.index.description"),
+        inLanguage: locale.value,
+        isPartOf: {
+          "@id": "https://supriseme-production.up.railway.app/#website",
+        },
+        about: {
+          "@type": "Service",
+          "@id": "https://supriseme-production.up.railway.app/#service",
+          name: "Personalized Surprise Page Creation",
+          description:
+            "Create beautiful, personalized surprise pages with photos and messages for your loved ones",
+          provider: {
+            "@id": "https://supriseme-production.up.railway.app/#organization",
+          },
+          areaServed: "Worldwide",
+          availableLanguage: ["English", "Portuguese"],
+          serviceType: "Digital Service",
+        },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://supriseme-production.up.railway.app",
+            },
+          ],
+        },
+      }),
+    },
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: "SurpriseMe Page Creation Service",
+        description:
+          "Create personalized surprise pages with photos, messages, and themes",
+        brand: {
+          "@type": "Brand",
+          name: "SurpriseMe",
+        },
+        category: "Digital Service",
+        offers: [
+          {
+            "@type": "Offer",
+            name: "Basic Plan",
+            description: "3 photos, 6 months access",
+            price: "4",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            validFrom: new Date().toISOString(),
+            seller: {
+              "@id":
+                "https://supriseme-production.up.railway.app/#organization",
+            },
+          },
+          {
+            "@type": "Offer",
+            name: "Premium Plan",
+            description: "5 photos, lifetime access, with background music",
+            price: "7",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            validFrom: new Date().toISOString(),
+            seller: {
+              "@id":
+                "https://supriseme-production.up.railway.app/#organization",
+            },
+          },
+        ],
       }),
     },
   ],

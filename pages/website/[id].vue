@@ -131,20 +131,28 @@ const { data, error } = await useFetch<IWebsiteClient>(
 );
 
 useSeoMeta({
-  title: `${data?.value?.website?.name} - SurpriseMe`,
-  ogTitle: `${data?.value?.website?.name} - SurpriseMe`,
-  description: `A special surprise page created for ${data?.value?.website?.name}. View personalized messages and photos.`,
-  ogDescription: `A special surprise page created for ${data?.value?.website?.name}. View personalized messages and photos.`,
-  ogImage:
-    data?.value?.website?.messages?.[0]?.image ||
-    "/icons/surpriseme_512_512.png",
-  ogImageAlt: `Surprise page for ${data?.value?.website?.name}`,
+  title: `${data?.value?.website?.name} - Your Special Surprise | SurpriseMe`,
+  ogTitle: `A Special Surprise for ${data?.value?.website?.name}`,
+  description: `${data?.value?.website?.name}, this special surprise page was created just for you! Discover personalized messages, beautiful photos, and heartfelt memories. Created with love on SurpriseMe.`,
+  ogDescription: `A heartfelt surprise page created especially for ${data?.value?.website?.name}, filled with personalized messages and cherished photos.`,
+  ogImage: data?.value?.website?.messages?.[0]?.image || "https://surpriseme.app/icons/surpriseme_512_512.png",
+  ogImageAlt: `Personal photo from ${data?.value?.website?.name}'s surprise page`,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogType: "article",
+  ogSiteName: "SurpriseMe",
+  ogUrl: `https://surpriseme.app/website/${id.value}`,
   twitterCard: "summary_large_image",
-  twitterImage:
-    data?.value?.website?.messages?.[0]?.image ||
-    "/icons/surpriseme_512_512.png",
-  robots: "noindex, nofollow",
-  keywords: "surprise page, personal message, gift, special moment",
+  twitterImage: data?.value?.website?.messages?.[0]?.image || "https://surpriseme.app/icons/surpriseme_512_512.png",
+  twitterTitle: `A Special Surprise for ${data?.value?.website?.name}`,
+  twitterDescription: `Discover this beautiful collection of memories created especially for ${data?.value?.website?.name}`,
+  twitterSite: "@surprisemeapp",
+  robots: "noindex, nofollow, noarchive, nosnippet",
+  author: "SurpriseMe",
+  publisher: "SurpriseMe",
+  themeColor: "#8b5cf6",
+  colorScheme: "light dark",
+  keywords: `${data?.value?.website?.name}, surprise page, personal message, gift, special moment, memories, photos, ${data?.value?.website?.theme?.toLowerCase() || 'celebration'}`,
 });
 
 const { startGlobal } = useThemeStore();
