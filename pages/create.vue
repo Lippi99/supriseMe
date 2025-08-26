@@ -112,7 +112,7 @@
                           v-model="formState.plan"
                           value-attribute="name"
                           :options="plans"
-                          option-attribute="name"
+                          option-attribute="label"
                           :ui="{ 
                             wrapper: 'relative z-50',
                             container: 'z-50 relative',
@@ -170,7 +170,7 @@
                           v-model="formState.theme"
                           value-attribute="name"
                           :options="themes"
-                          option-attribute="name"
+                          option-attribute="label"
                           :ui="{ 
                             wrapper: 'relative z-40',
                             container: 'z-40 relative',
@@ -899,14 +899,17 @@ const themes = computed(() => {
   const baseThemes = [
     {
       name: "Christmas",
+      label: t("createPage.themes.christmas"),
       icon: "i-icon-park-solid-christmas-tree-one",
     },
     {
       name: "Birthday",
+      label: t("createPage.themes.birthday"),
       icon: "i-heroicons-cake-20-solid",
     },
     {
       name: "Wedding",
+      label: t("createPage.themes.wedding"),
       icon: "i-fluent-emoji-high-contrast-wedding",
     },
   ];
@@ -915,6 +918,7 @@ const themes = computed(() => {
   if (formState.plan === "Premium") {
     baseThemes.push({
       name: "Custom",
+      label: t("createPage.themes.custom"),
       icon: "i-heroicons-photo-20-solid",
     });
   }
@@ -922,18 +926,20 @@ const themes = computed(() => {
   return baseThemes;
 });
 
-const plans = [
+const plans = computed(() => [
   {
     name: "Basic",
+    label: t("createPage.plans.basic"),
   },
   {
-    name: "Premium",
+    name: "Premium", 
+    label: t("createPage.plans.premium"),
   },
-];
+]);
 
 const selected = computed(() => {
   const currentTheme = themes.value.find(theme => theme.name === formState.theme);
-  return currentTheme || themes.value[0] || { name: '', icon: '' };
+  return currentTheme || themes.value[0] || { name: '', label: '', icon: '' };
 });
 const isOpen = ref(false);
 const isSubmitting = ref(false);

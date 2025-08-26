@@ -105,6 +105,16 @@ export default defineI18nConfig(() => ({
         removeImage: "Remove Image",
         creating: "Creating...",
         createButton: "Create your website",
+        plans: {
+          basic: "Basic",
+          premium: "Premium",
+        },
+        themes: {
+          christmas: "Christmas",
+          birthday: "Birthday",
+          wedding: "Wedding",
+          custom: "Custom",
+        },
       },
       youtubeMusic: {
         playMusicTitle: "Play Music?",
@@ -237,6 +247,16 @@ export default defineI18nConfig(() => ({
         removeImage: "Remover Imagem",
         creating: "Criando...",
         createButton: "Crie seu site",
+        plans: {
+          basic: "Básico",
+          premium: "Premium",
+        },
+        themes: {
+          christmas: "Natal",
+          birthday: "Aniversário",
+          wedding: "Casamento",
+          custom: "Personalizado",
+        },
       },
       youtubeMusic: {
         playMusicTitle: "Reproduzir Música?",
