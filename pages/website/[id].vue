@@ -70,13 +70,21 @@
                   class="transform group-hover:scale-105 transition-all duration-700 shadow-2xl hover:shadow-purple-500/25"
                 >
                   <NuxtImg
-                    class="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] rounded-lg h-auto"
+                    class="w-[350px] sm:w-[400px] md:w-[450px] lg:w-[500px] xl:w-[550px] h-auto rounded-lg mx-auto block"
                     :alt="`Photo ${index + 1}: ${message?.message?.substring(
                       0,
                       100
                     )}${message?.message?.length > 100 ? '...' : ''}`"
                     :src="message?.image"
                     loading="lazy"
+                    quality="95"
+                    format="webp"
+                    :width="1100"
+                    sizes="(max-width: 640px) 350px, (max-width: 768px) 400px, (max-width: 1024px) 450px, (max-width: 1280px) 500px, 550px"
+                    :img-attrs="{
+                      style:
+                        'max-width: 100%; height: auto; display: block; margin: 0 auto;',
+                    }"
                   />
                 </PolaroidPhoto>
 
@@ -218,7 +226,8 @@ onMounted(() => {
   }
   startGlobal(
     data?.value?.website?.theme as string,
-    data?.value?.website?.customThemeImage as string
+    data?.value?.website?.customThemeImage as string,
+    500000
   );
 });
 

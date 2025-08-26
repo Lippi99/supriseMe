@@ -2,7 +2,7 @@ export const useThemeStore = defineStore("theme", () => {
   const confetti = getCurrentInstance()?.appContext.config.globalProperties
     .$confetti as any;
 
-  function start(preview: boolean = false) {
+  function start(preview: boolean = false, duration: number = 10000) {
     if (preview) {
       const canvas = document.getElementById("preview");
 
@@ -32,20 +32,20 @@ export const useThemeStore = defineStore("theme", () => {
 
     setTimeout(() => {
       stop();
-    }, 10000);
+    }, duration);
   }
 
-  function startGlobal(theme: string, customThemeImage?: string) {
-    start(); // Start with global confetti
+  function startGlobal(theme: string, customThemeImage?: string, duration: number = 10000) {
+    start(false, duration); // Start with global confetti and custom duration
 
     if (theme === "Christmas") {
-      snowTheme(false);
+      snowTheme(false, duration);
     } else if (theme === "Wedding") {
-      loveTheme(false);
+      loveTheme(false, duration);
     } else if (theme === "Custom" && customThemeImage) {
-      customTheme(false, customThemeImage);
+      customTheme(false, customThemeImage, duration);
     } else if (theme === "Confetti") {
-      confettiTheme(false);
+      confettiTheme(false, duration);
     }
   }
 
@@ -53,8 +53,8 @@ export const useThemeStore = defineStore("theme", () => {
     confetti.stop();
   }
 
-  function loveTheme(preview: boolean = false) {
-    start(preview);
+  function loveTheme(preview: boolean = false, duration: number = 10000) {
+    start(preview, duration);
     confetti.update({
       ...(preview && { canvasId: "preview" }), // Apply only for preview
       defaultSize: 7,
@@ -66,8 +66,8 @@ export const useThemeStore = defineStore("theme", () => {
     });
   }
 
-  function snowTheme(preview: boolean = false) {
-    start(preview);
+  function snowTheme(preview: boolean = false, duration: number = 10000) {
+    start(preview, duration);
     confetti.update({
       ...(preview && { canvasId: "preview" }), // Apply only for preview
       defaultSize: 10,
@@ -83,8 +83,8 @@ export const useThemeStore = defineStore("theme", () => {
     });
   }
 
-  function confettiTheme(preview: boolean = false) {
-    start(preview);
+  function confettiTheme(preview: boolean = false, duration: number = 10000) {
+    start(preview, duration);
     confetti.update({
       ...(preview && { canvasId: "preview" }), // Apply only for preview
       defaultSize: 7,
@@ -95,8 +95,8 @@ export const useThemeStore = defineStore("theme", () => {
     });
   }
 
-  function customTheme(preview: boolean = false, imageUrl: string) {
-    start(preview);
+  function customTheme(preview: boolean = false, imageUrl: string, duration: number = 10000) {
+    start(preview, duration);
     confetti.update({
       ...(preview && { canvasId: "preview" }), // Apply only for preview
       defaultSize: 10,
