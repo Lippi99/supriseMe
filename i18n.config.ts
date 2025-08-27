@@ -137,6 +137,13 @@ export default defineI18nConfig(() => ({
         backgroundSoundtrack: "Background soundtrack",
         youtubeVideo: "YouTube Video",
       },
+      signInModal: {
+        title: "Welcome Back",
+        subtitle: "Sign in to your account to continue creating amazing surprises",
+        continueWithGoogle: "Continue with Google",
+        close: "Close",
+        privacyNotice: "By signing in, you agree to our Terms of Service and Privacy Policy.",
+      },
       footer: {
         socialMedia: "Social Media",
         support: "Support",
@@ -282,6 +289,13 @@ export default defineI18nConfig(() => ({
         nowPlaying: "Reproduzindo Agora",
         backgroundSoundtrack: "Trilha sonora de fundo",
         youtubeVideo: "Vídeo do YouTube",
+      },
+      signInModal: {
+        title: "Bem-vindo de Volta",
+        subtitle: "Entre em sua conta para continuar criando surpresas incríveis",
+        continueWithGoogle: "Continuar com Google",
+        close: "Fechar",
+        privacyNotice: "Ao entrar, você concorda com nossos Termos de Serviço e Política de Privacidade.",
       },
       footer: {
         socialMedia: "Redes Sociais",

@@ -28,11 +28,6 @@
                 class="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-20 mx-auto"
               ></div>
             </div>
-            <p
-              class="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-delay"
-            >
-              A special collection of memories just for you ✨
-            </p>
           </div>
         </header>
       </div>

@@ -73,13 +73,12 @@
                   <h1
                     class="text-lg font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-2"
                   >
-                    {{ form.name || 'Your Name' }}
+                    {{ form.name || "Your Name" }}
                   </h1>
-                  <div class="h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-12 mx-auto"></div>
+                  <div
+                    class="h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-12 mx-auto"
+                  ></div>
                 </div>
-                <p class="mt-2 text-xs text-gray-300 max-w-xs mx-auto">
-                  A special collection of memories just for you ✨
-                </p>
               </div>
             </header>
 
@@ -94,21 +93,26 @@
                 <div v-if="message.image" class="flex justify-center mb-4">
                   <div class="relative group/photo">
                     <!-- Shadow/Glow Effect -->
-                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur-sm opacity-25"></div>
-                    
+                    <div
+                      class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur-sm opacity-25"
+                    ></div>
+
                     <!-- Polaroid-style Frame -->
                     <div class="relative bg-white rounded-xl p-2 shadow-lg">
                       <NuxtPicture
                         class="w-full max-w-[120px] rounded-lg h-auto"
                         :img-attrs="{
                           alt: 'Message image',
-                          style: 'width: 100%; height: auto; object-fit: cover;',
+                          style:
+                            'width: 100%; height: auto; object-fit: cover;',
                         }"
                         :src="message.image"
                       />
-                      
+
                       <!-- Floating Number Badge -->
-                      <div class="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      <div
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                      >
                         {{ index + 1 }}
                       </div>
                     </div>
@@ -116,23 +120,42 @@
                 </div>
 
                 <!-- Decorative Divider (matching website style) -->
-                <div class="flex items-center justify-center mb-4" v-if="message.image">
-                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+                <div
+                  class="flex items-center justify-center mb-4"
+                  v-if="message.image"
+                >
+                  <div
+                    class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"
+                  ></div>
                   <div class="mx-2">
-                    <div class="w-1 h-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <div
+                      class="w-1 h-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
+                    ></div>
                   </div>
-                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+                  <div
+                    class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"
+                  ></div>
                 </div>
 
                 <!-- Message Content (matching website blockquote style) -->
                 <div v-if="message.message" class="max-w-xs mx-auto px-2">
                   <div class="relative">
                     <!-- Quote Marks -->
-                    <div class="absolute -top-1 -left-1 text-lg text-purple-300/50 font-serif leading-none">"</div>
-                    <div class="absolute -bottom-2 -right-1 text-lg text-purple-300/50 font-serif leading-none">"</div>
-                    
+                    <div
+                      class="absolute -top-1 -left-1 text-lg text-purple-300/50 font-serif leading-none"
+                    >
+                      "
+                    </div>
+                    <div
+                      class="absolute -bottom-2 -right-1 text-lg text-purple-300/50 font-serif leading-none"
+                    >
+                      "
+                    </div>
+
                     <!-- Message Text -->
-                    <blockquote class="relative text-xs text-center leading-relaxed text-gray-200 font-medium italic p-3">
+                    <blockquote
+                      class="relative text-xs text-center leading-relaxed text-gray-200 font-medium italic p-3"
+                    >
                       {{ message.message }}
                     </blockquote>
                   </div>
@@ -140,13 +163,18 @@
               </div>
 
               <!-- End Decoration (matching website) -->
-              <div v-if="form.messages && form.messages.length > 0" class="text-center mt-8">
+              <div
+                v-if="form.messages && form.messages.length > 0"
+                class="text-center mt-8"
+              >
                 <div class="inline-flex items-center space-x-1 text-purple-500">
                   <div class="w-1 h-1 rounded-full bg-current"></div>
                   <div class="w-1 h-1 rounded-full bg-current"></div>
                   <div class="w-1 h-1 rounded-full bg-current"></div>
                 </div>
-                <p class="mt-2 text-gray-400 text-xs">Made with 💜 on SurpriseMe</p>
+                <p class="mt-2 text-gray-400 text-xs">
+                  Made with 💜 on SurpriseMe
+                </p>
               </div>
 
               <!-- Placeholder when no messages -->
