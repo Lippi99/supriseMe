@@ -401,17 +401,15 @@ useSeoMeta({
   ogTitle: t("seo.index.ogTitle"),
   description: t("seo.index.description"),
   ogDescription: t("seo.index.ogDescription"),
-  ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  ogImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   ogImageAlt: "SurpriseMe - Create surprise pages for loved ones",
   ogImageWidth: 512,
   ogImageHeight: 512,
   ogType: "website",
   ogSiteName: "SurpriseMe",
-  ogUrl: "https://supriseme-production.up.railway.app",
+  ogUrl: "https://www.surpriseme.com.br",
   twitterCard: "summary_large_image",
-  twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  twitterImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   twitterTitle: t("seo.index.title"),
   twitterDescription: t("seo.index.description"),
   twitterSite: "@surprisemeapp",
@@ -433,22 +431,22 @@ useHead({
   link: [
     {
       rel: "canonical",
-      href: "https://supriseme-production.up.railway.app",
+      href: "https://www.surpriseme.com.br",
     },
     {
       rel: "alternate",
       hreflang: "en",
-      href: "https://supriseme-production.up.railway.app/en",
+      href: "https://www.surpriseme.com.br/en",
     },
     {
       rel: "alternate",
       hreflang: "pt",
-      href: "https://supriseme-production.up.railway.app",
+      href: "https://www.surpriseme.com.br",
     },
     {
       rel: "alternate",
       hreflang: "x-default",
-      href: "https://supriseme-production.up.railway.app",
+      href: "https://www.surpriseme.com.br",
     },
   ],
   script: [
@@ -457,14 +455,14 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "@id": "https://supriseme-production.up.railway.app/#website",
+        "@id": "https://www.surpriseme.com.br/#website",
         name: "SurpriseMe",
         alternateName: "Surprise Me",
-        url: "https://supriseme-production.up.railway.app",
+        url: "https://www.surpriseme.com.br",
         description: t("seo.index.description"),
         inLanguage: [locale.value, locale.value === "pt" ? "pt-BR" : "en-US"],
         isPartOf: {
-          "@id": "https://supriseme-production.up.railway.app/#organization",
+          "@id": "https://www.surpriseme.com.br/#organization",
         },
         about: {
           "@type": "Thing",
@@ -472,19 +470,19 @@ useHead({
         },
         mainEntity: {
           "@type": "WebPage",
-          "@id": "https://supriseme-production.up.railway.app/#webpage",
+          "@id": "https://www.surpriseme.com.br/#webpage",
         },
         potentialAction: {
           "@type": "SearchAction",
           target: {
             "@type": "EntryPoint",
             urlTemplate:
-              "https://supriseme-production.up.railway.app/search?q={search_term_string}",
+              "https://www.surpriseme.com.br/search?q={search_term_string}",
           },
           "query-input": "required name=search_term_string",
         },
         publisher: {
-          "@id": "https://supriseme-production.up.railway.app/#organization",
+          "@id": "https://www.surpriseme.com.br/#organization",
         },
       }),
     },
@@ -493,20 +491,20 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
-        "@id": "https://supriseme-production.up.railway.app/#organization",
+        "@id": "https://www.surpriseme.com.br/#organization",
         name: "SurpriseMe",
         alternateName: "Surprise Me",
-        url: "https://supriseme-production.up.railway.app",
+        url: "https://www.surpriseme.com.br",
         logo: {
           "@type": "ImageObject",
-          "@id": "https://supriseme-production.up.railway.app/#logo",
-          url: "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+          "@id": "https://www.surpriseme.com.br/#logo",
+          url: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
           width: 512,
           height: 512,
           caption: "SurpriseMe Logo",
         },
         image: {
-          "@id": "https://supriseme-production.up.railway.app/#logo",
+          "@id": "https://www.surpriseme.com.br/#logo",
         },
         description: t("seo.index.description"),
         sameAs: [
@@ -526,22 +524,22 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id": "https://supriseme-production.up.railway.app/#webpage",
-        url: "https://supriseme-production.up.railway.app",
+        "@id": "https://www.surpriseme.com.br/#webpage",
+        url: "https://www.surpriseme.com.br",
         name: t("seo.index.title"),
         description: t("seo.index.description"),
         inLanguage: locale.value,
         isPartOf: {
-          "@id": "https://supriseme-production.up.railway.app/#website",
+          "@id": "https://www.surpriseme.com.br/#website",
         },
         about: {
           "@type": "Service",
-          "@id": "https://supriseme-production.up.railway.app/#service",
+          "@id": "https://www.surpriseme.com.br/#service",
           name: "Personalized Surprise Page Creation",
           description:
             "Create beautiful, personalized surprise pages with photos and messages for your loved ones",
           provider: {
-            "@id": "https://supriseme-production.up.railway.app/#organization",
+            "@id": "https://www.surpriseme.com.br/#organization",
           },
           areaServed: "Worldwide",
           availableLanguage: ["English", "Portuguese"],
@@ -554,7 +552,7 @@ useHead({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://supriseme-production.up.railway.app",
+              item: "https://www.surpriseme.com.br",
             },
           ],
         },
@@ -583,8 +581,7 @@ useHead({
             availability: "https://schema.org/InStock",
             validFrom: new Date().toISOString(),
             seller: {
-              "@id":
-                "https://supriseme-production.up.railway.app/#organization",
+              "@id": "https://www.surpriseme.com.br/#organization",
             },
           },
           {
@@ -596,8 +593,7 @@ useHead({
             availability: "https://schema.org/InStock",
             validFrom: new Date().toISOString(),
             seller: {
-              "@id":
-                "https://supriseme-production.up.railway.app/#organization",
+              "@id": "https://www.surpriseme.com.br/#organization",
             },
           },
         ],

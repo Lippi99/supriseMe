@@ -113,13 +113,13 @@
                           value-attribute="name"
                           :options="plans"
                           option-attribute="label"
-                          :ui="{ 
+                          :ui="{
                             wrapper: 'relative z-50',
                             container: 'z-50 relative',
                             base: 'relative z-50',
                             option: {
-                              container: 'z-50 relative'
-                            }
+                              container: 'z-50 relative',
+                            },
                           }"
                         />
                       </div>
@@ -171,10 +171,10 @@
                           value-attribute="name"
                           :options="themes"
                           option-attribute="label"
-                          :ui="{ 
+                          :ui="{
                             wrapper: 'relative z-40',
                             container: 'z-40 relative',
-                            base: 'relative z-40'
+                            base: 'relative z-40',
                           }"
                         >
                           <template #leading>
@@ -609,17 +609,15 @@ useSeoMeta({
   ogTitle: t("seo.create.ogTitle"),
   description: t("seo.create.description"),
   ogDescription: t("seo.create.ogDescription"),
-  ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  ogImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   ogImageAlt: "Create your personalized surprise page with photos and messages",
   ogImageWidth: 512,
   ogImageHeight: 512,
   ogType: "website",
   ogSiteName: "SurpriseMe",
-  ogUrl: `https://supriseme-production.up.railway.app${route.fullPath}`,
+  ogUrl: `https://www.surpriseme.com.br${route.fullPath}`,
   twitterCard: "summary_large_image",
-  twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  twitterImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   twitterTitle: t("seo.create.title"),
   twitterDescription: t("seo.create.description"),
   twitterSite: "@surprisemeapp",
@@ -640,7 +638,7 @@ useHead({
   link: [
     {
       rel: "canonical",
-      href: `https://supriseme-production.up.railway.app${route.fullPath}`,
+      href: `https://www.surpriseme.com.br${route.fullPath}`,
     },
   ],
   script: [
@@ -649,13 +647,13 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id": `https://supriseme-production.up.railway.app${route.fullPath}#webpage`,
-        url: `https://supriseme-production.up.railway.app${route.fullPath}`,
+        "@id": `https://www.surpriseme.com.br${route.fullPath}#webpage`,
+        url: `https://www.surpriseme.com.br${route.fullPath}`,
         name: t("seo.create.title"),
         description: t("seo.create.description"),
         inLanguage: locale.value,
         isPartOf: {
-          "@id": "https://supriseme-production.up.railway.app/#website",
+          "@id": "https://www.surpriseme.com.br/#website",
         },
         about: {
           "@type": "CreativeWork",
@@ -670,19 +668,19 @@ useHead({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://supriseme-production.up.railway.app",
+              item: "https://www.surpriseme.com.br",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Create",
-              item: "https://supriseme-production.up.railway.app/create",
+              item: "https://www.surpriseme.com.br/create",
             },
           ],
         },
         mainEntity: {
           "@type": "WebApplication",
-          "@id": `https://supriseme-production.up.railway.app${route.fullPath}#application`,
+          "@id": `https://www.surpriseme.com.br${route.fullPath}#application`,
           name: "SurpriseMe Page Creator",
           description:
             "Create beautiful surprise pages with photos and personalized messages",
@@ -726,8 +724,7 @@ useHead({
         name: "How to Create a Surprise Page",
         description:
           "Step by step guide to create a personalized surprise page for your loved ones",
-        image:
-          "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+        image: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
         totalTime: "PT10M",
         supply: [
           {
@@ -751,28 +748,28 @@ useHead({
             name: "Choose your plan",
             text: "Select between Basic (3 photos) or Premium (5 photos + music) plan",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+              "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
           },
           {
             "@type": "HowToStep",
             name: "Select a theme",
             text: "Choose from Christmas, Birthday, Wedding, or upload your custom theme",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+              "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
           },
           {
             "@type": "HowToStep",
             name: "Upload photos and write messages",
             text: "Add your favorite photos and write heartfelt messages for each one",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+              "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
           },
           {
             "@type": "HowToStep",
             name: "Complete payment and share",
             text: "Complete the payment and share the unique link with your loved one",
             image:
-              "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+              "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
           },
         ],
       }),
@@ -932,14 +929,16 @@ const plans = computed(() => [
     label: t("createPage.plans.basic"),
   },
   {
-    name: "Premium", 
+    name: "Premium",
     label: t("createPage.plans.premium"),
   },
 ]);
 
 const selected = computed(() => {
-  const currentTheme = themes.value.find(theme => theme.name === formState.theme);
-  return currentTheme || themes.value[0] || { name: '', label: '', icon: '' };
+  const currentTheme = themes.value.find(
+    (theme) => theme.name === formState.theme
+  );
+  return currentTheme || themes.value[0] || { name: "", label: "", icon: "" };
 });
 const isOpen = ref(false);
 const isSubmitting = ref(false);

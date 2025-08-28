@@ -204,15 +204,13 @@ useSeoMeta({
     "Política de privacidade da SurpriseMe. Saiba como protegemos suas informações pessoais e respeitamos sua privacidade.",
   ogDescription:
     "Política de privacidade da SurpriseMe. Saiba como protegemos suas informações pessoais e respeitamos sua privacidade.",
-  ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  ogImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   ogImageAlt: "SurpriseMe Privacy Policy",
   ogType: "article",
   ogSiteName: "SurpriseMe",
-  ogUrl: "https://supriseme-production.up.railway.app/privacy-policy",
+  ogUrl: "https://www.surpriseme.com.br/privacy-policy",
   twitterCard: "summary",
-  twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  twitterImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   twitterTitle: `${t("footer.legal.privacyPolicy")} - SurpriseMe`,
   twitterDescription:
     "Política de privacidade da SurpriseMe. Saiba como protegemos suas informações pessoais.",
@@ -229,7 +227,7 @@ useHead({
   link: [
     {
       rel: "canonical",
-      href: "https://supriseme-production.up.railway.app/privacy-policy",
+      href: "https://www.surpriseme.com.br/privacy-policy",
     },
   ],
   script: [
@@ -238,14 +236,13 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id":
-          "https://supriseme-production.up.railway.app/privacy-policy#webpage",
-        url: "https://supriseme-production.up.railway.app/privacy-policy",
+        "@id": "https://www.surpriseme.com.br/privacy-policy#webpage",
+        url: "https://www.surpriseme.com.br/privacy-policy",
         name: `${t("footer.legal.privacyPolicy")} - SurpriseMe`,
         description: "Política de privacidade da SurpriseMe",
         inLanguage: locale.value,
         isPartOf: {
-          "@id": "https://supriseme-production.up.railway.app/#website",
+          "@id": "https://www.surpriseme.com.br/#website",
         },
         about: {
           "@type": "Thing",
@@ -258,19 +255,19 @@ useHead({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://supriseme-production.up.railway.app",
+              item: "https://www.surpriseme.com.br",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: t("footer.legal.privacyPolicy"),
-              item: "https://supriseme-production.up.railway.app/privacy-policy",
+              item: "https://www.surpriseme.com.br/privacy-policy",
             },
           ],
         },
         dateModified: "2024-12-05",
         publisher: {
-          "@id": "https://supriseme-production.up.railway.app/#organization",
+          "@id": "https://www.surpriseme.com.br/#organization",
         },
       }),
     },

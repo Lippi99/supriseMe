@@ -186,17 +186,17 @@ useSeoMeta({
   ogDescription: `A heartfelt surprise page created especially for ${data?.value?.website?.name}, filled with personalized messages and cherished photos.`,
   ogImage:
     data?.value?.website?.messages?.[0]?.image ||
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+    "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   ogImageAlt: `Personal photo from ${data?.value?.website?.name}'s surprise page`,
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogType: "article",
   ogSiteName: "SurpriseMe",
-  ogUrl: `https://supriseme-production.up.railway.app/website/${id.value}`,
+  ogUrl: `https://www.surpriseme.com.br/website/${id.value}`,
   twitterCard: "summary_large_image",
   twitterImage:
     data?.value?.website?.messages?.[0]?.image ||
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+    "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   twitterTitle: `A Special Surprise for ${data?.value?.website?.name}`,
   twitterDescription: `Discover this beautiful collection of memories created especially for ${data?.value?.website?.name}`,
   twitterSite: "@surprisemeapp",

@@ -27,7 +27,7 @@
             <p class="text-gray-300 leading-relaxed mb-6">
               Ao acessar ao site
               <a
-                href="https://supriseme-production.up.railway.app"
+                href="https://www.surpriseme.com.br"
                 class="text-purple-400 hover:text-purple-300 underline"
                 >SurpriseMe</a
               >, concorda em cumprir estes termos de serviço, todas as leis e
@@ -179,15 +179,13 @@ useSeoMeta({
     "Termos de serviço da SurpriseMe. Conheça os termos e condições de uso da nossa plataforma para criar páginas de surpresa personalizadas.",
   ogDescription:
     "Termos de serviço da SurpriseMe. Conheça os termos e condições de uso da nossa plataforma.",
-  ogImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  ogImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   ogImageAlt: "SurpriseMe Terms of Service",
   ogType: "article",
   ogSiteName: "SurpriseMe",
-  ogUrl: "https://supriseme-production.up.railway.app/term-services",
+  ogUrl: "https://www.surpriseme.com.br/term-services",
   twitterCard: "summary",
-  twitterImage:
-    "https://supriseme-production.up.railway.app/icons/surpriseme_512_512.webp",
+  twitterImage: "https://www.surpriseme.com.br/icons/surpriseme_512_512.webp",
   twitterTitle: `${t("footer.legal.termsOfService")} - SurpriseMe`,
   twitterDescription:
     "Termos de serviço da SurpriseMe. Conheça os termos e condições de uso da nossa plataforma.",
@@ -204,7 +202,7 @@ useHead({
   link: [
     {
       rel: "canonical",
-      href: "https://supriseme-production.up.railway.app/term-services",
+      href: "https://www.surpriseme.com.br/term-services",
     },
   ],
   script: [
@@ -213,14 +211,13 @@ useHead({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id":
-          "https://supriseme-production.up.railway.app/term-services#webpage",
-        url: "https://supriseme-production.up.railway.app/term-services",
+        "@id": "https://www.surpriseme.com.br/term-services#webpage",
+        url: "https://www.surpriseme.com.br/term-services",
         name: `${t("footer.legal.termsOfService")} - SurpriseMe`,
         description: "Termos de serviço da SurpriseMe",
         inLanguage: locale.value,
         isPartOf: {
-          "@id": "https://supriseme-production.up.railway.app/#website",
+          "@id": "https://www.surpriseme.com.br/#website",
         },
         about: {
           "@type": "Thing",
@@ -233,19 +230,19 @@ useHead({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://supriseme-production.up.railway.app",
+              item: "https://www.surpriseme.com.br",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: t("footer.legal.termsOfService"),
-              item: "https://supriseme-production.up.railway.app/term-services",
+              item: "https://www.surpriseme.com.br/term-services",
             },
           ],
         },
         dateModified: "2024-12-05",
         publisher: {
-          "@id": "https://supriseme-production.up.railway.app/#organization",
+          "@id": "https://www.surpriseme.com.br/#organization",
         },
       }),
     },
