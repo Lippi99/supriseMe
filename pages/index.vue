@@ -341,53 +341,6 @@
     </section>
 
     <!-- FAQ Section -->
-    <section
-      class="py-12 sm:py-20 lg:py-32 bg-gradient-to-b from-gray-900 via-gray-800/50 to-gray-900 relative overflow-hidden"
-      aria-labelledby="faq-section"
-    >
-      <div
-        class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10"
-      >
-        <!-- Mobile-optimized header -->
-        <div class="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div
-            class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/50 dark:to-indigo-900/50 backdrop-blur-sm border border-blue-200 dark:border-blue-700 shadow-lg mb-4 sm:mb-6"
-          >
-            <span
-              class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent"
-            >
-              ❓ Got Questions?
-            </span>
-          </div>
-
-          <h2
-            id="faq-section"
-            class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight px-2 sm:px-0"
-          >
-            {{ $t("indexPage.sectionFour.title") }}
-          </h2>
-
-          <div
-            class="w-24 sm:w-32 h-1 sm:h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 mx-auto rounded-full shadow-lg"
-          ></div>
-        </div>
-
-        <!-- Mobile-optimized FAQ container -->
-        <div class="relative group touch-manipulation">
-          <!-- Mobile-friendly glowing background -->
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-blue-100/50 to-violet-100/50 dark:from-blue-900/20 dark:to-violet-900/20 rounded-2xl sm:rounded-3xl blur-lg sm:blur-xl scale-95 group-hover:scale-100 transition-transform duration-500"
-          ></div>
-
-          <!-- Mobile-optimized FAQ container -->
-          <div
-            class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl sm:shadow-2xl border border-blue-100 dark:border-blue-800 transform transition-all duration-500 hover:-translate-y-1 hover:shadow-blue-500/25"
-          >
-            <Faq />
-          </div>
-        </div>
-      </div>
-    </section>
   </NuxtLayout>
 </template>
 
