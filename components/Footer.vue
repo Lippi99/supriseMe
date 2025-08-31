@@ -70,18 +70,17 @@ const navigation = {
   socialMedia: [
     {
       icon: "i-skill-icons:instagram",
-      href: "#",
+      href: "https://www.instagram.com/surprisemebr/",
     },
-    {
-      icon: "i-logos:facebook",
-      href: "#",
-    },
+
     {
       icon: "i-logos:tiktok-icon",
-      href: "#",
+      href: "https://www.tiktok.com/@surprisemebr?_t=ZM-8zLT8Z3M8YA&_r=1",
     },
   ],
-  support: [{ icon: "i-logos:whatsapp-icon", href: "#" }],
+  support: [
+    { icon: "i-logos:whatsapp-icon", href: "https://wa.me/5521995380781" },
+  ],
 
   legal: [
     { name: t("footer.legal.termsOfService"), href: "/term-services" },
