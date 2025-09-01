@@ -2,9 +2,9 @@
   <UModal
     :modelValue="isOpen"
     :transition="false"
-    :ui="{ 
+    :ui="{
       width: 'sm:max-w-md',
-      container: 'flex min-h-full items-center justify-center p-4'
+      container: 'flex min-h-full items-center justify-center p-4',
     }"
   >
     <div
@@ -64,48 +64,227 @@
           <h2
             class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
           >
-            {{ $t("signInModal.title") }}
+            {{
+              currentView === "register"
+                ? $t("auth.register.title")
+                : $t("auth.login.title")
+            }}
           </h2>
           <p
             class="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed"
           >
-            {{ $t("signInModal.subtitle") }}
+            {{
+              currentView === "register"
+                ? $t("auth.register.subtitle")
+                : $t("auth.login.subtitle")
+            }}
           </p>
         </div>
 
-        <!-- Sign In Button -->
-        <div class="space-y-4 w-full flex items-center justify-center flex-col">
-          <GoogleSignInButton
-            @success="handleGoogleSuccess"
-            @error="handleGoogleError"
-          >
-            <button
-              class="w-full group relative overflow-hidden bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-            >
-              <div class="flex items-center justify-center space-x-3">
-                <div class="flex-shrink-0">
-                  <UIcon name="i-logos:google-icon" class="w-5 h-5" />
-                </div>
-                <span
-                  class="font-medium text-gray-900 dark:text-white group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-200"
-                >
-                  {{ $t("signInModal.continueWithGoogle") }}
-                </span>
-              </div>
+        <!-- Login Form -->
+        <div v-if="currentView === 'login'" class="space-y-6">
+          <!-- Email/Password Form -->
+          <form @submit.prevent="handleEmailLogin" class="space-y-4">
+            <div>
+              <UInput
+                v-model="loginForm.email"
+                type="email"
+                :placeholder="$t('auth.login.emailPlaceholder')"
+                required
+                class="w-full"
+                :disabled="isLoading"
+              />
+            </div>
+            <div>
+              <UInput
+                v-model="loginForm.password"
+                type="password"
+                :placeholder="$t('auth.login.passwordPlaceholder')"
+                required
+                class="w-full"
+                :disabled="isLoading"
+              />
+            </div>
+            <div class="w-full flex items-center justify-center">
+              <UButton
+                type="submit"
+                class="w-full flex items-center text-white justify-center bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700"
+                :loading="isLoading"
+                size="lg"
+              >
+                {{ $t("auth.login.signInButton") }}
+              </UButton>
+            </div>
+          </form>
 
-              <!-- Subtle hover effect -->
+          <!-- Divider -->
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
               <div
-                class="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-purple-500/5 to-fuchsia-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                class="w-full border-t border-gray-300 dark:border-gray-600"
               ></div>
-            </button>
-          </GoogleSignInButton>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white dark:bg-gray-900 text-gray-500">{{
+                $t("auth.common.or")
+              }}</span>
+            </div>
+          </div>
 
-          <!-- Privacy Notice -->
+          <!-- Google Sign In -->
+          <!-- <div class="w-full flex items-center justify-center">
+            <GoogleSignInButton
+              @success="handleGoogleSuccess"
+              @error="handleGoogleError"
+            >
+              <button
+                class="w-full group relative overflow-hidden bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                :disabled="isLoading"
+              >
+                <div class="flex items-center justify-center space-x-3">
+                  <div class="flex-shrink-0">
+                    <UIcon name="i-logos:google-icon" class="w-5 h-5" />
+                  </div>
+                  <span
+                    class="font-medium text-gray-900 dark:text-white group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-200"
+                  >
+                    {{ $t("auth.common.googleContinue") }}
+                  </span>
+                </div>
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-purple-500/5 to-fuchsia-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                ></div>
+              </button>
+            </GoogleSignInButton>
+          </div> -->
+
+          <!-- Register Link -->
           <div class="text-center">
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              {{ $t("signInModal.privacyNotice") }}
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              {{ $t("auth.login.noAccount") }}
+              <button
+                @click="currentView = 'register'"
+                class="text-violet-600 hover:text-violet-500 font-medium"
+              >
+                {{ $t("auth.login.signUpLink") }}
+              </button>
             </p>
           </div>
+        </div>
+
+        <!-- Register Form -->
+        <div v-else-if="currentView === 'register'" class="space-y-6">
+          <form @submit.prevent="handleEmailRegister" class="space-y-4">
+            <div>
+              <UInput
+                v-model="registerForm.name"
+                type="text"
+                :placeholder="$t('auth.register.namePlaceholder')"
+                required
+                class="w-full"
+                :disabled="isLoading"
+              />
+            </div>
+            <div>
+              <UInput
+                v-model="registerForm.email"
+                type="email"
+                :placeholder="$t('auth.register.emailPlaceholder')"
+                required
+                class="w-full"
+                :disabled="isLoading"
+              />
+            </div>
+            <div>
+              <UInput
+                v-model="registerForm.password"
+                type="password"
+                :placeholder="$t('auth.register.passwordPlaceholder')"
+                required
+                class="w-full"
+                :disabled="isLoading"
+              />
+            </div>
+            <div>
+              <UInput
+                v-model="registerForm.confirmPassword"
+                type="password"
+                :placeholder="$t('auth.register.confirmPasswordPlaceholder')"
+                required
+                class="w-full"
+                :disabled="isLoading"
+              />
+            </div>
+            <UButton
+              type="submit"
+              class="w-full flex items-center justify-center bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700"
+              :loading="isLoading"
+              size="lg"
+            >
+              {{ $t("auth.register.createAccountButton") }}
+            </UButton>
+          </form>
+
+          <!-- Divider -->
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div
+                class="w-full border-t border-gray-300 dark:border-gray-600"
+              ></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white dark:bg-gray-900 text-gray-500">{{
+                $t("auth.common.or")
+              }}</span>
+            </div>
+          </div>
+
+          <!-- Google Sign In -->
+          <!-- <div class="flex items-center justify-center">
+            <GoogleSignInButton
+              @success="handleGoogleSuccess"
+              @error="handleGoogleError"
+            >
+              <button
+                class="w-full group relative overflow-hidden bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                :disabled="isLoading"
+              >
+                <div class="flex items-center justify-center space-x-3">
+                  <div class="flex-shrink-0">
+                    <UIcon name="i-logos:google-icon" class="w-5 h-5" />
+                  </div>
+                  <span
+                    class="font-medium text-gray-900 dark:text-white group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-200"
+                  >
+                    {{ $t("auth.common.googleContinue") }}
+                  </span>
+                </div>
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-purple-500/5 to-fuchsia-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                ></div>
+              </button>
+            </GoogleSignInButton>
+          </div> -->
+
+          <!-- Login Link -->
+          <div class="text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              {{ $t("auth.register.hasAccount") }}
+              <button
+                @click="currentView = 'login'"
+                class="text-violet-600 hover:text-violet-500 font-medium"
+              >
+                {{ $t("auth.register.signInLink") }}
+              </button>
+            </p>
+          </div>
+        </div>
+
+        <!-- Privacy Notice -->
+        <div class="text-center mt-6">
+          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            {{ $t("signInModal.privacyNotice") }}
+          </p>
         </div>
       </div>
     </div>
@@ -114,6 +293,8 @@
 <script setup lang="ts">
 const { setUser } = useAuthState();
 const emit = defineEmits(["closeModal"]);
+const toast = useToast();
+const { t } = useI18n();
 
 defineProps({
   isOpen: {
@@ -122,7 +303,100 @@ defineProps({
   },
 });
 
+// Form states
+const currentView = ref<"login" | "register">("login");
+const isLoading = ref(false);
+
+const loginForm = reactive({
+  email: "",
+  password: "",
+});
+
+const registerForm = reactive({
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+
+async function handleEmailLogin() {
+  if (isLoading.value) return;
+
+  isLoading.value = true;
+  try {
+    const response = await $fetch("/api/auth/login", {
+      method: "POST",
+      body: {
+        email: loginForm.email,
+        password: loginForm.password,
+      },
+    });
+
+    if (response?.success) {
+      setUser(response.user);
+      closeModal();
+      toast.add({
+        title: t("auth.login.signInSuccess"),
+        color: "green",
+      });
+    }
+  } catch (error: any) {
+    toast.add({
+      title: error?.data?.statusMessage || t("auth.login.signInFailed"),
+      color: "red",
+    });
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+async function handleEmailRegister() {
+  if (isLoading.value) return;
+
+  // Validate password confirmation
+  if (registerForm.password !== registerForm.confirmPassword) {
+    toast.add({
+      title: t("auth.register.passwordMismatch"),
+      color: "red",
+    });
+    return;
+  }
+
+  isLoading.value = true;
+  try {
+    const response = await $fetch("/api/auth/register", {
+      method: "POST",
+      body: {
+        name: registerForm.name,
+        email: registerForm.email,
+        password: registerForm.password,
+        confirmPassword: registerForm.confirmPassword,
+      },
+    });
+
+    if (response?.success) {
+      setUser(response.user);
+      closeModal();
+      toast.add({
+        title: t("auth.register.accountCreated"),
+        color: "green",
+      });
+    }
+  } catch (error: any) {
+    toast.add({
+      title:
+        error?.data?.statusMessage || t("auth.register.registrationFailed"),
+      color: "red",
+    });
+  } finally {
+    isLoading.value = false;
+  }
+}
+
 async function handleGoogleSuccess(response: any) {
+  if (isLoading.value) return;
+
+  isLoading.value = true;
   try {
     const credential = response.credential;
     // Decode the JWT to get user info
@@ -146,17 +420,41 @@ async function handleGoogleSuccess(response: any) {
     if (serverResponse?.success) {
       setUser(userData);
       closeModal();
+      toast.add({
+        title: t("auth.common.googleSuccess"),
+        color: "green",
+      });
     }
   } catch (error) {
     console.error("Google sign in failed:", error);
+    toast.add({
+      title: t("auth.common.googleError"),
+      color: "red",
+    });
+  } finally {
+    isLoading.value = false;
   }
 }
 
 function handleGoogleError(error: any) {
   console.error("Google sign in error:", error);
+  toast.add({
+    title: t("auth.common.googleError"),
+    color: "red",
+  });
 }
 
 const closeModal = () => {
+  // Reset forms
+  currentView.value = "login";
+  loginForm.email = "";
+  loginForm.password = "";
+  registerForm.name = "";
+  registerForm.email = "";
+  registerForm.password = "";
+  registerForm.confirmPassword = "";
+  isLoading.value = false;
+
   emit("closeModal", false);
 };
 </script>
