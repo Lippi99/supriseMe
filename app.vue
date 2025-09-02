@@ -33,25 +33,4 @@ useHead({
     },
   ],
 });
-
-// TypeScript declarations for gtag
-declare global {
-  interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
-  }
-}
-
-useScript("https://www.googletagmanager.com/gtag/js?id=G-F0JDJGDP4H");
-
-onMounted(() => {
-  if (import.meta.client) {
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function (...args: any[]) {
-      window.dataLayer.push(args);
-    };
-    window.gtag("js", new Date());
-    window.gtag("config", "G-F0JDJGDP4H");
-  }
-});
 </script>

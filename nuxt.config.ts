@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     public: {
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
       googleSignInClientId: process.env.NUXT_GOOGLE_CLIENT,
+      googleAnalyticsId: process.env.NUXT_GOOGLE_ANALYTICS_ID,
     },
     stripe: {
       productId: process.env.NUXT_STRIPE_PRODUCT_ID,
