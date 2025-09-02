@@ -27,7 +27,6 @@ export default defineNuxtConfig({
     public: {
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
       googleSignInClientId: process.env.NUXT_GOOGLE_CLIENT,
-      googleAnalyticsId: process.env.NUXT_GOOGLE_ANALYTICS_ID,
     },
     stripe: {
       productId: process.env.NUXT_STRIPE_PRODUCT_ID,
@@ -62,6 +61,7 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@nuxtjs/robots",
     "@nuxtjs/seo",
+    "nuxt-gtag",
   ],
   image: {
     cloudflare: {
@@ -119,6 +119,25 @@ export default defineNuxtConfig({
 
   seo: {
     redirectToCanonicalSiteUrl: true,
+  },
+
+  gtag: {
+    enabled: process.env.NODE_ENV === "production",
+    id: process.env.NUXT_GOOGLE_ANALYTICS_ID,
+    initCommands: [
+      // Setup up consent mode
+      [
+        "consent",
+        "default",
+        {
+          ad_user_data: "granted",
+          ad_personalization: "granted",
+          ad_storage: "granted",
+          analytics_storage: "granted",
+          wait_for_update: 500,
+        },
+      ],
+    ],
   },
 
   compatibilityDate: "2024-11-19",
