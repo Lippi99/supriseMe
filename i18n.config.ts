@@ -51,7 +51,7 @@ export default defineI18nConfig(() => ({
           title: "Plan prices",
           basic: {
             title: "Basic",
-            price: "$2",
+            price: "R$ 6",
             descriptionOne: "Lifetime access",
             descriptionTwo: "3 photos",
             descriptionThree: "No song",
@@ -60,7 +60,7 @@ export default defineI18nConfig(() => ({
           premium: {
             title: "Premium",
             tag: "Most popular",
-            price: "$4",
+            price: "R$ 12",
             descriptionOne: "Lifetime access",
             descriptionTwo: "5 photos",
             descriptionThree: "With song",
@@ -238,7 +238,7 @@ export default defineI18nConfig(() => ({
           title: "Preços dos planos",
           basic: {
             title: "Básico",
-            price: "$2",
+            price: "R$ 6",
             descriptionOne: "Acesso por vitalício",
             descriptionTwo: "3 fotos",
             descriptionThree: "Sem música",
@@ -247,7 +247,7 @@ export default defineI18nConfig(() => ({
           premium: {
             title: "Premium",
             tag: "Mais popular",
-            price: "$4",
+            price: "R$ 12",
             descriptionOne: "Acesso vitalício",
             descriptionTwo: "5 fotos",
             descriptionThree: "Com música",
