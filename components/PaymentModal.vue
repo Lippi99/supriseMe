@@ -132,7 +132,7 @@
           </div>
 
           <!-- Google Sign In -->
-          <!-- <div class="w-full flex items-center justify-center">
+          <div class="w-full flex items-center justify-center">
             <GoogleSignInButton
               @success="handleGoogleSuccess"
               @error="handleGoogleError"
@@ -156,7 +156,7 @@
                 ></div>
               </button>
             </GoogleSignInButton>
-          </div> -->
+          </div>
 
           <!-- Register Link -->
           <div class="text-center">
@@ -240,7 +240,7 @@
           </div>
 
           <!-- Google Sign In -->
-          <!-- <div class="flex items-center justify-center">
+          <div class="flex items-center justify-center">
             <GoogleSignInButton
               @success="handleGoogleSuccess"
               @error="handleGoogleError"
@@ -264,7 +264,7 @@
                 ></div>
               </button>
             </GoogleSignInButton>
-          </div> -->
+          </div>
 
           <!-- Login Link -->
           <div class="text-center">

@@ -299,7 +299,7 @@ export default defineI18nConfig(() => ({
         themes: {
           christmas: "Natal",
           birthday: "Aniversário",
-          wedding: "Casamento",
+          wedding: "Amor",
           custom: "Personalizado",
         },
       },
