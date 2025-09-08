@@ -115,6 +115,22 @@ export default defineEventHandler(async (event) => {
         break;
       }
 
+      case "invoice.payment_succeeded": {
+        const invoice = stripeEvent.data.object as any;
+        console.log(
+          `Invoice ${invoice.id} paid successfully. Receipt will be automatically sent by Stripe.`
+        );
+        break;
+      }
+
+      case "invoice.payment_failed": {
+        const invoice = stripeEvent.data.object as any;
+        console.log(
+          `Invoice ${invoice.id} payment failed. Customer: ${invoice.customer_email}`
+        );
+        break;
+      }
+
       default:
         console.log(`Unhandled event type: ${stripeEvent.type}`);
     }

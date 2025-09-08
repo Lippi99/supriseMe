@@ -126,6 +126,22 @@ export default defineEventHandler(async (event) => {
       phone_number_collection: { enabled: true },
       // Set default locale to English
       locale: "pt-BR",
+      // Enable automatic receipt emails
+      payment_intent_data: {
+        receipt_email: userEmail,
+      },
+      // Create invoice for this payment
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          metadata: {
+            websiteId: websiteId.toString(),
+            plan,
+          },
+          description: `SurpriseMe ${plan} Plan - Website ID: ${websiteId}`,
+          footer: "Obrigado por escolher SurpriseMe!",
+        },
+      },
     });
 
     // Log successful session creation (without sensitive data)
