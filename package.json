@@ -31,6 +31,7 @@
     "@unlok-co/nuxt-stripe": "^4.0.1",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
+    "mercadopago": "^2.9.0",
     "nuxt": "^3.13.2",
     "nuxt-gtag": "^4.0.0",
     "nuxt-vue3-google-signin": "^0.0.11",

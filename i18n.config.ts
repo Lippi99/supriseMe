@@ -30,6 +30,7 @@ export default defineI18nConfig(() => ({
       },
       header: {
         myWebsites: "My Websites",
+        login: "Login",
       },
       indexPage: {
         sectionOne: {
@@ -37,6 +38,19 @@ export default defineI18nConfig(() => ({
           description:
             "Take some time to surprise someone you love. Share special moments and make someone smile.",
           button: "I want to surprise",
+        },
+        demoSection: {
+          mainTitle: "From Creation to Celebration",
+          mainDescription:
+            "See how easy it is to create and share your personalized surprise page in just minutes.",
+          creationTitle: "Step 1: Create Your Surprise",
+          creationDescription:
+            "Use our intuitive desktop interface to add photos, write heartfelt messages, and customize your page.",
+          resultTitle: "Step 2: Share the Magic",
+          resultDescription:
+            "Your loved ones receive a beautiful mobile-optimized page they can view anytime, anywhere.",
+          ctaText: "Ready to create your own surprise page?",
+          ctaButton: "Start Creating Now",
         },
         sectionTwo: {
           title: "How it works",
@@ -89,6 +103,8 @@ export default defineI18nConfig(() => ({
       createPage: {
         title: "Create your page",
         instructions: "Fill the fields in blank",
+        livePreview: "Live Preview",
+        websitePreview: "Website's preview",
         choosePlan: "Choose the plan",
         pickSong: "Pick a song (optional)",
         chooseTheme: "Choose the theme",
@@ -188,6 +204,28 @@ export default defineI18nConfig(() => ({
           privacyPolicy: "Privacy Policy",
         },
       },
+      payment: {
+        pix: {
+          title: "PIX Payment",
+          generating: "Generating PIX code...",
+          scanQrCode: "Scan the QR Code with your bank app",
+          orCopyCode: "Or copy the PIX code",
+          copyCode: "Copy PIX Code",
+          copied: "Copied!",
+          howToPay: "How to pay with PIX",
+          step1: "Open your bank or payment app",
+          step2: "Choose PIX payment option",
+          step3: "Scan the QR code or paste the copied code",
+          expiresAt: "Expires at",
+          waitingPayment: "Waiting for payment confirmation...",
+          paymentApproved: "Payment Approved!",
+          redirecting: "Redirecting to your page...",
+          error: "Payment Error",
+        },
+      },
+      common: {
+        close: "Close",
+      },
     },
     pt: {
       myWebsites: {
@@ -217,6 +255,7 @@ export default defineI18nConfig(() => ({
       },
       header: {
         myWebsites: "Meus sites",
+        login: "Entrar",
       },
       indexPage: {
         sectionOne: {
@@ -224,6 +263,19 @@ export default defineI18nConfig(() => ({
           description:
             "Tire um tempo para surpreender alguém que você ama. Compartilhe momentos especiais e faça alguém sorrir.",
           button: "Quero surpreender",
+        },
+        demoSection: {
+          mainTitle: "Da Criação à Celebração",
+          mainDescription:
+            "Veja como é fácil criar e compartilhar sua página surpresa personalizada em apenas alguns minutos.",
+          creationTitle: "Passo 1: Crie Sua Surpresa",
+          creationDescription:
+            "Use nossa interface intuitiva no desktop para adicionar fotos, escrever mensagens sinceras e personalizar sua página.",
+          resultTitle: "Passo 2: Compartilhe a Magia",
+          resultDescription:
+            "Seus entes queridos recebem uma linda página otimizada para celular que podem ver a qualquer momento, em qualquer lugar.",
+          ctaText: "Pronto para criar sua própria página surpresa?",
+          ctaButton: "Comece a Criar Agora",
         },
         sectionTwo: {
           title: "Como funciona",
@@ -276,6 +328,8 @@ export default defineI18nConfig(() => ({
       createPage: {
         title: "Crie sua página",
         instructions: "Preencha os campos em branco",
+        livePreview: "Visualização ao Vivo",
+        websitePreview: "Pré-visualização do site",
         choosePlan: "Escolha o plano",
         pickSong: "Escolha uma música (opcional)",
         chooseTheme: "Escolha o tema",
@@ -375,6 +429,28 @@ export default defineI18nConfig(() => ({
           termsOfService: "Termos de Serviço",
           privacyPolicy: "Política de Privacidade",
         },
+      },
+      payment: {
+        pix: {
+          title: "Pagamento PIX",
+          generating: "Gerando código PIX...",
+          scanQrCode: "Escaneie o QR Code com seu app bancário",
+          orCopyCode: "Ou copie o código PIX",
+          copyCode: "Copiar Código PIX",
+          copied: "Copiado!",
+          howToPay: "Como pagar com PIX",
+          step1: "Abra seu app bancário ou de pagamento",
+          step2: "Escolha a opção de pagamento PIX",
+          step3: "Escaneie o QR code ou cole o código copiado",
+          expiresAt: "Expira em",
+          waitingPayment: "Aguardando confirmação do pagamento...",
+          paymentApproved: "Pagamento Aprovado!",
+          redirecting: "Redirecionando para sua página...",
+          error: "Erro no Pagamento",
+        },
+      },
+      common: {
+        close: "Fechar",
       },
     },
   },

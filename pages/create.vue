@@ -563,7 +563,7 @@
                       <h2
                         class="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent"
                       >
-                        Live Preview
+                        {{ $t("createPage.livePreview") }}
                       </h2>
                     </div>
                     <div
@@ -582,6 +582,14 @@
 
     <!-- Modals and Notifications -->
     <PaymentModal :isOpen="isOpen" @closeModal="closeModal" />
+    <PixPaymentModal
+      v-if="currentWebsiteData"
+      :isOpen="isPixPaymentModalOpen"
+      :websiteId="currentWebsiteData.id"
+      :websiteGuid="currentWebsiteData.guid"
+      :plan="formState.plan"
+      @close="closePixModal"
+    />
     <UNotifications />
   </NuxtLayout>
 </template>
@@ -978,10 +986,6 @@ onMounted(async () => {
       formState.messages.push({ message: "", image: null });
     }
   }
-  if (status.value === "unauthenticated") {
-    isOpen.value = true;
-    return;
-  }
 });
 
 function selectedTheme(value: string) {
@@ -1002,6 +1006,58 @@ function selectedTheme(value: string) {
 }
 
 const { stripe } = useClientStripe();
+
+// Payment provider selection
+const isPixPaymentModalOpen = ref(false);
+const currentWebsiteData = ref<{ id: number; guid: string } | null>(null);
+
+// Determine payment provider based on country code
+const paymentProvider = computed(() => {
+  // Use MercadoPago/PIX for Brazil, Stripe for others
+  return countryCode.value === "BR" ? "mercadopago" : "stripe";
+});
+
+async function subscribeMercadoPago(websiteId: number, websiteGuid: string) {
+  if (!websiteId) {
+    toast.add({
+      title: "Failed to create website",
+      color: "red",
+    });
+    return;
+  }
+
+  try {
+    const { data } = await useFetch("/api/mercadopago/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        websiteId,
+        websiteGuid,
+        plan: formState.plan,
+      }),
+    });
+
+    // Use production init_point or fallback to sandbox for testing
+    const checkoutUrl = data.value?.initPoint || data.value?.sandboxInitPoint;
+
+    if (!checkoutUrl) {
+      throw new Error("Failed to create checkout session");
+    }
+
+    // Redirect to MercadoPago checkout page
+    setTimeout(() => {
+      window.location.href = checkoutUrl;
+    }, 100);
+  } catch (error) {
+    console.log(error);
+    toast.add({
+      title: "Erro ao criar checkout PIX",
+      color: "red",
+    });
+  }
+}
 
 async function subscribeStripe(websiteId: number, websiteGuid: string) {
   if (!websiteId) {
@@ -1044,6 +1100,11 @@ async function subscribeStripe(websiteId: number, websiteGuid: string) {
   } catch (error) {
     console.log(error);
   }
+}
+
+function closePixModal() {
+  isPixPaymentModalOpen.value = false;
+  currentWebsiteData.value = null;
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -1131,7 +1192,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     console.log(websiteError.value);
 
-    await subscribeStripe(websiteId as number, websiteGuid as string);
+    // Choose payment provider based on country
+    if (paymentProvider.value === "mercadopago") {
+      await subscribeMercadoPago(websiteId as number, websiteGuid as string);
+    } else {
+      await subscribeStripe(websiteId as number, websiteGuid as string);
+    }
 
     form.value!.clear();
     clearFields();

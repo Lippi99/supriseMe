@@ -54,6 +54,23 @@
               </UButton>
             </template>
 
+            <!-- Login button for non-authenticated users -->
+            <template v-else>
+              <UButton
+                @click="openLoginModal"
+                size="md"
+                variant="solid"
+                color="violet"
+                class="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                <UIcon
+                  name="i-heroicons-arrow-right-on-rectangle-20-solid"
+                  class="w-4 h-4 mr-2"
+                />
+                {{ $t("header.login") }}
+              </UButton>
+            </template>
+
             <!-- Language switcher -->
             <div
               class="flex items-center gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl shadow-inner"
@@ -202,11 +219,25 @@
               </UButton>
             </template>
             <template v-else>
-              <div class="text-center py-4">
-                <p class="text-gray-600 dark:text-gray-400 text-sm">
-                  Welcome to SurpriseMe
-                </p>
-              </div>
+              <UButton
+                @click="
+                  () => {
+                    openLoginModal();
+                    mobileMenuOpen = false;
+                  }
+                "
+                size="lg"
+                variant="solid"
+                color="violet"
+                block
+                class="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300"
+              >
+                <UIcon
+                  name="i-heroicons-arrow-right-on-rectangle-20-solid"
+                  class="w-5 h-5 mr-2"
+                />
+                {{ $t("header.login") }}
+              </UButton>
             </template>
           </div>
         </div>
@@ -215,6 +246,7 @@
   </header>
 
   <MyWebsites :isOpen="isOpen" @update:isOpen="isOpen = $event" />
+  <PaymentModal :isOpen="isLoginModalOpen" @closeModal="isLoginModalOpen = $event" />
 </template>
 
 <script setup lang="ts">
@@ -222,6 +254,7 @@ import { ref, computed } from "vue";
 
 const { setLocale, locale } = useI18n();
 const isOpen = ref(false);
+const isLoginModalOpen = ref(false);
 const mobileMenuOpen = ref(false);
 const { status, clearUser } = useAuthState();
 
@@ -232,6 +265,11 @@ const logout = () => {
   clearUser();
   mobileMenuOpen.value = false;
   navigateTo("/");
+};
+
+const openLoginModal = () => {
+  // Open the login modal (PaymentModal handles authentication)
+  isLoginModalOpen.value = true;
 };
 
 // Close mobile menu when clicking outside or on route change

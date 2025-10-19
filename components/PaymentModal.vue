@@ -1,6 +1,7 @@
 <template>
   <UModal
     :modelValue="isOpen"
+    @update:modelValue="closeModal"
     :transition="false"
     :ui="{
       width: 'sm:max-w-md',
@@ -36,8 +37,9 @@
       </div>
 
       <!-- Close Button -->
-      <div class="absolute top-4 right-4 z-10">
+      <div class="absolute top-4 right-4 z-50">
         <button
+          type="button"
           @click="closeModal"
           class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-200 group"
           :aria-label="$t('signInModal.close')"
@@ -445,6 +447,7 @@ function handleGoogleError(error: any) {
 }
 
 const closeModal = () => {
+  console.log("fechei");
   // Reset forms
   currentView.value = "login";
   loginForm.email = "";

@@ -47,6 +47,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+  vite: {
+    server: {},
+  },
   nitro: {
     preset: "node-server",
     experimental: {
@@ -69,7 +72,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
+      baseUrl:
+        process.env.NUXT_PUBLIC_BASE_URL || "https://www.surpriseme.com.br",
       googleSignInClientId: process.env.NUXT_GOOGLE_CLIENT,
     },
     stripe: {
@@ -78,6 +82,11 @@ export default defineNuxtConfig({
       webhook: {
         secret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
       },
+    },
+    mercadopago: {
+      accessToken: process.env.NUXT_MERCADOPAGO_ACCESS_TOKEN,
+      publicKey: process.env.NUXT_MERCADOPAGO_PK,
+      webhookSecret: process.env.NUXT_MERCADOPAGO_WEBHOOK,
     },
     r2: {
       accountId: process.env.NUXT_R2_ACCOUNT_ID,
@@ -117,6 +126,10 @@ export default defineNuxtConfig({
     vueI18n: "./i18n.config.ts",
     locales: ["en", "pt"],
     defaultLocale: "pt",
+  },
+  mercadopago: {
+    publicKey: process.env.NUXT_MERCADOPAGO_PK || "",
+    accessToken: process.env.NUXT_MERCADOPAGO_ACCESS_TOKEN || "",
   },
   stripe: {
     server: {

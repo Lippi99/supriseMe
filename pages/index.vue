@@ -64,26 +64,6 @@
                   :label="$t('indexPage.sectionOne.button')"
                 />
               </NuxtLinkLocale>
-
-              <!-- Mobile-friendly secondary button -->
-              <button
-                class="group flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300 py-4 px-4 xs:py-0 xs:px-0 touch-manipulation"
-              >
-                <svg
-                  class="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a2.5 2.5 0 110 5H9V10z"
-                  />
-                </svg>
-                <span class="font-medium text-sm sm:text-base">Watch Demo</span>
-              </button>
             </div>
           </div>
 
@@ -144,6 +124,188 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Video Section -->
+    <section
+      class="py-12 sm:py-20 lg:py-32 bg-gradient-to-b from-slate-900 via-gray-900 to-slate-900 relative overflow-hidden"
+      aria-labelledby="demo-video-heading"
+    >
+      <!-- Background decorative elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          class="absolute top-1/4 right-0 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-bl from-violet-500/10 to-purple-500/10 rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-1/4 left-0 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-tr from-fuchsia-500/10 to-pink-500/10 rounded-full blur-3xl"
+        ></div>
+      </div>
+
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10"
+      >
+        <!-- Main Section header -->
+        <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div
+            class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-violet-100 to-fuchsia-100 dark:from-violet-900/50 dark:to-fuchsia-900/50 backdrop-blur-sm border border-violet-200 dark:border-violet-700 shadow-lg mb-4 sm:mb-6"
+          >
+            <span
+              class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-violet-700 to-fuchsia-700 bg-clip-text text-transparent"
+            >
+              🎬 See It In Action
+            </span>
+          </div>
+
+          <h2
+            id="demo-video-heading"
+            class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-violet-700 via-purple-700 to-fuchsia-700 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight px-2 sm:px-0"
+          >
+            {{ $t("indexPage.demoSection.mainTitle") }}
+          </h2>
+
+          <p
+            class="text-base sm:text-lg lg:text-xl text-gray-400 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0"
+          >
+            {{ $t("indexPage.demoSection.mainDescription") }}
+          </p>
+
+          <div
+            class="w-24 sm:w-32 h-1 sm:h-1.5 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 mx-auto rounded-full shadow-lg mt-4 sm:mt-6"
+          ></div>
+        </div>
+
+        <!-- Creation Process - Desktop Browser -->
+        <div class="mb-16 sm:mb-20 lg:mb-24">
+          <div class="text-center mb-8 sm:mb-12">
+            <h3
+              class="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-3 sm:mb-4"
+            >
+              {{ $t("indexPage.demoSection.creationTitle") }}
+            </h3>
+            <p
+              class="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto px-4"
+            >
+              {{ $t("indexPage.demoSection.creationDescription") }}
+            </p>
+          </div>
+
+          <div class="max-w-6xl mx-auto px-4">
+            <div class="relative">
+              <!-- Browser mockup with glowing effect -->
+              <div class="relative group">
+                <!-- Glowing border effect -->
+                <div
+                  class="absolute -inset-4 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-40 transition-opacity duration-500"
+                ></div>
+
+                <!-- Browser Mockup Component -->
+                <BrowserMockup
+                  size="large"
+                  demo-path="create"
+                  class="relative z-10 browser-float"
+                >
+                  <!-- Video inside the browser -->
+                  <video
+                    class="w-full h-full object-cover object-top"
+                    src="https://pub-10ca3048728847c5b410c357acd03135.r2.dev/demo-video/demo-desktop.mp4"
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    title="SurpriseMe Creation Process Demo"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </BrowserMockup>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Separator -->
+        <div class="flex items-center justify-center mb-16 sm:mb-20 lg:mb-24">
+          <div
+            class="flex-1 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent max-w-xs"
+          ></div>
+          <div class="mx-4">
+            <svg
+              class="w-8 h-8 text-violet-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </div>
+          <div
+            class="flex-1 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent max-w-xs"
+          ></div>
+        </div>
+
+        <!-- Final Result - Mobile Phone -->
+        <div class="mb-12 sm:mb-16">
+          <div class="text-center mb-8 sm:mb-12">
+            <h3
+              class="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-fuchsia-400 to-pink-400 bg-clip-text text-transparent mb-3 sm:mb-4"
+            >
+              {{ $t("indexPage.demoSection.resultTitle") }}
+            </h3>
+            <p
+              class="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto px-4"
+            >
+              {{ $t("indexPage.demoSection.resultDescription") }}
+            </p>
+          </div>
+
+          <div class="max-w-4xl mx-auto">
+            <div class="relative">
+              <!-- Phone mockup with glowing effect -->
+              <div class="relative group flex justify-center">
+                <!-- Glowing border effect -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-fuchsia-600 via-pink-600 to-rose-600 rounded-[3rem] sm:rounded-[4rem] blur-2xl opacity-40 group-hover:opacity-50 transition-opacity duration-500 scale-105"
+                ></div>
+
+                <!-- iPhone Mockup Component -->
+                <PhoneMockup size="medium" class="relative z-10 phone-float">
+                  <!-- Video inside the phone -->
+                  <video
+                    class="w-full h-full object-cover"
+                    src="https://pub-10ca3048728847c5b410c357acd03135.r2.dev/demo-video/demo.mp4"
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    title="SurpriseMe Mobile Result Demo"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </PhoneMockup>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="text-center mt-12 sm:mt-16 lg:mt-20">
+          <p
+            class="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8 font-medium"
+          >
+            {{ $t("indexPage.demoSection.ctaText") }}
+          </p>
+          <NuxtLinkLocale to="/create" class="inline-block">
+            <UButton
+              class="text-lg sm:text-xl px-8 py-4 sm:px-10 sm:py-5 font-bold text-white bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 hover:from-violet-700 hover:via-purple-700 hover:to-fuchsia-700 transform transition-all duration-500 hover:scale-105 hover:-translate-y-1 shadow-2xl hover:shadow-violet-500/25 rounded-2xl touch-manipulation"
+              :label="$t('indexPage.demoSection.ctaButton')"
+            />
+          </NuxtLinkLocale>
         </div>
       </div>
     </section>
