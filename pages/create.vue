@@ -1193,11 +1193,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     console.log(websiteError.value);
 
     // Choose payment provider based on country
-    if (paymentProvider.value === "mercadopago") {
-      await subscribeMercadoPago(websiteId as number, websiteGuid as string);
-    } else {
-      await subscribeStripe(websiteId as number, websiteGuid as string);
-    }
+    // if (paymentProvider.value === "mercadopago") {
+    await subscribeMercadoPago(websiteId as number, websiteGuid as string);
+    // } else {
+    // await subscribeStripe(websiteId as number, websiteGuid as string);
+    // }
 
     form.value!.clear();
     clearFields();
