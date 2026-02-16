@@ -1,75 +1,76 @@
-# Nuxt Minimal Starter
+# SurpriseMe — Create Magic Moments
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+**SurpriseMe** is a web service that helps you create personalized surprise pages to share with friends, family, or someone special. It lets you add photos, messages, themes, and more to craft a memorable digital surprise that can be shared easily online
 
-## Setup
+---
 
-Make sure to install dependencies:
+## 🎉 Overview
 
-```bash
-# npm
-npm install
+✨ Surprise someone you care about by creating a custom surprise page with:
 
-# pnpm
-pnpm install
+- Photos
+- Heartfelt messages
+- Beautiful themes
+- Optional music  
+ 
+You can create and share your surprise in just a few steps!
 
-# yarn
-yarn install
+---
 
-# bun
-bun install
-```
+## 🛠️ How It Works
 
-## Development Server
+1. **Choose a Theme**  
+   Pick a design style for your surprise page.
 
-Start the development server on `http://localhost:3000`:
+2. **Write Your Message & Upload Photos**  
+   Add photos and heartfelt text to make the moment special.
 
-```bash
-# npm
-npm run dev
+3. **Make the Payment**  
+   Complete the payment for your selected plan.
 
-# pnpm
-pnpm dev
+4. **Get Your Surprise Link**  
+   Access your custom surprise page and share it with the lucky person!
 
-# yarn
-yarn dev
+---
 
-# bun
-bun run dev
-```
+## 💡 Pricing Plans
 
-## Production
+### **Basic**
 
-Build the application for production:
+- 💰 **R$ 6**
+- 🖼️ Up to *3 photos*
+- 🎵 *No song included*
 
-```bash
-# npm
-npm run build
+### **Premium** ⭐
 
-# pnpm
-pnpm build
+- 💰 **R$ 12**
+- 🖼️ Up to *5 photos*
+- 🎵 *Includes song*
 
-# yarn
-yarn build
+Both plans give lifetime access to your created page.
 
-# bun
-bun run build
-```
+---
 
-Locally preview production build:
+## 🚀 Get Started
 
-```bash
-# npm
-npm run preview
+To begin creating a surprise page:
 
-# pnpm
-pnpm preview
+👉 Go to the Create page and fill out your details:  
+`https://www.surpriseme.com.br/en/create`
 
-# yarn
-yarn preview
+---
 
-# bun
-bun run preview
-```
+## 📄 Legal & Privacy
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+SurpriseMe provides links to its **Terms of Service** and **Privacy Policy** on the website footer. Users should review these before using the service.
+
+---
+
+## 📌 Notes
+
+- The platform focuses on digital surprise pages rather than physical gifting.
+- Created pages are mobile-friendly and easy to share.
+
+---
+
+*End of document.*
